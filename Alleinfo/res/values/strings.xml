@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ålleinfo</string>
+    <string name="settings">Inställningar</string>
+    <string name="home">Hem</string>
+    <string name="scheme">Schema</string>
+    <string name="food">Skolmat</string>
+    <string name="calendar">Kalender</string>
+    <string name="blogs">Bloggar</string>
+    <string name="itslearning">It\'s learning</string>
+    
+    <string name="news">Nyheter från elevkåren</string>
+    
+    <string name="angeDittPers">Ange ditt personnummer för att se ditt schema.</string>
+    <string name="willBeDeleted">Personnumret kommer att raderas så fort appen avslutas om du inte väljer att spara det</string>
+    <string name="angeDinPin">Ange en PIN-kod för att spara personnumret.</string>
+    <string name="willNotBeVisible">Personnumret kommer inte att visas för någon och kan endast raderas med hjälp av pin-koden eller genom att skapa en ny pin-kod.\nNumret sparas lokalt i krypterad form.</string>
+    <string name="angeDinPinForAtt">Ange din PIN-kod för att fortsätta</string>
+    <string name="angePin">Ange PIN</string>
+    <string name="inityear">19</string>
+    <string name="cont">Fortsätt</string>
+    <string name="change">Byt</string>
+    <string name="abort">Avbryt</string>
+    <string name="savecred">Spara personnummer</string>
+    
+    <string name="forward">Framåt</string>
+    <string name="back"></string>
+    
+    <string name="weekchoice">Vecka</string>
+    <string name="day">Dag</string>
+    <string name="mon">Måndag</string>
+    <string name="tis">Tisdag</string>
+    <string name="ons">Onsdag</string>
+    <string name="tors">Torsdag</string>
+    <string name="fre">Fredag</string>
+    <string name="week">Veckovy</string>
+    <string name="chngpers">Byt person</string>
+
+    <string name="thisweek">Denna vecka</string>
+    <string name="nextweek">Nästa vecka</string>
+
+    <string-array name="colors">
+        <item>#6AB52C</item>
+        <item>#29b7eb</item>
+        <item>#c1cc67</item>
+        <item>#9c2a89</item>
+        <item>#F07F0A</item>
+        <item>#1d71b8</item>
+        <item>#9c2a89</item>
+        <item>#e6332a</item>
+    </string-array>
+</resources>
