@@ -42,7 +42,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Home extends SherlockActivity {
-
+	
 	Drawable currcolor;
 	Button home;
 	Button food;
@@ -75,8 +75,8 @@ public class Home extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.board);
 
-		Intent fromIntent = getIntent(); // returns intent which started this
-											// activity
+		// Get personal number
+		Intent fromIntent = getIntent();
 		number = fromIntent.getStringExtra("number");
 
 		sharedP = this.getSharedPreferences("com.felectronix.alleinfo", 0);
