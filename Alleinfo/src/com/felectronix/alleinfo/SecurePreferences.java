@@ -39,6 +39,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
+// secure preferences
 
 public class SecurePreferences {
 

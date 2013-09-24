@@ -1,5 +1,6 @@
 package com.felectronix.alleinfo;
 
+// information about the news
 public class NewsInfo {
 	public String description;
 	public String type;

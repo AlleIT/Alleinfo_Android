@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+// news feed
+
 public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 	private Activity c;
 	private NewsInfo[] datas;
