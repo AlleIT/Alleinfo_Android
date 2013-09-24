@@ -23,6 +23,8 @@ public class BootRunner extends Activity {
 	Context c;
 	DialogCodes returnCode;
 	
+	// asks the user to write his/her pin code to get access to the application
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class BootRunner extends Activity {
 			requestPersNumString();
 		}
 	}
+	
+	// Request personal number on start of the application
 
 	public void requestPersNumString() {
 		final Dialog dialog = new Dialog(c);
@@ -55,8 +59,12 @@ public class BootRunner extends Activity {
 
 			});
 		} else {
+			// if pin code is saved 
 			gotoPin.setVisibility(View.INVISIBLE);
 		}
+		
+		// check if the personal number has the right length
+		
 		Button cont = (Button) dialog.findViewById(R.id.button_ok);
 		cont.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -71,18 +79,23 @@ public class BootRunner extends Activity {
 					number = persnum;
 					CheckBox cb = (CheckBox) dialog.findViewById(R.id.saveCred);
 					if (cb.isChecked()) {
+						// if user clicks the "save button", save it.
 						SaveCredDialog();
 					} else {
 						handleResponse();
 					}
 					dialog.dismiss();
 				} else {
+					// if the input has the wrong format
 					Toast.makeText(c, "Felaktigt format", Toast.LENGTH_LONG)
 							.show();
 					return;
 				}
 			}
 		});
+		
+		// if user clicks the "abort" button, close the application
+		
 		Button abor = (Button) dialog.findViewById(R.id.button_abort);
 		abor.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -99,7 +112,8 @@ public class BootRunner extends Activity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
 	}
-
+	
+	// save cred
 	public void SaveCredDialog() {
 		final Dialog dialog = new Dialog(c);
 		dialog.setContentView(R.layout.requestpin);
@@ -140,6 +154,9 @@ public class BootRunner extends Activity {
 				}
 			}
 		});
+		
+		// if the personal number was'nt saved
+		
 		Button abor = (Button) dialog.findViewById(R.id.button_abort1);
 		abor.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -155,7 +172,8 @@ public class BootRunner extends Activity {
 		dialog.getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	}
-
+	
+	// input pin dialog
 	public void InputPinDialog() {
 		final Dialog dialog = new Dialog(c);
 		dialog.setContentView(R.layout.requestpintodecrypt);
@@ -205,6 +223,9 @@ public class BootRunner extends Activity {
 				}
 			}
 		});
+		
+		// change user
+		
 		Button chngUsr = (Button) dialog.findViewById(R.id.button_otherUser);
 		chngUsr.setOnClickListener(new OnClickListener() {
 			@Override
@@ -227,6 +248,9 @@ public class BootRunner extends Activity {
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	}
 	
+	
+	// error handling
+	
 	public void handleResponse() {
 		switch(returnCode)
 		{
@@ -245,6 +269,7 @@ public class BootRunner extends Activity {
 		}
 	}
 	
+	// start the application
 	public void startApp()
 	{
 		Intent intent = new Intent("com.felectronix.alleinfo.HOME");  
