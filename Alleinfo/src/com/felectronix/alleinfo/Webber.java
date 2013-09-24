@@ -6,8 +6,10 @@ import android.graphics.Point;
 
 public class Webber {
 
+	// web url for the food schedule
 	public String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
-
+	
+	// render schedule
 	public String renderSchedule(String number, int specday, Boolean specweek,
 			Point screenSize) {
 		Calendar cal = Calendar.getInstance();
@@ -31,7 +33,9 @@ public class Webber {
 			}
 			day = specday;
 		}
-
+		
+		// get calendar
+		
 		if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
 				|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
 				|| specday == -1 && cal.get(Calendar.HOUR_OF_DAY) >= 16
@@ -70,7 +74,8 @@ public class Webber {
 			day = 0;
 			break;
 		}
-
+		
+		// web url for schedule search
 		String schemesearch = "http://www.novasoftware.se/ImgGen/schedulegenerator.aspx?format=png&schoolid=20700/sv-se&type=1&id="
 				+ number
 				+ "&period=&week="
@@ -85,19 +90,24 @@ public class Webber {
 				+ String.valueOf((int) (screenSize.x * 0.65))
 				+ "&maxheight="
 				+ String.valueOf(screenSize.y);
-
+		
+		// return value
 		return schemesearch;
 	}
-
+	
+	// get todays meal
 	public String getTodaysMeal() {
 		String todMeal = null;
-
+		
+		// return value
 		return todMeal;
 	}
-
+	
+	// get tiny news feed
 	public NewsInfo[] getTinyNewsFeed() {
 		NewsInfo[] feed;
-
+		
+		// for each new feed update
 		NewsInfo data = null;
 		feed = new NewsInfo[3];
 		for (int i = 0; i < 2; i++) {
@@ -109,6 +119,8 @@ public class Webber {
 			data.uniqeIdentifier = null;
 			feed[i] = data;
 		}
+		
+		// news info, show more news
 		data = new NewsInfo();
 		data.description = "Fler nyheter...";
 		data.type = null;
@@ -116,7 +128,8 @@ public class Webber {
 		data.contentType = 1;
 		data.uniqeIdentifier = null;
 		feed[2] = data;
-
+		
+		// return value
 		return feed;
 	}
 }
