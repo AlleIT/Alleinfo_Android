@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -52,11 +53,13 @@ public class Home extends SherlockActivity {
 	Button itsLearning;
 	TextView todDay, todDate, todWeek;
 	String[] colorlist;
+	// Where is the user?
 	HomePage current = HomePage.Start;
 	SlidingMenu leftBar;
 	ActionBar bar;
 	ViewGroup viewGroup;
 	Menu menu;
+	// TODO: Convert chosenDay to enum for simplicity
 	int chosenDay = -1;
 	Boolean showThisWeek = true;
 	Point xy;
@@ -113,7 +116,8 @@ public class Home extends SherlockActivity {
 		}
 
 		bar = getSupportActionBar();
-		bar.setDisplayHomeAsUpEnabled(true);
+		bar.setDisplayHomeAsUpEnabled(false);
+		bar.setHomeButtonEnabled(true);
 		colorlist = getResources().getStringArray(R.array.colors);
 		makeHome();
 		
@@ -187,7 +191,7 @@ public class Home extends SherlockActivity {
 			Calendar cal = Calendar.getInstance();
 			switch (cal.get(Calendar.DAY_OF_WEEK)) {
 			case Calendar.MONDAY:
-				todDay.setText("Måndag");
+				todDay.setText(Html.fromHtml("M&aring;ndag"));
 				break;
 			case Calendar.TUESDAY:
 				todDay.setText("Tisdag");
@@ -202,10 +206,10 @@ public class Home extends SherlockActivity {
 				todDay.setText("Fredag");
 				break;
 			case Calendar.SATURDAY:
-				todDay.setText("Lördag");
+				todDay.setText(Html.fromHtml("L&ouml;rdag"));
 				break;
 			case Calendar.SUNDAY:
-				todDay.setText("Söndag");
+				todDay.setText(Html.fromHtml("S&ouml;ndag"));
 				break;
 			}
 			todDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
@@ -241,7 +245,6 @@ public class Home extends SherlockActivity {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.webber, null));
 			current = HomePage.Mat;
-			chosenDay = -1;
 			checkColors();
 		}
 		leftBar.toggle();
@@ -262,10 +265,10 @@ public class Home extends SherlockActivity {
 	}
 
 	private void makeBlog() {
-		if (current != HomePage.Kalender) {
+		if (current != HomePage.Bloggar) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.webber, null));
-			current = HomePage.Kalender;
+			current = HomePage.Bloggar;
 			checkColors();
 		}
 		leftBar.toggle();
@@ -366,7 +369,7 @@ public class Home extends SherlockActivity {
 
 		switch (current) {
 		
-		// whitch case, depends on what button the user clicks on 
+		// which case, depends on what button the user clicks on 
 
 		case Home:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
@@ -508,8 +511,6 @@ public class Home extends SherlockActivity {
 
 					final String toLoad = webHandler.renderSchedule(number,
 							chosenDay, showThisWeek, xy);
-
-					chosenDay = -1;
 					
 					runOnUiThread(new Runnable() {
 						public void run() {

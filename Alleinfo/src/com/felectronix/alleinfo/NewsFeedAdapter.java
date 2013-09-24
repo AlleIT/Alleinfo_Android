@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-// news feed
+/* news feed
+*
+*	Uveckla gärna sådana här kommentarer! Vad är meningen med funktionen?
+*
+*/
 
 public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 	private Activity c;
