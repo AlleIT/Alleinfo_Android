@@ -81,6 +81,8 @@ public class Home extends SherlockActivity {
 		number = fromIntent.getStringExtra("number");
 
 		sharedP = this.getSharedPreferences("com.felectronix.alleinfo", 0);
+		
+		// Application menu
 
 		leftBar = new SlidingMenu(this);
 		leftBar.setMode(SlidingMenu.LEFT);
@@ -114,37 +116,54 @@ public class Home extends SherlockActivity {
 		bar.setDisplayHomeAsUpEnabled(true);
 		colorlist = getResources().getStringArray(R.array.colors);
 		makeHome();
-
+		
+		// if user clicks on home menu button
+		
 		home.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeHome();
 			}
 		});
+		
+		// if user clicks on food menu button
+		
 		food.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeFood();
 			}
 		});
+		
+		// if user clicks on schedule button
+		
 		schedule.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeScheme();
 			}
 		});
+		
+		// if user clicks on calendar button
+		
 		calendar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeCal();
 			}
 		});
+		
+		// if user clicks on blog button
+		
 		blogs.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeBlog();
 			}
 		});
+		
+		// if user clicks on itsLearning button
+		
 		itsLearning.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -152,6 +171,8 @@ public class Home extends SherlockActivity {
 			}
 		});
 	}
+	
+	// Create pages for different buttons in menu --> functions
 
 	private void makeHome() {
 		chosenDay = -1;
@@ -262,6 +283,9 @@ public class Home extends SherlockActivity {
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
+	
+	
+	// get all the latest news from elevkaren
 
 	private void prepFeed() {
 		final Activity a = this;
@@ -301,7 +325,9 @@ public class Home extends SherlockActivity {
 		});
 
 	}
-
+	
+	// Check colors for the different buttons in the menu
+	
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public void checkColors() {
@@ -339,6 +365,8 @@ public class Home extends SherlockActivity {
 			itsLearning.setBackground(currcolor);
 
 		switch (current) {
+		
+		// whitch case, depends on what button the user clicks on 
 
 		case Home:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
@@ -405,7 +433,9 @@ public class Home extends SherlockActivity {
 			break;
 		}
 	}
-
+	
+	// progressbar, show loading when web is loading
+	
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
 	public void prepWeb() {
@@ -421,7 +451,9 @@ public class Home extends SherlockActivity {
 		WV.clearCache(true);
 		WV.getSettings().setJavaScriptEnabled(true);
 		WV.setVerticalScrollBarEnabled(false);
-
+		
+		// set a web client
+		
 		WV.setWebViewClient(new WebViewClient() {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				PB.setVisibility(View.VISIBLE);
@@ -430,6 +462,8 @@ public class Home extends SherlockActivity {
 				return true;
 			}
 
+			// when the page is finished
+			
 			public void onPageFinished(WebView view, String url) {
 				if (PB.isShown()) {
 					PB.setVisibility(View.INVISIBLE);
@@ -437,14 +471,17 @@ public class Home extends SherlockActivity {
 					mWebView = WV;
 				}
 			}
-
+			
+			// if SSL certificate won't work, show error
+			
 			public void onReceivedSslError(WebView view,
 					SslErrorHandler handler, SslError error) {
 				handler.proceed();
 			}
 
 		});
-
+		
+		// if custom view have been dismissed
 		WV.setWebChromeClient(new WebChromeClient() {
 
 			public void onProgressChanged(WebView view, int newProgress) {
@@ -460,7 +497,9 @@ public class Home extends SherlockActivity {
 			}
 
 		});
-
+		
+		// if user switch from home to schedule page, change to week view
+		
 		if (current == HomePage.Home || current == HomePage.Schema) {
 			new Thread(new Runnable() {
 
@@ -471,7 +510,7 @@ public class Home extends SherlockActivity {
 							chosenDay, showThisWeek, xy);
 
 					chosenDay = -1;
-
+					
 					runOnUiThread(new Runnable() {
 						public void run() {
 							WV.getSettings().setUseWideViewPort(false);
@@ -490,7 +529,9 @@ public class Home extends SherlockActivity {
 
 			}).start();
 		}
-
+		
+		// settings, disable zooming etc
+		
 		if (current == HomePage.Mat) {
 			WV.getSettings().setUseWideViewPort(false);
 			WV.getSettings().setLoadWithOverviewMode(false);
@@ -510,7 +551,9 @@ public class Home extends SherlockActivity {
 
 			WV.loadUrl(webHandler.foodAddress);
 		}
-
+		
+		// settings, disable zooming etc
+		
 		if (current == HomePage.ItsLearning) {
 			WV.getSettings().setUseWideViewPort(true);
 			WV.getSettings().setLoadWithOverviewMode(true);
@@ -559,7 +602,10 @@ public class Home extends SherlockActivity {
 
 		return true;
 	}
-
+	
+	
+	// toggle
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -567,7 +613,7 @@ public class Home extends SherlockActivity {
 			leftBar.toggle();
 			return true;
 
-			// Schema
+			// Schedule
 
 		case R.id.mandag:
 			chosenDay = 1;
@@ -637,7 +683,9 @@ public class Home extends SherlockActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
+	
+	// go back to home screen
+	
 	@Override
 	public void onBackPressed() {
 		if (leftBar.isMenuShowing()) {
