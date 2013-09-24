@@ -76,7 +76,6 @@ public class Home extends SherlockActivity {
 		setContentView(R.layout.board);
 
 		// Get personal number
-		
 		Intent fromIntent = getIntent();
 		number = fromIntent.getStringExtra("number");
 
@@ -241,10 +240,10 @@ public class Home extends SherlockActivity {
 	}
 
 	private void makeBlog() {
-		if (current != HomePage.Kalender) {
+		if (current != HomePage.Bloggar) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.webber, null));
-			current = HomePage.Kalender;
+			current = HomePage.Bloggar;
 			checkColors();
 		}
 		leftBar.toggle();
