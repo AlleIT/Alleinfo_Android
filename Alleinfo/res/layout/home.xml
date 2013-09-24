@@ -48,18 +48,19 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/webber"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="4dp"
         android:text="@string/scheme"
         android:textAppearance="?android:attr/textAppearance"
         android:textColor="#222222" />
-    
-    <View 
-        android:layout_height="1px"
+
+    <View
         android:layout_width="fill_parent"
-        android:background="#222222"
-        android:layout_below="@+id/textView1" />
+        android:layout_height="1px"
+        android:layout_below="@+id/textView1"
+        android:background="#222222" />
 
     <!-- Webb -->
-    
+
     <WebView
         android:id="@+id/webber"
         android:layout_width="fill_parent"
@@ -73,28 +74,27 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/webber"
-        android:layout_alignLeft="@+id/webber"
         android:layout_alignBottom="@+id/webber"
-        android:layout_alignRight="@+id/webber" >
+        android:layout_alignLeft="@+id/webber"
+        android:layout_alignRight="@+id/webber"
+        android:layout_alignTop="@+id/webber" >
 
-    <ProgressBar
-        android:id="@+id/loadprogress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        <ProgressBar
+            android:id="@+id/loadprogress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
 
-    <TextView
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@null"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        <TextView
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@null"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
     </RelativeLayout>
 
     <!-- EOA -->
@@ -103,17 +103,18 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_above="@+id/mininew"
+        android:layout_above="@+id/mininew"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="4dp"
         android:text="@string/news"
         android:textAppearance="?android:attr/textAppearance"
         android:textColor="#222222" />
-    
-    <View 
-        android:layout_height="1px"
+
+    <View
         android:layout_width="fill_parent"
-        android:background="#222222"
-        android:layout_below="@+id/textView2" />
+        android:layout_height="1px"
+        android:layout_below="@+id/textView2"
+        android:background="#222222" />
 
     <ListView
         android:id="@+id/mininew"
@@ -122,5 +123,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" >
     </ListView>
-    
+
 </RelativeLayout>
