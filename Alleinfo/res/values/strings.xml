@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- 
+<!--
 Use
 <![CDATA[char]]>
-When handling ÅÄÖ -->
+When handling ÅÄÖ
+-->
 
 <resources>
     <string name="app_name"><![CDATA[Å]]>lleinfo</string>
