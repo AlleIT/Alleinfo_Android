@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-// news feed
+/* news feed
+*
+*	Visa senaste nyheterna från elevkaren
+*
+*/
 
 public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 	private Activity c;

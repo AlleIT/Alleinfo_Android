@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 
+Use
+<![CDATA[char]]>
+When handling ÅÄÖ -->
+
 <resources>
-    <string name="app_name">Ålleinfo</string>
-    <string name="settings">Inställningar</string>
+    <string name="app_name"><![CDATA[Å]]>lleinfo</string>
+    <string name="settings">Inst<![CDATA[ä]]>llningar</string>
     <string name="home">Hem</string>
     <string name="scheme">Schema</string>
     <string name="food">Skolmat</string>
@@ -9,26 +15,26 @@
     <string name="blogs">Bloggar</string>
     <string name="itslearning">It\'s learning</string>
     
-    <string name="news">Nyheter från elevkåren</string>
+    <string name="news">Nyheter fr<![CDATA[å]]>n elevk<![CDATA[å]]>ren</string>
     
-    <string name="angeDittPers">Ange ditt personnummer för att se ditt schema.</string>
-    <string name="willBeDeleted">Personnumret kommer att raderas så fort appen avslutas om du inte väljer att spara det</string>
-    <string name="angeDinPin">Ange en PIN-kod för att spara personnumret.</string>
-    <string name="willNotBeVisible">Personnumret kommer inte att visas för någon och kan endast raderas med hjälp av pin-koden eller genom att skapa en ny pin-kod.\nNumret sparas lokalt i krypterad form.</string>
-    <string name="angeDinPinForAtt">Ange din PIN-kod för att fortsätta</string>
+    <string name="angeDittPers">Ange ditt personnummer f<![CDATA[ö]]>r att se ditt schema.</string>
+    <string name="willBeDeleted">Personnumret kommer att raderas s<![CDATA[å]]> fort appen avslutas om du inte v<![CDATA[ä]]>ljer att spara det</string>
+    <string name="angeDinPin">Ange en PIN-kod f<![CDATA[ö]]>r att spara personnumret.</string>
+    <string name="willNotBeVisible">Personnumret kommer inte att visas f<![CDATA[ö]]>r n<![CDATA[å]]>gon och kan endast raderas med hj<![CDATA[ä]]>lp av pin-koden eller genom att skapa en ny pin-kod.\nNumret sparas lokalt i krypterad form.</string>
+    <string name="angeDinPinForAtt">Ange din PIN-kod f<![CDATA[ö]]>r att forts<![CDATA[ä]]>tta</string>
     <string name="angePin">Ange PIN</string>
     <string name="inityear">19</string>
-    <string name="cont">Fortsätt</string>
+    <string name="cont">Forts<![CDATA[ä]]>tt</string>
     <string name="change">Byt</string>
     <string name="abort">Avbryt</string>
     <string name="savecred">Spara personnummer</string>
     
-    <string name="forward">Framåt</string>
-    <string name="back"></string>
+    <string name="forward">Fram<![CDATA[å]]>t</string>
+    <string name="back">Bak<![CDATA[å]]>t</string>
     
     <string name="weekchoice">Vecka</string>
     <string name="day">Dag</string>
-    <string name="mon">Måndag</string>
+    <string name="mon">M<![CDATA[å]]>ndag</string>
     <string name="tis">Tisdag</string>
     <string name="ons">Onsdag</string>
     <string name="tors">Torsdag</string>
@@ -37,7 +43,7 @@
     <string name="chngpers">Byt person</string>
 
     <string name="thisweek">Denna vecka</string>
-    <string name="nextweek">Nästa vecka</string>
+    <string name="nextweek">N<![CDATA[ä]]>sta vecka</string>
 
     <string-array name="colors">
         <item>#6AB52C</item>
