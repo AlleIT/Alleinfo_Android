@@ -23,7 +23,6 @@ public class BootRunner extends Activity {
 	Context c;
 	DialogCodes returnCode;
 	
-	// asks the user to write his/her pin code to get access to the application
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +31,14 @@ public class BootRunner extends Activity {
 		c = this;
 		returnCode = DialogCodes.noError;
 		if (SP.getBoolean("RequirePIN", false)) {
+			// asks the user to write his/her pin code to get access to the application
 			InputPinDialog();
 		} else {
+			// Request personal number on start of the application
 			requestPersNumString();
 		}
 	}
 	
-	// Request personal number on start of the application
-
 	public void requestPersNumString() {
 		final Dialog dialog = new Dialog(c);
 		dialog.setContentView(R.layout.requestnum);
@@ -48,6 +47,7 @@ public class BootRunner extends Activity {
 		dialog.setCanceledOnTouchOutside(false);
 
 		Button gotoPin = (Button) dialog.findViewById(R.id.quickPIN);
+		// check if pin code is saved 
 		if (SP.getBoolean("RequirePIN", false)) {
 			gotoPin.setOnClickListener(new OnClickListener() {
 
@@ -59,7 +59,6 @@ public class BootRunner extends Activity {
 
 			});
 		} else {
-			// if pin code is saved 
 			gotoPin.setVisibility(View.INVISIBLE);
 		}
 		

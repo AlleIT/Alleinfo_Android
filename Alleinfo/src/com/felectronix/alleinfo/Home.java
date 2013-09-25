@@ -79,7 +79,6 @@ public class Home extends SherlockActivity {
 		setContentView(R.layout.board);
 
 		// Get personal number
-		
 		Intent fromIntent = getIntent();
 		number = fromIntent.getStringExtra("number");
 
