@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 /* news feed
 *
-*	Uveckla gärna sådana här kommentarer! Vad är meningen med funktionen?
+*	Visa senaste nyheterna från elevkaren
 *
 */
 
