@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 /*
 Copyright (C) 2012 Sveinung Kval Bakken, sveinung.bakken@gmail.com

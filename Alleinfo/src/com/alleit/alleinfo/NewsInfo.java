@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 // information about the news
 public class NewsInfo {
