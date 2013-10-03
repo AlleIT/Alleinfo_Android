@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -271,7 +271,7 @@ public class BootRunner extends Activity {
 	// start the application
 	public void startApp()
 	{
-		Intent intent = new Intent("com.felectronix.alleinfo.HOME");  
+		Intent intent = new Intent("com.alleit.alleinfo.HOME");  
 		intent.putExtra("number", number);
 		startActivity(intent);
 		finish();

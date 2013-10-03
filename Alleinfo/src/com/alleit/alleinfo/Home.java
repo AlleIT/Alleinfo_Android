@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 import java.util.Calendar;
 
@@ -82,7 +82,7 @@ public class Home extends SherlockActivity {
 		Intent fromIntent = getIntent();
 		number = fromIntent.getStringExtra("number");
 
-		sharedP = this.getSharedPreferences("com.felectronix.alleinfo", 0);
+		sharedP = this.getSharedPreferences("com.alleit.alleinfo", 0);
 
 		// Application menu
 

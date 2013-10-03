@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
