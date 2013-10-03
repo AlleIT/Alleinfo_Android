@@ -27,8 +27,9 @@ public class Webber {
 			}
 
 			if (specday != -1) {
-				if (specday < day || specday == day
-						&& cal.get(Calendar.HOUR_OF_DAY) >= 16) {
+				if (specday == day
+						&& cal.get(Calendar.HOUR_OF_DAY) >= 16
+						&& cal.get(Calendar.DAY_OF_WEEK) == day) {
 					week++;
 					if (week > 52)
 						week = 1;
