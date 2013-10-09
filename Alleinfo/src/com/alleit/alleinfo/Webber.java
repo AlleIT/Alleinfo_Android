@@ -1,4 +1,4 @@
-package com.felectronix.alleinfo;
+package com.alleit.alleinfo;
 
 import java.util.Calendar;
 
@@ -19,8 +19,13 @@ public class Webber {
 	public String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
 
 	// render schedule
+<<<<<<< HEAD:Alleinfo/src/com/felectronix/alleinfo/Webber.java
 	public String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize, Context c) {
+=======
+	public static String renderSchedule(String number, int specday,
+			Boolean showThisWeek, Point screenSize) {
+>>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad:Alleinfo/src/com/alleit/alleinfo/Webber.java
 		Calendar cal = Calendar.getInstance();
 
 		int day = 0;
@@ -52,8 +57,9 @@ public class Webber {
 			}
 
 			if (specday != -1) {
-				if (specday < day || specday == day
-						&& cal.get(Calendar.HOUR_OF_DAY) >= 16) {
+				if (specday == day
+						&& cal.get(Calendar.HOUR_OF_DAY) >= 16
+						&& cal.get(Calendar.DAY_OF_WEEK) == day) {
 					week++;
 					if (week > 52)
 						week = 1;
@@ -114,7 +120,7 @@ public class Webber {
 	}
 
 	// get todays meal
-	public String getTodaysMeal() {
+	public static String getTodaysMeal() {
 		String todMeal = null;
 
 		// return value
@@ -122,7 +128,7 @@ public class Webber {
 	}
 
 	// get tiny news feed
-	public NewsInfo[] getTinyNewsFeed() {
+	public static NewsInfo[] getTinyNewsFeed() {
 		NewsInfo[] feed;
 
 		// for each new feed update
