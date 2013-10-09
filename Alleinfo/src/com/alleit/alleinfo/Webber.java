@@ -11,7 +11,7 @@ public class Webber {
 	public String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
 
 	// render schedule
-	public String renderSchedule(String number, int specday,
+	public static String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize) {
 		Calendar cal = Calendar.getInstance();
 		int day = 0;
@@ -89,7 +89,7 @@ public class Webber {
 	}
 
 	// get todays meal
-	public String getTodaysMeal() {
+	public static String getTodaysMeal() {
 		String todMeal = null;
 
 		// return value
@@ -97,7 +97,7 @@ public class Webber {
 	}
 
 	// get tiny news feed
-	public NewsInfo[] getTinyNewsFeed() {
+	public static NewsInfo[] getTinyNewsFeed() {
 		NewsInfo[] feed;
 
 		// for each new feed update
