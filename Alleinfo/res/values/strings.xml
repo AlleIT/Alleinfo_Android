@@ -28,6 +28,7 @@ When handling ÅÄÖ -->
     <string name="change">Byt</string>
     <string name="abort">Avbryt</string>
     <string name="savecred">Spara personnummer</string>
+    <string name="saveSport">RIG/NIU</string>
     
     <string name="forward">Fram<![CDATA[å]]>t</string>
     <string name="back">Bak<![CDATA[å]]>t</string>

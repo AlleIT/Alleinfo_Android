@@ -508,8 +508,7 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 
-					final String toLoad = webHandler.renderSchedule(number,
-							chosenDay, showThisWeek, xy);
+					final String toLoad = webHandler.renderSchedule(number,	chosenDay, showThisWeek, xy, getApplicationContext());
 					
 					runOnUiThread(new Runnable() {
 						public void run() {
