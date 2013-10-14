@@ -2,12 +2,22 @@ package com.alleit.alleinfo;
 
 import java.util.Calendar;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.text.Html;
+import android.util.Log;
+import android.widget.Toast;
 
 public class Webber {
 
+<<<<<<< HEAD
 	// Web URLs used in-app
+=======
+	// preferences file
+	public static final String MY_PREFS = "MyPreferencesFile";
+>>>>>>> 8849cba00706d4904e37b2fb62c8686eae869b84
 
 	// web url for the food menu
 	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
@@ -17,19 +27,41 @@ public class Webber {
 
 	
 	// render schedule
+<<<<<<< HEAD:Alleinfo/src/com/felectronix/alleinfo/Webber.java
+	public String renderSchedule(String number, int specday,
+			Boolean showThisWeek, Point screenSize, Context c) {
+=======
 	public static String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize) {
+>>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad:Alleinfo/src/com/alleit/alleinfo/Webber.java
 		Calendar cal = Calendar.getInstance();
+
 		int day = 0;
 		int week = cal.get(Calendar.WEEK_OF_YEAR);
 		cal.setFirstDayOfWeek(Calendar.MONDAY);
 		day = cal.get(Calendar.DAY_OF_WEEK) - 1;
 		if (showThisWeek) {
 
-			if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
-					&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
-					&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-				day++;
+			/*
+			 * check if user have a sport
+			 */
+			SharedPreferences prefs = c.getSharedPreferences(
+					"com.felectronix.alleinfo", 0);
+
+			if (prefs.getBoolean("playSports", false)) {
+				
+				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					day++;
+				}
+			} else {
+
+				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					day++;
+				}
 			}
 
 			if (specday != -1) {
