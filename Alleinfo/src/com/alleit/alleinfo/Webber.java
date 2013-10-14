@@ -7,9 +7,15 @@ import android.text.Html;
 
 public class Webber {
 
-	// web url for the food menu
-	public String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
+	// Web URLs used in-app
 
+	// web url for the food menu
+	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
+
+	// Url to it's learning
+	public static String itslearningAddress = "https://falkoping.itslearning.com/elogin/default.aspx";
+
+	
 	// render schedule
 	public static String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize) {
@@ -27,8 +33,7 @@ public class Webber {
 			}
 
 			if (specday != -1) {
-				if (specday == day
-						&& cal.get(Calendar.HOUR_OF_DAY) >= 16
+				if (specday == day && cal.get(Calendar.HOUR_OF_DAY) >= 16
 						&& cal.get(Calendar.DAY_OF_WEEK) == day) {
 					week++;
 					if (week > 52)
@@ -40,7 +45,7 @@ public class Webber {
 			week++;
 			if (week > 52)
 				week = 1;
-			
+
 			if (specday != -1) {
 				day = specday;
 			}
@@ -87,14 +92,6 @@ public class Webber {
 
 		// return value
 		return schemesearch;
-	}
-
-	// get todays meal
-	public static String getTodaysMeal() {
-		String todMeal = null;
-
-		// return value
-		return todMeal;
 	}
 
 	// get tiny news feed

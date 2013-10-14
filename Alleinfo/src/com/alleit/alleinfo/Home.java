@@ -290,14 +290,13 @@ public class Home extends SherlockActivity {
 
 	private void prepFeed() {
 		final Activity a = this;
-		final Webber webHandler = new Webber();
 		final ListView listView = (ListView) a.findViewById(R.id.mininew);
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 
-				listData = webHandler.getTinyNewsFeed();
+				listData = Webber.getTinyNewsFeed();
 
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -444,7 +443,6 @@ public class Home extends SherlockActivity {
 		WV = (WebView) findViewById(R.id.webber);
 		final ProgressBar PB = (ProgressBar) findViewById(R.id.loadprogress);
 		final TextView progress = (TextView) findViewById(R.id.progress);
-		final Webber webHandler = new Webber();
 		PB.setVisibility(View.VISIBLE);
 		progress.setVisibility(View.VISIBLE);
 		progress.setText("0");
@@ -454,14 +452,17 @@ public class Home extends SherlockActivity {
 		WV.getSettings().setJavaScriptEnabled(true);
 		WV.setVerticalScrollBarEnabled(false);
 
-		// set a web client
+		// Allow/Deny the user to click links on pages
 
 		WV.setWebViewClient(new WebViewClient() {
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				PB.setVisibility(View.VISIBLE);
-				progress.setVisibility(View.VISIBLE);
-				progress.setText("0");
-				view.loadUrl(url);
+				// We want to avoid navigation from some pages
+				if (current != HomePage.Schema && current != HomePage.Mat) {
+					PB.setVisibility(View.VISIBLE);
+					progress.setVisibility(View.VISIBLE);
+					progress.setText("0");
+					view.loadUrl(url);
+				}
 				return true;
 			}
 
@@ -475,7 +476,7 @@ public class Home extends SherlockActivity {
 				}
 			}
 
-			// if SSL certificate won't work, don't show error
+			// if SSL certificate doesn't work, don't show any error
 
 			public void onReceivedSslError(WebView view,
 					SslErrorHandler handler, SslError error) {
@@ -484,7 +485,7 @@ public class Home extends SherlockActivity {
 
 		});
 
-		// On progress update in web loading
+		// Show the progress of the loading page
 		WV.setWebChromeClient(new WebChromeClient() {
 
 			public void onProgressChanged(WebView view, int newProgress) {
@@ -508,7 +509,7 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 
-					final String toLoad = webHandler.renderSchedule(number,
+					final String toLoad = Webber.renderSchedule(number,
 							chosenDay, showThisWeek, xy);
 
 					runOnUiThread(new Runnable() {
@@ -549,7 +550,7 @@ public class Home extends SherlockActivity {
 			scaling = (int) Math.floor(scaling);
 			WV.setInitialScale((int) scaling);
 
-			WV.loadUrl(webHandler.foodAddress);
+			WV.loadUrl(Webber.foodAddress);
 		}
 
 		// Load It's Learning
@@ -565,7 +566,7 @@ public class Home extends SherlockActivity {
 			WV.getSettings().setSupportZoom(true);
 			WV.setPadding(0, 0, 0, 0);
 			WV.setInitialScale(0);
-			WV.loadUrl("https://falkoping.itslearning.com/elogin/default.aspx");
+			WV.loadUrl(Webber.itslearningAddress);
 
 		}
 		mWebView = WV;
