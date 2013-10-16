@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -56,7 +55,6 @@ public class BootRunner extends Activity {
 		// checkbox rig/niu
 		
 		final CheckBox SS_CHECKBOX = (CheckBox) dialog.findViewById(R.id.saveSport);
-
 		
 
 		Button gotoPin = (Button) dialog.findViewById(R.id.quickPIN);
@@ -286,7 +284,7 @@ public class BootRunner extends Activity {
 			startApp();
 			break;
 		default:
-			Toast.makeText(getApplicationContext(), "Något gick fel",
+			Toast.makeText(getApplicationContext(), "Nï¿½got gick fel",
 					Toast.LENGTH_SHORT).show();
 			finish();
 			break;
@@ -294,17 +292,9 @@ public class BootRunner extends Activity {
 	}
 
 	// start the application
-<<<<<<< HEAD:Alleinfo/src/com/felectronix/alleinfo/BootRunner.java
-	public void startApp() {
-		
-		isPlayingSport = SP.getBoolean("playSports", false);
-		
-		Intent intent = new Intent("com.felectronix.alleinfo.HOME");
-=======
 	public void startApp()
 	{
 		Intent intent = new Intent("com.alleit.alleinfo.HOME");  
->>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad:Alleinfo/src/com/alleit/alleinfo/BootRunner.java
 		intent.putExtra("number", number);
 		intent.putExtra("playSport", isPlayingSport);
 		startActivity(intent);

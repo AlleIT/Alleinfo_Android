@@ -508,19 +508,8 @@ public class Home extends SherlockActivity {
 
 				@Override
 				public void run() {
-
-<<<<<<< HEAD
 					final String toLoad = Webber.renderSchedule(number,
-=======
-<<<<<<< HEAD:Alleinfo/src/com/felectronix/alleinfo/Home.java
-					final String toLoad = webHandler.renderSchedule(number,	chosenDay, showThisWeek, xy, getApplicationContext());
-					
-=======
-					final String toLoad = webHandler.renderSchedule(number,
->>>>>>> 8849cba00706d4904e37b2fb62c8686eae869b84
-							chosenDay, showThisWeek, xy);
-
->>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad:Alleinfo/src/com/alleit/alleinfo/Home.java
+							chosenDay, showThisWeek, xy, c);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							WV.getSettings().setUseWideViewPort(false);

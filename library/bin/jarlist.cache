@@ -1,20 +1,5 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-<<<<<<< HEAD
 1379695959000 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f /home/felix/alleinfo/library/libs/android-support-v4.jar
 1378715925000 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f /home/felix/alleinfo/JakeWharton-ActionBarSherlock-5a15d92/actionbarsherlock/libs/android-support-v4.jar
-=======
-<<<<<<< HEAD
-1379763926354 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f C:\Users\Robin\Desktop\Ålleinfo-apputveckling\Alleinfo_Android\library\libs\android-support-v4.jar
-1379765460568 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f C:\Users\Robin\Desktop\Ålleinfo-apputveckling\Alleinfo_Android\JakeWharton-ActionBarSherlock-5a15d92\actionbarsherlock\libs\android-support-v4.jar
-=======
-<<<<<<< HEAD
-1379695959000 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f /home/felix/alleinfo/library/libs/android-support-v4.jar
-1378715925000 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f /home/felix/alleinfo/JakeWharton-ActionBarSherlock-5a15d92/actionbarsherlock/libs/android-support-v4.jar
-=======
-1380199870541 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f C:\Users\Timmy\Documents\GitHub\Alleinfo_Android\JakeWharton-ActionBarSherlock-5a15d92\actionbarsherlock\libs\android-support-v4.jar
-1380199875829 556198 4a6be13368bb64c5a0b0460632d228a1a915f58f C:\Users\Timmy\Documents\GitHub\Alleinfo_Android\library\libs\android-support-v4.jar
->>>>>>> 9229b11df4045bc4ce2f788b110d740ed0d99cd2
->>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad
->>>>>>> 8849cba00706d4904e37b2fb62c8686eae869b84

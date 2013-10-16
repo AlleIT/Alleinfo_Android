@@ -2,22 +2,17 @@ package com.alleit.alleinfo;
 
 import java.util.Calendar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.text.Html;
-import android.util.Log;
-import android.widget.Toast;
 
 public class Webber {
 
-<<<<<<< HEAD
 	// Web URLs used in-app
-=======
+
 	// preferences file
 	public static final String MY_PREFS = "MyPreferencesFile";
->>>>>>> 8849cba00706d4904e37b2fb62c8686eae869b84
 
 	// web url for the food menu
 	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
@@ -27,13 +22,8 @@ public class Webber {
 
 	
 	// render schedule
-<<<<<<< HEAD:Alleinfo/src/com/felectronix/alleinfo/Webber.java
-	public String renderSchedule(String number, int specday,
-			Boolean showThisWeek, Point screenSize, Context c) {
-=======
 	public static String renderSchedule(String number, int specday,
-			Boolean showThisWeek, Point screenSize) {
->>>>>>> a55691d1e7baa1270ababb604efd9ba506184bad:Alleinfo/src/com/alleit/alleinfo/Webber.java
+			Boolean showThisWeek, Point screenSize, Context c) {
 		Calendar cal = Calendar.getInstance();
 
 		int day = 0;
