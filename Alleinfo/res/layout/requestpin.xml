@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/angeDinPin"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -19,6 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
         android:gravity="center"
         android:text="@string/willNotBeVisible"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -28,8 +32,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
-        android:gravity="center"
         android:ems="10"
+        android:gravity="center"
         android:inputType="numberPassword" />
 
     <LinearLayout
