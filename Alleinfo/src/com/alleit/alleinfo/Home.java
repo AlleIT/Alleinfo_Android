@@ -49,7 +49,6 @@ public class Home extends SherlockActivity {
 	Button food;
 	Button schedule;
 	Button calendar;
-	Button blogs;
 	Button itsLearning;
 	TextView todDay, todDate, todWeek;
 	String[] colorlist;
@@ -84,8 +83,7 @@ public class Home extends SherlockActivity {
 
 		sharedP = this.getSharedPreferences("com.alleit.alleinfo", 0);
 
-		// Application menu
-
+		// Set up sidebar menu
 		leftBar = new SlidingMenu(this);
 		leftBar.setMode(SlidingMenu.LEFT);
 		leftBar.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
@@ -102,7 +100,6 @@ public class Home extends SherlockActivity {
 		food = (Button) findViewById(R.id.foodSlide);
 		schedule = (Button) findViewById(R.id.schemeSlide);
 		calendar = (Button) findViewById(R.id.calSlide);
-		blogs = (Button) findViewById(R.id.blogSlide);
 		itsLearning = (Button) findViewById(R.id.itsSlide);
 
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
@@ -156,15 +153,6 @@ public class Home extends SherlockActivity {
 			}
 		});
 
-		// if user clicks on blog button
-
-		blogs.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeBlog();
-			}
-		});
-
 		// if user clicks on itsLearning button
 
 		itsLearning.setOnClickListener(new OnClickListener() {
@@ -212,7 +200,7 @@ public class Home extends SherlockActivity {
 				break;
 			}
 			todDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-					+ "/" + String.valueOf(cal.get(Calendar.MONTH)) + " - "
+					+ "/" + String.valueOf(cal.get(Calendar.MONTH) + 1) + " - "
 					+ String.valueOf(cal.get(Calendar.YEAR)));
 			todWeek.setText("Vecka "
 					+ String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)));
@@ -261,17 +249,6 @@ public class Home extends SherlockActivity {
 		leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 
-	}
-
-	private void makeBlog() {
-		if (current != HomePage.Bloggar) {
-			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null));
-			current = HomePage.Bloggar;
-			checkColors();
-		}
-		leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeItsLearning() {
@@ -355,11 +332,6 @@ public class Home extends SherlockActivity {
 			calendar.setBackground(currcolor);
 
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			blogs.setBackgroundDrawable(currcolor);
-		else
-			blogs.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 			itsLearning.setBackgroundDrawable(currcolor);
 		else
 			itsLearning.setBackground(currcolor);
@@ -404,17 +376,8 @@ public class Home extends SherlockActivity {
 				calendar.setBackground(currcolor);
 			break;
 
-		case Bloggar:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
-			bar.setTitle("Bloggar");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				blogs.setBackgroundDrawable(currcolor);
-			else
-				blogs.setBackground(currcolor);
-			break;
-
 		case ItsLearning:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 			bar.setTitle("It's learning");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				itsLearning.setBackgroundDrawable(currcolor);
@@ -424,7 +387,7 @@ public class Home extends SherlockActivity {
 
 		default:
 			current = HomePage.Home;
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
 			bar.setTitle("Hem");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				home.setBackgroundDrawable(currcolor);

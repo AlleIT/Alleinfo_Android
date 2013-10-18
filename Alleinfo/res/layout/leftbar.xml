@@ -51,16 +51,6 @@
             android:textSize="50sp" />
 
         <Button
-            android:id="@+id/blogSlide"
-            android:layout_width="fill_parent"
-            android:layout_height="75dp"
-            android:background="@null"
-            android:gravity="left|center_vertical"
-            android:text="@string/blogs"
-            android:textColor="#FFFFFF"
-            android:textSize="50sp" />
-
-        <Button
             android:id="@+id/itsSlide"
             android:layout_width="fill_parent"
             android:layout_height="75dp"
