@@ -212,7 +212,11 @@ public class Home extends SherlockActivity {
 				break;
 			}
 			todDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-					+ "/" + String.valueOf(cal.get(Calendar.MONTH)) + " - "
+					
+					/* TODAYS MONTH
+					 * I will fix this month bug soon // Robin
+					 */
+					+ "/" + String.valueOf(cal.get(Calendar.MONTH) + 1) + " - "
 					+ String.valueOf(cal.get(Calendar.YEAR)));
 			todWeek.setText("Vecka "
 					+ String.valueOf(cal.get(Calendar.WEEK_OF_YEAR)));
