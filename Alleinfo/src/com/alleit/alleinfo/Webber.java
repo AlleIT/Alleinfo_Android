@@ -20,6 +20,8 @@ public class Webber {
 	// Url to it's learning
 	public static String itslearningAddress = "https://falkoping.itslearning.com/elogin/default.aspx";
 
+	// Url to Dexter
+	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/index.html";
 	
 	// render schedule
 	public static String renderSchedule(String number, int specday,

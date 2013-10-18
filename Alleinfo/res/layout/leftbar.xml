@@ -41,12 +41,32 @@
             android:textSize="50sp" />
 
         <Button
-            android:id="@+id/calSlide"
+            android:id="@+id/newsSlide"
             android:layout_width="fill_parent"
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
-            android:text="@string/calendar"
+            android:text="@string/newr"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp" />
+
+        <Button
+            android:id="@+id/karSlide"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:text="@string/elevkar"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp" />
+
+        <Button
+            android:id="@+id/dexSlide"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:text="@string/dexter"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
 

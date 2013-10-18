@@ -12,9 +12,10 @@ When handling ÅÄÖ
     <string name="home">Hem</string>
     <string name="scheme">Schema</string>
     <string name="food">Skolmat</string>
-    <string name="calendar">Kalender</string>
-    <string name="blogs">Bloggar</string>
     <string name="itslearning">It\'s learning</string>
+    <string name="elevkar">Elevk<![CDATA[å]]>ren</string>
+    <string name="newr">Nyheter</string>
+    <string name="dexter">Dexter</string>
     
     <string name="news">Nyheter fr<![CDATA[å]]>n elevk<![CDATA[å]]>ren</string>
     
@@ -53,8 +54,7 @@ When handling ÅÄÖ
         <item>#c1cc67</item>
         <item>#9c2a89</item>
         <item>#F07F0A</item>
-        <item>#1d71b8</item>
-        <item>#9c2a89</item>
         <item>#e6332a</item>
+        <item>#1d71b8</item>
     </string-array>
 </resources>

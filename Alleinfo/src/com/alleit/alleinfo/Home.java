@@ -45,21 +45,34 @@ import android.widget.TextView;
 public class Home extends SherlockActivity {
 
 	Drawable currcolor;
+	
+	/*
+	 * Buttons in the sidebar. Please keep these in the same order as the actual buttons
+	 */
 	Button home;
-	Button food;
 	Button schedule;
-	Button calendar;
+	Button food;
+	Button news;
+	Button elevkaren;
+	Button dexter;
 	Button itsLearning;
+	
 	TextView todDay, todDate, todWeek;
+	
+	// Colors for the sidebar buttons. Expand in strings.xml as necessary.
 	String[] colorlist;
-	// Where is the user?
+	
+	// The user's location
 	HomePage current = HomePage.Start;
+	
 	SlidingMenu leftBar;
 	ActionBar bar;
 	ViewGroup viewGroup;
 	Menu menu;
+	
 	// TODO: Convert chosenDay to enum for simplicity
 	int chosenDay = -1;
+	
 	Boolean showThisWeek = true;
 	Point xy;
 	Context c;
@@ -96,10 +109,16 @@ public class Home extends SherlockActivity {
 
 		viewGroup = (ViewGroup) findViewById(R.id.content);
 
+		
+		/*
+		 * Please keep these in the same order as the actual buttons (leftbar.xml)
+		 */
 		home = (Button) findViewById(R.id.homeSlide);
 		food = (Button) findViewById(R.id.foodSlide);
 		schedule = (Button) findViewById(R.id.schemeSlide);
-		calendar = (Button) findViewById(R.id.calSlide);
+		news = (Button) findViewById(R.id.newsSlide);
+		elevkaren = (Button) findViewById(R.id.karSlide);
+		dexter = (Button) findViewById(R.id.dexSlide);
 		itsLearning = (Button) findViewById(R.id.itsSlide);
 
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
@@ -117,6 +136,11 @@ public class Home extends SherlockActivity {
 		colorlist = getResources().getStringArray(R.array.colors);
 		makeHome();
 
+		/*
+		 * XXX: OnClick listeners for sidebar
+		 * Please keep these in the same order as the actual buttons
+		 */
+		
 		// if user clicks on home menu button
 
 		home.setOnClickListener(new OnClickListener() {
@@ -143,13 +167,31 @@ public class Home extends SherlockActivity {
 				makeScheme();
 			}
 		});
+		
+		// if user clicks on news button
 
-		// if user clicks on calendar button
-
-		calendar.setOnClickListener(new OnClickListener() {
+		news.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				makeCal();
+				makeNews();
+			}
+		});
+
+		// if user clicks on "elevkar" button
+
+		elevkaren.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				makeKar();
+			}
+		});
+
+		// if user clicks on Dexter button
+
+		dexter.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				makeDexter();
 			}
 		});
 
@@ -162,8 +204,12 @@ public class Home extends SherlockActivity {
 			}
 		});
 	}
-
-	// Create pages for different buttons in menu --> functions
+	
+	/*
+	 * XXX: makeXxx()
+	 * Prepare the various pages here.
+	 * Keep the methods in the same order as the actual buttons please.
+	 */
 
 	private void makeHome() {
 		chosenDay = -1;
@@ -238,17 +284,41 @@ public class Home extends SherlockActivity {
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
-
-	private void makeCal() {
-		if (current != HomePage.Kalender) {
+	
+	private void makeNews() {
+		if(current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null));
-			current = HomePage.Kalender;
-			checkColors();
+			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO: Set the corresponding layout
+			current = HomePage.Nyheter;
+			checkColors();			
 		}
 		leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
-
+		// TODO: Load the newsfeed
+	}
+	
+	private void makeKar() {
+		if(current != HomePage.Elevkaren) {
+			viewGroup.removeAllViews();
+			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO: Set the corresponding layout
+			current = HomePage.Elevkaren;
+			checkColors();			
+		}
+		leftBar.toggle();
+		Home.this.supportInvalidateOptionsMenu();
+		// TODO: Load elevkaren
+	}
+	
+	private void makeDexter() {
+		if(current != HomePage.Dexter) {
+			viewGroup.removeAllViews();
+			viewGroup.addView(View.inflate(c, R.layout.webber, null));
+			current = HomePage.Dexter;
+			checkColors();			
+		}
+		leftBar.toggle();
+		Home.this.supportInvalidateOptionsMenu();
+		prepWeb();
 	}
 
 	private void makeItsLearning() {
@@ -311,6 +381,9 @@ public class Home extends SherlockActivity {
 
 		currcolor = new ColorDrawable(Color.TRANSPARENT);
 
+		// Reset the colors of all the buttons in the sidebar
+		// Please keep these in the same order as the actual buttons
+		
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 			home.setBackgroundDrawable(currcolor);
 		else
@@ -327,9 +400,19 @@ public class Home extends SherlockActivity {
 			food.setBackground(currcolor);
 
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			calendar.setBackgroundDrawable(currcolor);
+			news.setBackgroundDrawable(currcolor);
 		else
-			calendar.setBackground(currcolor);
+			news.setBackground(currcolor);
+
+		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+			elevkaren.setBackgroundDrawable(currcolor);
+		else
+			elevkaren.setBackground(currcolor);
+
+		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+			dexter.setBackgroundDrawable(currcolor);
+		else
+			dexter.setBackground(currcolor);
 
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 			itsLearning.setBackgroundDrawable(currcolor);
@@ -366,18 +449,36 @@ public class Home extends SherlockActivity {
 			else
 				food.setBackground(currcolor);
 			break;
-
-		case Kalender:
+			
+		case Nyheter:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
-			bar.setTitle("Kalender");
+			bar.setTitle("Nyheter");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				calendar.setBackgroundDrawable(currcolor);
+				news.setBackgroundDrawable(currcolor);
 			else
-				calendar.setBackground(currcolor);
+				news.setBackground(currcolor);			
+			break;
+			
+		case Elevkaren:
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
+			bar.setTitle("Elevkåren");
+			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				elevkaren.setBackgroundDrawable(currcolor);
+			else
+				elevkaren.setBackground(currcolor);			
+			break;
+			
+		case Dexter:
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
+			bar.setTitle("Dexter");
+			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				dexter.setBackgroundDrawable(currcolor);
+			else
+				dexter.setBackground(currcolor);			
 			break;
 
 		case ItsLearning:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
 			bar.setTitle("It's learning");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				itsLearning.setBackgroundDrawable(currcolor);
@@ -514,9 +615,9 @@ public class Home extends SherlockActivity {
 			WV.loadUrl(Webber.foodAddress);
 		}
 
-		// Load It's Learning
+		// Load It's Learning or Dexter
 
-		if (current == HomePage.ItsLearning) {
+		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {
 			WV.getSettings().setUseWideViewPort(true);
 			WV.getSettings().setLoadWithOverviewMode(true);
 			WV.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
@@ -527,7 +628,10 @@ public class Home extends SherlockActivity {
 			WV.getSettings().setSupportZoom(true);
 			WV.setPadding(0, 0, 0, 0);
 			WV.setInitialScale(0);
-			WV.loadUrl(Webber.itslearningAddress);
+			if(current == HomePage.Dexter)
+				WV.loadUrl(Webber.dexterAddress);
+			else
+				WV.loadUrl(Webber.itslearningAddress);
 
 		}
 		mWebView = WV;
