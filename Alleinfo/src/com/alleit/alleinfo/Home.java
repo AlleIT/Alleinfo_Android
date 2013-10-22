@@ -45,9 +45,10 @@ import android.widget.TextView;
 public class Home extends SherlockActivity {
 
 	Drawable currcolor;
-	
+
 	/*
-	 * Buttons in the sidebar. Please keep these in the same order as the actual buttons
+	 * Buttons in the sidebar. Please keep these in the same order as the actual
+	 * buttons
 	 */
 	Button home;
 	Button schedule;
@@ -56,23 +57,23 @@ public class Home extends SherlockActivity {
 	Button elevkaren;
 	Button dexter;
 	Button itsLearning;
-	
+
 	TextView todDay, todDate, todWeek;
-	
+
 	// Colors for the sidebar buttons. Expand in strings.xml as necessary.
 	String[] colorlist;
-	
+
 	// The user's location
 	HomePage current = HomePage.Start;
-	
+
 	SlidingMenu leftBar;
 	ActionBar bar;
 	ViewGroup viewGroup;
 	Menu menu;
-	
+
 	// TODO: Convert chosenDay to enum for simplicity
 	int chosenDay = -1;
-	
+
 	Boolean showThisWeek = true;
 	Point xy;
 	Context c;
@@ -109,9 +110,9 @@ public class Home extends SherlockActivity {
 
 		viewGroup = (ViewGroup) findViewById(R.id.content);
 
-		
 		/*
-		 * Please keep these in the same order as the actual buttons (leftbar.xml)
+		 * Please keep these in the same order as the actual buttons
+		 * (leftbar.xml)
 		 */
 		home = (Button) findViewById(R.id.homeSlide);
 		food = (Button) findViewById(R.id.foodSlide);
@@ -137,10 +138,10 @@ public class Home extends SherlockActivity {
 		makeHome();
 
 		/*
-		 * XXX: OnClick listeners for sidebar
-		 * Please keep these in the same order as the actual buttons
+		 * XXX: OnClick listeners for sidebar Please keep these in the same
+		 * order as the actual buttons
 		 */
-		
+
 		// if user clicks on home menu button
 
 		home.setOnClickListener(new OnClickListener() {
@@ -167,7 +168,7 @@ public class Home extends SherlockActivity {
 				makeScheme();
 			}
 		});
-		
+
 		// if user clicks on news button
 
 		news.setOnClickListener(new OnClickListener() {
@@ -204,11 +205,10 @@ public class Home extends SherlockActivity {
 			}
 		});
 	}
-	
+
 	/*
-	 * XXX: makeXxx()
-	 * Prepare the various pages here.
-	 * Keep the methods in the same order as the actual buttons please.
+	 * XXX: makeXxx() Prepare the various pages here. Keep the methods in the
+	 * same order as the actual buttons please.
 	 */
 
 	private void makeHome() {
@@ -284,37 +284,45 @@ public class Home extends SherlockActivity {
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
-	
+
 	private void makeNews() {
-		if(current != HomePage.Nyheter) {
+		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO: Set the corresponding layout
+			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO:
+																		// Set
+																		// the
+																		// corresponding
+																		// layout
 			current = HomePage.Nyheter;
-			checkColors();			
+			checkColors();
 		}
 		leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		// TODO: Load the newsfeed
 	}
-	
+
 	private void makeKar() {
-		if(current != HomePage.Elevkaren) {
+		if (current != HomePage.Elevkaren) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO: Set the corresponding layout
+			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO:
+																		// Set
+																		// the
+																		// corresponding
+																		// layout
 			current = HomePage.Elevkaren;
-			checkColors();			
+			checkColors();
 		}
 		leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		// TODO: Load elevkaren
 	}
-	
+
 	private void makeDexter() {
-		if(current != HomePage.Dexter) {
+		if (current != HomePage.Dexter) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.webber, null));
 			current = HomePage.Dexter;
-			checkColors();			
+			checkColors();
 		}
 		leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
@@ -383,7 +391,7 @@ public class Home extends SherlockActivity {
 
 		// Reset the colors of all the buttons in the sidebar
 		// Please keep these in the same order as the actual buttons
-		
+
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 			home.setBackgroundDrawable(currcolor);
 		else
@@ -449,32 +457,32 @@ public class Home extends SherlockActivity {
 			else
 				food.setBackground(currcolor);
 			break;
-			
+
 		case Nyheter:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
 			bar.setTitle("Nyheter");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				news.setBackgroundDrawable(currcolor);
 			else
-				news.setBackground(currcolor);			
+				news.setBackground(currcolor);
 			break;
-			
+
 		case Elevkaren:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 			bar.setTitle("Elevkåren");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				elevkaren.setBackgroundDrawable(currcolor);
 			else
-				elevkaren.setBackground(currcolor);			
+				elevkaren.setBackground(currcolor);
 			break;
-			
+
 		case Dexter:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
 			bar.setTitle("Dexter");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				dexter.setBackgroundDrawable(currcolor);
 			else
-				dexter.setBackground(currcolor);			
+				dexter.setBackground(currcolor);
 			break;
 
 		case ItsLearning:
@@ -628,7 +636,7 @@ public class Home extends SherlockActivity {
 			WV.getSettings().setSupportZoom(true);
 			WV.setPadding(0, 0, 0, 0);
 			WV.setInitialScale(0);
-			if(current == HomePage.Dexter)
+			if (current == HomePage.Dexter)
 				WV.loadUrl(Webber.dexterAddress);
 			else
 				WV.loadUrl(Webber.itslearningAddress);
@@ -646,19 +654,28 @@ public class Home extends SherlockActivity {
 			menu.findItem(R.id.WeekDayContainer).setVisible(true);
 
 			Calendar cal = Calendar.getInstance();
-			if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-					|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
-					|| chosenDay == -1 && cal.get(Calendar.HOUR_OF_DAY) >= 16
-					&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-				menu.findItem(R.id.whatWeekContainer).setVisible(true);
+			if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+					&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 
+				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						&& cal.get(Calendar.HOUR_OF_DAY) > 16
+						&& !sharedP.getBoolean("playSports", false)
+						|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						&& cal.get(Calendar.HOUR_OF_DAY) > 20) {
+					showThisWeek = false;
+					menu.findItem(R.id.whatWeekContainer).setVisible(false);
+				} else
+					menu.findItem(R.id.whatWeekContainer).setVisible(true);
+			} else {
+				showThisWeek = false;
+				menu.findItem(R.id.whatWeekContainer).setVisible(false);
 			}
 		} else {
 			menu.findItem(R.id.WeekDayContainer).setVisible(false);
 			menu.findItem(R.id.whatWeekContainer).setVisible(false);
 		}
 
-		if (current == HomePage.ItsLearning) {
+		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {
 			menu.findItem(R.id.goBack).setVisible(true);
 			menu.findItem(R.id.goForward).setVisible(true);
 		} else {

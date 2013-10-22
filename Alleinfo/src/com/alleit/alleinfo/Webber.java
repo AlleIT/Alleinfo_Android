@@ -10,9 +10,7 @@ import android.text.Html;
 public class Webber {
 
 	// Web URLs used in-app
-
-	// preferences file
-	public static final String MY_PREFS = "MyPreferencesFile";
+	// XXX: Only URLS in this area!
 
 	// web url for the food menu
 	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
@@ -22,6 +20,8 @@ public class Webber {
 
 	// Url to Dexter
 	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/index.html";
+
+	//XXX: End Of Area
 	
 	// render schedule
 	public static String renderSchedule(String number, int specday,
@@ -38,15 +38,16 @@ public class Webber {
 			 * check if user have a sport
 			 */
 			SharedPreferences prefs = c.getSharedPreferences(
-					"com.felectronix.alleinfo", 0);
+					"com.alleit.alleinfo", 0);
 
 			if (prefs.getBoolean("playSports", false)) {
-				
+
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 					day++;
 				}
+
 			} else {
 
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
@@ -55,25 +56,14 @@ public class Webber {
 					day++;
 				}
 			}
-
-			if (specday != -1) {
-				if (specday == day && cal.get(Calendar.HOUR_OF_DAY) >= 16
-						&& cal.get(Calendar.DAY_OF_WEEK) == day) {
-					week++;
-					if (week > 52)
-						week = 1;
-				}
-				day = specday;
-			}
 		} else {
 			week++;
 			if (week > 52)
 				week = 1;
-
-			if (specday != -1) {
-				day = specday;
-			}
 		}
+
+		if (specday != -1)
+			day = specday;
 
 		switch (day) {
 		case 0:
