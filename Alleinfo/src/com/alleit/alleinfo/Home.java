@@ -19,6 +19,8 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,8 +40,11 @@ import android.webkit.WebSettings.LayoutAlgorithm;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class Home extends SherlockActivity {
@@ -268,7 +273,8 @@ public class Home extends SherlockActivity {
 			showThisWeek = true;
 			checkColors();
 		}
-		leftBar.toggle();
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
@@ -296,7 +302,8 @@ public class Home extends SherlockActivity {
 			current = HomePage.Nyheter;
 			checkColors();
 		}
-		leftBar.toggle();
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		// TODO: Load the newsfeed
 	}
@@ -304,17 +311,176 @@ public class Home extends SherlockActivity {
 	private void makeKar() {
 		if (current != HomePage.Elevkaren) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO:
-																		// Set
-																		// the
-																		// corresponding
-																		// layout
+			viewGroup.addView(View.inflate(c, R.layout.elevkar, null));
 			current = HomePage.Elevkaren;
 			checkColors();
+
+			// "buttons" for the various student assemblies
+			LinearLayout theboardbut = (LinearLayout) findViewById(R.id.ebg);
+			LinearLayout prbut = (LinearLayout) findViewById(R.id.prbg);
+			LinearLayout festarebut = (LinearLayout) findViewById(R.id.festarebg);
+			LinearLayout spexbut = (LinearLayout) findViewById(R.id.spexbg);
+			LinearLayout skolifbut = (LinearLayout) findViewById(R.id.ifbg);
+			LinearLayout alleitbut = (LinearLayout) findViewById(R.id.itbg);
+
+			// Clickevents
+			theboardbut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.Styrelsen);
+				}
+
+			});
+			prbut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.PR);
+				}
+
+			});
+			festarebut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.Ållefestare);
+				}
+
+			});
+			spexbut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.ÅlleSpex);
+				}
+
+			});
+			skolifbut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.SkolIF);
+				}
+
+			});
+			alleitbut.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					makeKarSub(StudentAssembly.ÅlleIT);
+				}
+
+			});
+
 		}
-		leftBar.toggle();
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
-		// TODO: Load elevkaren
+	}
+
+	private void makeKarSub(StudentAssembly SA) {
+		if (current != HomePage.Elevkaren_SUB) {
+			viewGroup.removeAllViews();
+			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
+			current = HomePage.Elevkaren_SUB;
+			checkColors();
+
+			ImageView Pic = (ImageView) findViewById(R.id.pic);
+			ProgressBar PB = (ProgressBar) findViewById(R.id.loadimg);
+			Button but = (Button) findViewById(R.id.button);
+			TextView rubrik = (TextView) findViewById(R.id.head);
+			TextView info = (TextView) findViewById(R.id.info);
+			TextView desc = (TextView) findViewById(R.id.desc);
+			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
+
+			PB.setVisibility(View.GONE);
+			but.setText("Besök Facebooksidan");
+
+			String url = "http://facebook.com/";
+
+			// Describṕtions picked up from facebook
+			// XXX: These need to be updated or kept up to date in some way.
+			switch (SA) {
+			case Styrelsen:
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.elevkaren));
+				rubrik.setText(Html.fromHtml(Karlista.Ename));
+				info.setText("");
+				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
+				desc.setText(Html.fromHtml(Karlista.Edesc));
+				url += Webber.theboard;
+				break;
+			case PR:
+				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
+				rubrik.setText(Html.fromHtml(Karlista.PRname));
+				info.setText("");
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
+				desc.setText(Html.fromHtml(Karlista.PRdesc));
+				url += Webber.PR;
+				break;
+			case Ållefestare:
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.festare));
+				rubrik.setText(Html.fromHtml(Karlista.Fname));
+				info.setText("");
+				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
+				desc.setText(Html.fromHtml(Karlista.Fdesc));
+				url += Webber.festare;
+				break;
+			case ÅlleSpex:
+				Pic.setImageDrawable(getResources()
+						.getDrawable(R.drawable.spex));
+				rubrik.setText(Html.fromHtml(Karlista.spexname));
+				info.setText("");
+				separator.setBackgroundColor(Color
+						.parseColor(Karlista.spexcolor));
+				desc.setText(Html.fromHtml(Karlista.spexdesc));
+				url += Webber.spex;
+				break;
+			case SkolIF:
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.skolif));
+				rubrik.setText(Html.fromHtml(Karlista.IFname));
+				info.setText("");
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
+				desc.setText(Html.fromHtml(Karlista.IFdesc));
+				url += Webber.skolif;
+				break;
+			case ÅlleIT:
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.alleit));
+				rubrik.setText(Html.fromHtml(Karlista.ITname));
+				info.setText("");
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
+				desc.setText(Html.fromHtml(Karlista.ITdesc));
+				url += Webber.IT;
+				break;
+			}
+
+			final String finURL = url;
+
+			but.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					// Open the facebook page in the default browser.
+					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+							.parse(finURL));
+					startActivity(myIntent);
+
+				}
+
+			});
+
+		}
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeDexter() {
@@ -324,7 +490,8 @@ public class Home extends SherlockActivity {
 			current = HomePage.Dexter;
 			checkColors();
 		}
-		leftBar.toggle();
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
@@ -336,7 +503,8 @@ public class Home extends SherlockActivity {
 			current = HomePage.ItsLearning;
 			checkColors();
 		}
-		leftBar.toggle();
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
@@ -345,39 +513,43 @@ public class Home extends SherlockActivity {
 
 	private void prepFeed() {
 		final Activity a = this;
-		final ListView listView = (ListView) a.findViewById(R.id.mininew);
-		new Thread(new Runnable() {
+		if (current == HomePage.Home) {
+			final ListView listView = (ListView) a.findViewById(R.id.mininew);
+			new Thread(new Runnable() {
 
-			@Override
-			public void run() {
+				@Override
+				public void run() {
 
-				listData = Webber.getTinyNewsFeed();
+					listData = Webber.getTinyNewsFeed();
 
-				runOnUiThread(new Runnable() {
-					public void run() {
-						NewsFeedAdapter itemAdapter = new NewsFeedAdapter(a,
-								R.layout.elevkar_previewrow, listData);
-						listView.setAdapter(itemAdapter);
-					}
-				});
+					runOnUiThread(new Runnable() {
+						public void run() {
+							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
+									a, R.layout.newsroll, listData);
+							listView.setAdapter(itemAdapter);
+						}
+					});
 
-			}
-
-		}).start();
-
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (listData[position].contentType == 1) {
-					// TODO: Visa fler nyheter
-					// makeNewsFeed();
-				} else {
-					// TODO: Visa nyheten i fråga.
-					// ShowNew(listData[position].uniqeIdentifier);
 				}
-			}
-		});
+
+			}).start();
+
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					if (listData[position].contentType == 1) {
+						// TODO: Visa fler nyheter
+						// makeNewsFeed();
+					} else {
+						// TODO: Visa nyheten i fråga.
+						// ShowNew(listData[position].uniqeIdentifier);
+					}
+				}
+			});
+		} else if (current == HomePage.Elevkaren) {
+
+		}
 
 	}
 
@@ -468,6 +640,7 @@ public class Home extends SherlockActivity {
 			break;
 
 		case Elevkaren:
+		case Elevkaren_SUB:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 			bar.setTitle("Elevkåren");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
@@ -515,6 +688,7 @@ public class Home extends SherlockActivity {
 		WV = (WebView) findViewById(R.id.webber);
 		final ProgressBar PB = (ProgressBar) findViewById(R.id.loadprogress);
 		final TextView progress = (TextView) findViewById(R.id.progress);
+		final Button retry = (Button) findViewById(R.id.retry);
 		PB.setVisibility(View.VISIBLE);
 		progress.setVisibility(View.VISIBLE);
 		progress.setText("0");
@@ -527,12 +701,18 @@ public class Home extends SherlockActivity {
 		// Allow/Deny the user to click links on pages
 
 		WV.setWebViewClient(new WebViewClient() {
+
+			String lasturl = null;
+			Boolean error = false;
+
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				// We want to avoid navigation from some pages
 				if (current != HomePage.Schema && current != HomePage.Mat) {
 					PB.setVisibility(View.VISIBLE);
 					progress.setVisibility(View.VISIBLE);
+					retry.setVisibility(View.INVISIBLE);
 					progress.setText("0");
+					error = false;
 					view.loadUrl(url);
 				}
 				return true;
@@ -541,7 +721,7 @@ public class Home extends SherlockActivity {
 			// when the page is finished
 
 			public void onPageFinished(WebView view, String url) {
-				if (PB.isShown()) {
+				if (PB.isShown() && error == false) {
 					PB.setVisibility(View.INVISIBLE);
 					progress.setVisibility(View.INVISIBLE);
 					mWebView = WV;
@@ -555,21 +735,50 @@ public class Home extends SherlockActivity {
 				handler.proceed();
 			}
 
+			public void onReceivedError(WebView view, int errorCode,
+					String description, String failingUrl) {
+				lasturl = failingUrl;
+				WV.loadUrl("about:blank");
+				tryAgain(WV, PB, progress, retry, "Sidan kunde inte laddas",
+						lasturl);
+			}
+
 		});
 
 		// Show the progress of the loading page
 		WV.setWebChromeClient(new WebChromeClient() {
 
 			public void onProgressChanged(WebView view, int newProgress) {
-				if (newProgress <= 99 && PB.getVisibility() != View.VISIBLE) {
-					PB.setVisibility(View.VISIBLE);
-					progress.setVisibility(View.VISIBLE);
+				ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				Boolean connected;
+				if (connectivityManager.getActiveNetworkInfo() != null) {
+					connected = connectivityManager.getActiveNetworkInfo()
+							.isConnectedOrConnecting();
+				} else {
+					final String lasturl = WV.getUrl();
+					tryAgain(WV, PB, progress, retry,
+							"Det finns ingen uppkoppling", lasturl);
+					return;
 				}
-				if (newProgress == 100) {
-					PB.setVisibility(View.INVISIBLE);
-					progress.setVisibility(View.INVISIBLE);
+
+				if (connected != null && connected != false) {
+					if (newProgress <= 98) {
+						if (PB.getVisibility() != View.VISIBLE) {
+							PB.setVisibility(View.VISIBLE);
+							progress.setVisibility(View.VISIBLE);
+							retry.setVisibility(View.GONE);
+						}
+						progress.setText(String.valueOf(newProgress));
+					}
+					if (newProgress == 99) {
+						PB.setVisibility(View.INVISIBLE);
+						progress.setVisibility(View.INVISIBLE);
+					}
+				} else {
+					final String lasturl = WV.getUrl();
+					tryAgain(WV, PB, progress, retry,
+							"Det finns ingen uppkoppling", lasturl);
 				}
-				progress.setText(String.valueOf(newProgress));
 			}
 
 		});
@@ -645,6 +854,33 @@ public class Home extends SherlockActivity {
 		mWebView = WV;
 	}
 
+	private void tryAgain(final WebView WV, ProgressBar PB, TextView progress,
+			final Button retry, String message, final String lasturl) {
+		PB.setVisibility(View.GONE);
+		progress.setText(message);
+		progress.setVisibility(View.VISIBLE);
+		retry.setVisibility(View.VISIBLE);
+		retry.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				retry.setVisibility(View.GONE);
+				if (lasturl.equalsIgnoreCase("about:blank")) {
+					prepWeb();
+				} else {
+					WV.loadUrl(lasturl);
+				}
+			}
+
+		});
+	}
+
+	private void sendEmail(String recipant) {
+		Uri uri = Uri.parse("mailto:" + recipant);
+		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+		startActivity(intent);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
@@ -681,6 +917,14 @@ public class Home extends SherlockActivity {
 		} else {
 			menu.findItem(R.id.goBack).setVisible(false);
 			menu.findItem(R.id.goForward).setVisible(false);
+		}
+
+		if (current == HomePage.Elevkaren || current == HomePage.Elevkaren_SUB) {
+			menu.findItem(R.id.beMember).setVisible(true);
+			menu.findItem(R.id.contact).setVisible(true);
+		} else {
+			menu.findItem(R.id.beMember).setVisible(false);
+			menu.findItem(R.id.contact).setVisible(false);
 		}
 
 		return true;
@@ -752,6 +996,37 @@ public class Home extends SherlockActivity {
 			}
 			return true;
 
+		case R.id.beMember:
+			// Open the signup page in the default browser.
+			Intent myIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(Webber.signupAddress));
+			startActivity(myIntent);
+			return true;
+
+		case R.id.contactKaren:
+			sendEmail(Karlista.Eemail);
+			return true;
+
+		case R.id.contactpr:
+			sendEmail(Karlista.PRemail);
+			return true;
+
+		case R.id.contactFestare:
+			sendEmail(Karlista.Femail);
+			return true;
+
+		case R.id.contactSpex:
+			sendEmail(Karlista.spexemail);
+			return true;
+
+		case R.id.contactSkolIF:
+			sendEmail(Karlista.IFemail);
+			return true;
+
+		case R.id.contactIT:
+			sendEmail(Karlista.ITemail);
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -772,11 +1047,23 @@ public class Home extends SherlockActivity {
 	public void onBackPressed() {
 		if (leftBar.isMenuShowing()) {
 			leftBar.toggle();
+			return;
+		}
+		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {
+			if (mWebView.canGoBack()) {
+				mWebView.goBack();
+			} else {
+				makeHome();
+			}
+		} else if (current == HomePage.Elevkaren_SUB) {
+			makeKar();
 		} else {
 			if (current != HomePage.Home) {
 				makeHome();
-			} else
+			} else {
 				finish();
+			}
+
 		}
 	}
 

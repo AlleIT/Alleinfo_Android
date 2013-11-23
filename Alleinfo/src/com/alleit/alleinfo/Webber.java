@@ -21,8 +21,22 @@ public class Webber {
 	// Url to Dexter
 	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/index.html";
 
-	//XXX: End Of Area
-	
+	// URL for signing up to elevkåren
+	public static String signupAddress = "http://ebas.gymnasiet.sverigeselevkarer.se/signups/index/539";
+
+	// XXX: End Of Area
+
+	// XXX: Facebook ID:s in this area
+
+	public static String theboard = "328398517288602";
+	public static String PR = "324024177734072";
+	public static String festare = "305522136255915";
+	public static String spex = "268351709901709";
+	public static String skolif = "547561921942120";
+	public static String IT = "1403614713207231";
+
+	// XXX: End Of Area
+
 	// render schedule
 	public static String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize, Context c) {
@@ -43,17 +57,41 @@ public class Webber {
 			if (prefs.getBoolean("playSports", false)) {
 
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 					day++;
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
+					week++;
+					if (week > 52)
+						week = 1;
+
 				}
 
 			} else {
 
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 					day++;
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
+					week++;
+					if (week > 52)
+						week = 1;
+
 				}
 			}
 		} else {
