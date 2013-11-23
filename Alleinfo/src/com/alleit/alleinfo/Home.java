@@ -100,7 +100,7 @@ public class Home extends SherlockActivity {
 		Intent fromIntent = getIntent();
 		number = fromIntent.getStringExtra("number");
 
-		sharedP = this.getSharedPreferences("com.alleit.alleinfo", 0);
+		sharedP = this.getPreferences(MODE_PRIVATE);
 
 		// Set up sidebar menu
 		leftBar = new SlidingMenu(this);
