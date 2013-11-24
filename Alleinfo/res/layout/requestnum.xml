@@ -1,54 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/angeDittPers"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/willBeDeleted"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    android:layout_height="match_parent"
+    android:background="#005566" >
 
     <EditText
         android:id="@+id/inBox"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:ems="10"
         android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:inputType="number" />
 
     <CheckBox
         android:id="@+id/saveCred"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/inBox"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/savecred" />
 
     <CheckBox
         android:id="@+id/saveSport"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/saveCred"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/saveSport" />
 
     <LinearLayout
@@ -61,28 +46,44 @@
         android:paddingTop="5dp" >
 
         <Button
-            android:id="@+id/button_abort"
-            android:layout_width="0dp"
+            android:id="@+id/button_teacher"
+            android:layout_width="94dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:text="@string/abort" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.25"
+            
+            android:text="@string/teacher" />
+
+        <Button
+            android:id="@+id/quickPIN"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.74"
+            android:text="@string/angePin" />
 
         <Button
             android:id="@+id/button_ok"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_width="94dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="0.28"
             android:text="@string/cont" />
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/quickPIN"
-        style="?android:attr/buttonStyleSmall"
+    <TextView
+        android:id="@+id/choose_personalCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/saveCred"
-        android:layout_alignBottom="@+id/saveCred"
-        android:layout_alignParentRight="true"
-        android:text="@string/angePin" />
+        android:layout_above="@+id/inBox"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="14dp"
+        android:text="Ange personnummer"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
