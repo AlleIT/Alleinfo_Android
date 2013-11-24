@@ -19,7 +19,7 @@ public class Webber {
 	public static String itslearningAddress = "https://falkoping.itslearning.com/elogin/default.aspx";
 
 	// Url to Dexter
-	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/index.html";
+	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/login?type=webtoken";
 
 	// URL for signing up to elevkåren
 	public static String signupAddress = "http://ebas.gymnasiet.sverigeselevkarer.se/signups/index/539";
