@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theboard">#445FA9</color>
+    <color name="theboardhover">#667FCB</color>
+    <color name="theboardclick">#223D87</color>
+    <color name="pr">#FFCC00</color>
+    <color name="prhover">#FFDD11</color>
+    <color name="prclick">#DDAA00</color>
+    <color name="festare">#9900FF</color>
+    <color name="festarehover">#AA11FF</color>
+    <color name="festareclick">#7700DD</color>
+    <color name="spex">#00E1ED</color>
+    <color name="spexhover">#11F2FE</color>
+    <color name="spexclick">#00C0CB</color>
+    <color name="skolif">#FF1975</color>
+    <color name="skolifhover">#FF3B97</color>
+    <color name="skolifclick">#DD0753</color>
+    <color name="alleit">#0099CC</color>
+    <color name="alleithover">#00BBEE</color>
+    <color name="alleitclick">#0077AA</color>
+</resources>

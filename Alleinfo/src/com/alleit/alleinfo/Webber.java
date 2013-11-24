@@ -10,9 +10,7 @@ import android.text.Html;
 public class Webber {
 
 	// Web URLs used in-app
-
-	// preferences file
-	public static final String MY_PREFS = "MyPreferencesFile";
+	// XXX: Only URLS in this area!
 
 	// web url for the food menu
 	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
@@ -20,7 +18,25 @@ public class Webber {
 	// Url to it's learning
 	public static String itslearningAddress = "https://falkoping.itslearning.com/elogin/default.aspx";
 
-	
+	// Url to Dexter
+	public static String dexterAddress = "https://m11-mg-local.falnet.falkoping.se/mg-local/login?type=webtoken";
+
+	// URL for signing up to elevkåren
+	public static String signupAddress = "http://ebas.gymnasiet.sverigeselevkarer.se/signups/index/539";
+
+	// XXX: End Of Area
+
+	// XXX: Facebook ID:s in this area
+
+	public static String theboard = "328398517288602";
+	public static String PR = "324024177734072";
+	public static String festare = "305522136255915";
+	public static String spex = "268351709901709";
+	public static String skolif = "547561921942120";
+	public static String IT = "1403614713207231";
+
+	// XXX: End Of Area
+
 	// render schedule
 	public static String renderSchedule(String number, int specday,
 			Boolean showThisWeek, Point screenSize, Context c) {
@@ -36,42 +52,56 @@ public class Webber {
 			 * check if user have a sport
 			 */
 			SharedPreferences prefs = c.getSharedPreferences(
-					"com.felectronix.alleinfo", 0);
+					"com.alleit.alleinfo", 0);
 
 			if (prefs.getBoolean("playSports", false)) {
-				
+
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
 					day++;
-				}
-			} else {
-
-				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
-						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
-						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-					day++;
-				}
-			}
-
-			if (specday != -1) {
-				if (specday == day && cal.get(Calendar.HOUR_OF_DAY) >= 16
-						&& cal.get(Calendar.DAY_OF_WEEK) == day) {
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
 					week++;
 					if (week > 52)
 						week = 1;
+
 				}
-				day = specday;
+
+			} else {
+
+				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					day++;
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
+					week++;
+					if (week > 52)
+						week = 1;
+
+				}
 			}
 		} else {
 			week++;
 			if (week > 52)
 				week = 1;
-
-			if (specday != -1) {
-				day = specday;
-			}
 		}
+
+		if (specday != -1)
+			day = specday;
 
 		switch (day) {
 		case 0:

@@ -12,9 +12,10 @@ When handling ÅÄÖ
     <string name="home">Hem</string>
     <string name="scheme">Schema</string>
     <string name="food">Skolmat</string>
-    <string name="calendar">Kalender</string>
-    <string name="blogs">Bloggar</string>
     <string name="itslearning">It\'s learning</string>
+    <string name="elevkar">Elevk<![CDATA[å]]>ren</string>
+    <string name="newr">Nyheter</string>
+    <string name="dexter">Dexter</string>
     
     <string name="news">Nyheter fr<![CDATA[å]]>n elevk<![CDATA[å]]>ren</string>
     
@@ -24,6 +25,7 @@ When handling ÅÄÖ
     <string name="willNotBeVisible">Personnumret kommer inte att visas f<![CDATA[ö]]>r n<![CDATA[å]]>gon och kan endast raderas med hj<![CDATA[ä]]>lp av pin-koden eller genom att skapa en ny pin-kod.\n</string>
     <string name="angeDinPinForAtt">Ange din PIN-kod f<![CDATA[ö]]>r att forts<![CDATA[ä]]>tta</string>
     <string name="angePin">Ange PIN</string>
+    <string name="tryagain">F<![CDATA[ö]]>rs<![CDATA[ö]]>k igen</string>
     <string name="inityear">19</string>
     <string name="cont">Forts<![CDATA[ä]]>tt</string>
     <string name="change">Byt</string>
@@ -35,6 +37,9 @@ When handling ÅÄÖ
     
     <string name="forward">Fram<![CDATA[å]]>t</string>
     <string name="back">Bak<![CDATA[å]]>t</string>
+    
+    <string name="bemember">Bli medlem</string>
+    <string name="contact">Kontakta elevkåren</string>
     
     <string name="weekchoice">Vecka</string>
     <string name="day">Dag</string>
@@ -48,15 +53,29 @@ When handling ÅÄÖ
 
     <string name="thisweek">Denna vecka</string>
     <string name="nextweek">N<![CDATA[ä]]>sta vecka</string>
-
+    
     <string-array name="colors">
-        <item>#6AB52C</item>
-        <item>#29b7eb</item>
-        <item>#c1cc67</item>
-        <item>#9c2a89</item>
-        <item>#F07F0A</item>
-        <item>#1d71b8</item>
-        <item>#9c2a89</item>
-        <item>#e6332a</item>
+        <item>#6AB52C</item> <!-- Hem -->
+        <item>#29b7eb</item> <!-- Schema -->
+        <item>#c1cc67</item> <!-- Skolmat -->
+        <item>#9c2a89</item> <!-- Nyheter -->
+        <item>#445Fa9</item> <!-- Elevkåren -->
+        <item>#e6332a</item> <!-- Dexter -->
+        <item>#F07F0A</item> <!-- It's learning -->
     </string-array>
+    
+    <string name="theboard">Styrelsen</string>
+    <string name="PR">PR</string>
+    <string name="festare"><![CDATA[Å]]>llefestare</string>
+    <string name="spex">ÅlleSpex</string>
+    <string name="skolif">Skol IF</string>
+    <string name="IT"><![CDATA[Å]]>lleIT</string>
+    <string name="utskott">Utskott</string>
+    <string name="foreningar">Föreningar</string>
+    
+    <string name="noHead">--Ingen rubrik--</string>
+    <string name="noExtra">--Ingen info--</string>
+    <string name="noDesc">--Ingen beskrivning--</string>
+    <string name="desc">Beskrivning:</string>
+    
 </resources>

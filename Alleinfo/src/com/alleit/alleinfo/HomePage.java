@@ -1,6 +1,5 @@
 package com.alleit.alleinfo;
 
-// home page
 public enum HomePage {
-	Start, Home, Schema, Mat, Kalender, Bloggar, ItsLearning
+	Start, Home, Schema, Mat, Nyheter, Elevkaren, Elevkaren_SUB, Dexter, ItsLearning
 }

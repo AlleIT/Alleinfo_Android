@@ -43,7 +43,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/webber"
@@ -56,7 +56,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/info"
         android:background="#222222" />
 
     <!-- Webb -->
@@ -95,6 +95,15 @@
             android:layout_centerVertical="true"
             android:text="@null"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress"
+            android:layout_centerHorizontal="true"
+            android:text="@string/tryagain"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <!-- EOA -->

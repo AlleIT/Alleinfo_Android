@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 /* news feed
 *
-*	Visa senaste nyheterna från elevkaren
+*	Visa senaste nyheterna frï¿½n elevkaren
 *
 */
 
@@ -26,7 +26,7 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = c.getLayoutInflater();
-		View rowView = inflater.inflate(R.layout.elevkar_previewrow, null);
+		View rowView = inflater.inflate(R.layout.newsroll, null);
 
 		TextView desc = (TextView) rowView.findViewById(R.id.description);
 		desc.setText(datas[position].description);

@@ -4,9 +4,15 @@
     android:layout_height="match_parent"
     android:background="#005566" >
 
+<<<<<<< HEAD
     <Button
         android:id="@+id/button_abort1"
         android:layout_width="0dp"
+=======
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+>>>>>>> 17a45afd5a8a46087800629d97fa5bf47c914ff9
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -18,10 +24,21 @@
         android:id="@+id/button_abort1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_weight="0.5"
         android:text="@string/abort" />
+=======
+        android:layout_below="@+id/info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="@string/willNotBeVisible"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+>>>>>>> 17a45afd5a8a46087800629d97fa5bf47c914ff9
 
     <Button
         android:id="@+id/button_abort1"
