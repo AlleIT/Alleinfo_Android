@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
         android:ems="10"
+        android:layout_margin="10dp"
         android:inputType="numberPassword"
         android:textColor="#FFFFFF" >
 
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/numbox"
         android:layout_alignLeft="@+id/numbox"
-        android:text="@string/angeDinPin"
+        android:text="@string/choosePin"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FFFFFF" />
 
@@ -64,11 +64,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/chuser"
+            android:id="@+id/abort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="@string/change"
+            android:text="@string/abort"
             android:textColor="#FFFFFF" />
 
         <Button

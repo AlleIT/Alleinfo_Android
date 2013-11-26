@@ -46,6 +46,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Home extends SherlockActivity {
 
@@ -88,6 +89,7 @@ public class Home extends SherlockActivity {
 	SharedPreferences sharedP;
 	String pin = null;
 	NewsInfo[] listData;
+	Boolean isPlayingSport;
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -101,6 +103,15 @@ public class Home extends SherlockActivity {
 		number = fromIntent.getStringExtra("number");
 
 		sharedP = this.getPreferences(MODE_PRIVATE);
+		
+		if(fromIntent.getBooleanExtra("Stored", false) == false)
+		{
+			isPlayingSport = fromIntent.getBooleanExtra("playSport", false);
+		}
+		else
+		{
+			isPlayingSport = sharedP.getBoolean("playSports", false);
+		}
 
 		// Set up sidebar menu
 		leftBar = new SlidingMenu(this);
@@ -292,6 +303,8 @@ public class Home extends SherlockActivity {
 	}
 
 	private void makeNews() {
+		Toast.makeText(getApplicationContext(), "Inte redo :(", Toast.LENGTH_SHORT).show();
+		/*
 		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO:
@@ -306,6 +319,8 @@ public class Home extends SherlockActivity {
 			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
 		// TODO: Load the newsfeed
+		 * 
+		 */
 	}
 
 	private void makeKar() {
@@ -790,7 +805,7 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 					final String toLoad = Webber.renderSchedule(number,
-							chosenDay, showThisWeek, xy, c);
+							chosenDay, showThisWeek, xy, isPlayingSport, c);
 					runOnUiThread(new Runnable() {
 						public void run() {
 							WV.getSettings().setUseWideViewPort(false);

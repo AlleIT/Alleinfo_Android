@@ -3,7 +3,6 @@ package com.alleit.alleinfo;
 import java.util.Calendar;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.text.Html;
 
@@ -39,7 +38,7 @@ public class Webber {
 
 	// render schedule
 	public static String renderSchedule(String number, int specday,
-			Boolean showThisWeek, Point screenSize, Context c) {
+			Boolean showThisWeek, Point screenSize, Boolean playSport, Context c) {
 		Calendar cal = Calendar.getInstance();
 
 		int day = 0;
@@ -48,13 +47,7 @@ public class Webber {
 		day = cal.get(Calendar.DAY_OF_WEEK) - 1;
 		if (showThisWeek) {
 
-			/*
-			 * check if user have a sport
-			 */
-			SharedPreferences prefs = c.getSharedPreferences(
-					"com.alleit.alleinfo", 0);
-
-			if (prefs.getBoolean("playSports", false)) {
+			if (playSport) {
 
 				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
 						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
