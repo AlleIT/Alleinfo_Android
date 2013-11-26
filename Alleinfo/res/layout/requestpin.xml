@@ -4,32 +4,21 @@
     android:layout_height="match_parent"
     android:background="#005566" >
 
-<<<<<<< HEAD
     <Button
         android:id="@+id/button_abort1"
         android:layout_width="0dp"
-=======
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
->>>>>>> 17a45afd5a8a46087800629d97fa5bf47c914ff9
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="44dp"
-        android:layout_weight="0.5"
-        android:text="@string/abort" />
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/button_abort1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_weight="0.5"
         android:text="@string/abort" />
-=======
+
+    <TextView
         android:layout_below="@+id/info"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="2dp"
@@ -38,7 +27,6 @@
         android:gravity="center"
         android:text="@string/willNotBeVisible"
         android:textAppearance="?android:attr/textAppearanceSmall" />
->>>>>>> 17a45afd5a8a46087800629d97fa5bf47c914ff9
 
     <Button
         android:id="@+id/button_abort1"
@@ -49,44 +37,64 @@
         android:layout_weight="0.5"
         android:text="@string/abort" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_abort1"
-        android:layout_alignParentRight="true"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button_abort1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginLeft="10dp"
-            android:text="@string/abort" />
-
-        <Button
-            android:id="@+id/button_ok1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginRight="10dp"
-            android:text="@string/cont" />
-    </LinearLayout>
+        android:layout_alignLeft="@+id/pinBox"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="106dp"
+        android:text="Ange PIN"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/pinBox"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:gravity="center"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:inputType="numberPassword" >
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="numberPassword" />
 
-        <requestFocus />
-    </EditText>
+    <Button
+        android:id="@+id/button_abort1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="72dp"
+        android:layout_weight="0.5"
+        android:text="@string/abort" />
+
+    
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_abort1"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_change_pin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/change" />
+
+        <Button
+            android:id="@+id/button_ok1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.5"
+            android:text="@string/cont" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -1,33 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-<<<<<<< HEAD
     android:layout_height="match_parent"
     android:background="#005566" >
-=======
-    android:layout_height="match_parent" >
-
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/angeDittPers"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/info"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/willBeDeleted"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
->>>>>>> 17a45afd5a8a46087800629d97fa5bf47c914ff9
 
     <EditText
         android:id="@+id/inBox"
@@ -35,10 +10,11 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:ems="10"
-        android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:ems="10"
+        android:textColor="@color/white"
+        android:gravity="center"
         android:inputType="number" />
 
     <CheckBox
@@ -49,6 +25,7 @@
         android:layout_below="@+id/inBox"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:textColor="@color/white"
         android:text="@string/savecred" />
 
     <CheckBox
@@ -59,6 +36,7 @@
         android:layout_below="@+id/saveCred"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:textColor="@color/white"
         android:text="@string/saveSport" />
 
     <LinearLayout
@@ -77,7 +55,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
             android:layout_weight="0.25"
-            
+            android:textColor="@color/white"
             android:text="@string/teacher" />
 
         <Button
@@ -87,6 +65,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="30dp"
             android:layout_weight="0.74"
+            android:textColor="@color/white"
             android:text="@string/angePin" />
 
         <Button
@@ -96,8 +75,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="30dp"
             android:layout_weight="0.28"
+            android:textColor="@color/white"
             android:text="@string/cont" />
-
     </LinearLayout>
 
     <TextView
@@ -107,8 +86,18 @@
         android:layout_above="@+id/inBox"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="14dp"
-        android:text="Ange personnummer"
         android:layout_marginLeft="10dp"
+        android:text="Ange personnummer"
+        android:textColor="@color/white"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_above="@+id/choose_personalCode"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

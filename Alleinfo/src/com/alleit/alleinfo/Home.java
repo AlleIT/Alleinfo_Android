@@ -344,7 +344,7 @@ public class Home extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					makeKarSub(StudentAssembly.Ållefestare);
+					makeKarSub(StudentAssembly.allefestare);
 				}
 
 			});
@@ -352,7 +352,7 @@ public class Home extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					makeKarSub(StudentAssembly.ÅlleSpex);
+					makeKarSub(StudentAssembly.alleSpex);
 				}
 
 			});
@@ -368,7 +368,7 @@ public class Home extends SherlockActivity {
 
 				@Override
 				public void onClick(View v) {
-					makeKarSub(StudentAssembly.ÅlleIT);
+					makeKarSub(StudentAssembly.alleIT);
 				}
 
 			});
@@ -420,7 +420,7 @@ public class Home extends SherlockActivity {
 				desc.setText(Html.fromHtml(Karlista.PRdesc));
 				url += Webber.PR;
 				break;
-			case Ållefestare:
+			case allefestare:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.festare));
 				rubrik.setText(Html.fromHtml(Karlista.Fname));
@@ -429,7 +429,7 @@ public class Home extends SherlockActivity {
 				desc.setText(Html.fromHtml(Karlista.Fdesc));
 				url += Webber.festare;
 				break;
-			case ÅlleSpex:
+			case alleSpex:
 				Pic.setImageDrawable(getResources()
 						.getDrawable(R.drawable.spex));
 				rubrik.setText(Html.fromHtml(Karlista.spexname));
@@ -449,7 +449,7 @@ public class Home extends SherlockActivity {
 				desc.setText(Html.fromHtml(Karlista.IFdesc));
 				url += Webber.skolif;
 				break;
-			case ÅlleIT:
+			case alleIT:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.alleit));
 				rubrik.setText(Html.fromHtml(Karlista.ITname));

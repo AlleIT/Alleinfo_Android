@@ -30,6 +30,7 @@ When handling ÅÄÖ
     <string name="cont">Forts<![CDATA[ä]]>tt</string>
     <string name="change">Byt</string>
     <string name="abort">Avbryt</string>
+    <string name="abort"></string>
     <string name="teacher">Lärare</string>
     <string name="choose_personalCode">Ange personnummer</string>
     <string name="savecred">Spara personnummer</string>

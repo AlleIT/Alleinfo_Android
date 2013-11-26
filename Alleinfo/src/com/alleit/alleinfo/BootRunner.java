@@ -46,18 +46,16 @@ public class BootRunner extends Activity {
 	}
 
 	public void requestPersNumString() {
-		final Dialog dialog = new Dialog(c);
-		dialog.setContentView(R.layout.requestnum);
-		dialog.setTitle("Ange personnummer...");
-		dialog.setCancelable(false);
-		dialog.setCanceledOnTouchOutside(false);
+		
+		setContentView(R.layout.requestnum);
+		
 
 		// checkbox rig/niu
 		
-		final CheckBox SS_CHECKBOX = (CheckBox) dialog.findViewById(R.id.saveSport);
+		final CheckBox SS_CHECKBOX = (CheckBox) findViewById(R.id.saveSport);
 		
 
-		Button gotoPin = (Button) dialog.findViewById(R.id.quickPIN);
+		Button gotoPin = (Button) findViewById(R.id.quickPIN);
 		// check if pin code is saved
 		if (SP.getBoolean("RequirePIN", false)) {
 			
@@ -66,7 +64,7 @@ public class BootRunner extends Activity {
 				@Override
 				public void onClick(View arg0) {
 					InputPinDialog();
-					dialog.dismiss();
+					
 				}
 
 			});
@@ -76,10 +74,10 @@ public class BootRunner extends Activity {
 
 		// check if the personal number has the right length
 
-		Button cont = (Button) dialog.findViewById(R.id.button_ok);
+		Button cont = (Button) findViewById(R.id.button_ok);
 		cont.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				EditText inBox = (EditText) dialog.findViewById(R.id.inBox);
+				EditText inBox = (EditText) findViewById(R.id.inBox);
 				String persnum = inBox.getText().toString();
 				if (persnum.length() == 10 || persnum.length() == 12) {
 					if (persnum.length() == 12) {
@@ -88,7 +86,7 @@ public class BootRunner extends Activity {
 					persnum = persnum.substring(0, 6) + "-"
 							+ persnum.substring(6);
 					number = persnum;
-					CheckBox cb = (CheckBox) dialog.findViewById(R.id.saveCred);
+					CheckBox cb = (CheckBox) findViewById(R.id.saveCred);
 
 					if (cb.isChecked()) {
 						isPlayingSport = SS_CHECKBOX.isChecked();
@@ -97,7 +95,7 @@ public class BootRunner extends Activity {
 					} else {
 						handleResponse();
 					}
-					dialog.dismiss();
+					
 				} else {
 					// if the input has the wrong format
 					Toast.makeText(c, "Felaktigt format", Toast.LENGTH_LONG)
@@ -107,6 +105,7 @@ public class BootRunner extends Activity {
 			}
 		});
 
+		/*
 		// if user clicks the "abort" button, close the application
 
 		Button abor = (Button) dialog.findViewById(R.id.button_abort);
@@ -119,10 +118,11 @@ public class BootRunner extends Activity {
 				dialog.dismiss();
 			}
 		});
+		
+		*/
 
-		dialog.show();
-		dialog.getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		
+		
 
 	}
 
