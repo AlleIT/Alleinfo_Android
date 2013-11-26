@@ -19,7 +19,7 @@ When handling ÅÄÖ
     
     <string name="news">Nyheter fr<![CDATA[å]]>n elevk<![CDATA[å]]>ren</string>
     
-    <string name="angeDittPers">Ange ditt personnummer f<![CDATA[ö]]>r att se ditt schema.</string>
+    <string name="angeDittPers">Ange ditt personnummer.</string>
     <string name="willBeDeleted">Personnumret kommer att raderas s<![CDATA[å]]> fort appen avslutas om du inte v<![CDATA[ä]]>ljer att spara det</string>
     <string name="angeDinPin">Ange en PIN-kod f<![CDATA[ö]]>r att spara personnumret.</string>
     <string name="willNotBeVisible">Personnumret kommer inte att visas f<![CDATA[ö]]>r n<![CDATA[å]]>gon och kan endast raderas med hj<![CDATA[ä]]>lp av pin-koden eller genom att skapa en ny pin-kod.\n</string>

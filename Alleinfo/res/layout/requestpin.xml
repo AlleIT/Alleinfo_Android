@@ -19,6 +19,8 @@
         android:text="@string/abort" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/info"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="2dp"
@@ -26,7 +28,8 @@
         android:layout_marginTop="2dp"
         android:gravity="center"
         android:text="@string/willNotBeVisible"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/button_abort1"
@@ -45,7 +48,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="106dp"
         android:text="Ange PIN"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF" />
 
     <EditText
         android:id="@+id/pinBox"
@@ -70,13 +74,11 @@
         android:layout_weight="0.5"
         android:text="@string/abort" />
 
-    
-
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_abort1"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:orientation="horizontal" >
 
