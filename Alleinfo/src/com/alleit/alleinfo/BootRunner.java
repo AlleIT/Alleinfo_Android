@@ -97,7 +97,7 @@ public class BootRunner extends Activity {
 
 			});
 		} else {
-			gotoPin.setVisibility(View.INVISIBLE);
+			gotoPin.setVisibility(View.GONE);
 		}
 
 		// check if the personal number has the right length
