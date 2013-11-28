@@ -38,7 +38,7 @@
             android:layout_below="@+id/progress"
             android:layout_centerHorizontal="true"
             android:text="@string/tryagain"
-            android:visibility="visible" />
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </RelativeLayout>
