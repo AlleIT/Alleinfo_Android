@@ -9,18 +9,18 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:gravity="left|center"
         android:layout_weight="0.7"
+        android:gravity="left|center"
         android:text="@null"
-        android:textSize="16sp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <LinearLayout 
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="16sp" />
+
+    <LinearLayout
         android:id="@+id/specKeep"
-        android:layout_height="fill_parent"
         android:layout_width="0dp"
+        android:layout_height="fill_parent"
         android:layout_weight="0.3"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/type"
@@ -37,13 +37,12 @@
             android:id="@+id/handler"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-        	android:layout_weight="0.5"
+            android:layout_weight="0.5"
             android:gravity="center_vertical|right"
             android:text="@null"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#0000FF"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-        
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

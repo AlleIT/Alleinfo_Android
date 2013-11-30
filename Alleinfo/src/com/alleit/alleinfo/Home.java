@@ -1,6 +1,7 @@
 package com.alleit.alleinfo;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -103,13 +104,10 @@ public class Home extends SherlockActivity {
 		number = fromIntent.getStringExtra("number");
 
 		sharedP = this.getPreferences(MODE_PRIVATE);
-		
-		if(fromIntent.getBooleanExtra("Stored", false) == false)
-		{
+
+		if (fromIntent.getBooleanExtra("Stored", false) == false) {
 			isPlayingSport = fromIntent.getBooleanExtra("playSport", false);
-		}
-		else
-		{
+		} else {
 			isPlayingSport = sharedP.getBoolean("playSports", false);
 		}
 
@@ -303,24 +301,101 @@ public class Home extends SherlockActivity {
 	}
 
 	private void makeNews() {
-		Toast.makeText(getApplicationContext(), "Inte redo :(", Toast.LENGTH_SHORT).show();
-		/*
 		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.webber, null)); // TODO:
-																		// Set
-																		// the
-																		// corresponding
-																		// layout
+			viewGroup.addView(View.inflate(c, R.layout.news, null));
 			current = HomePage.Nyheter;
 			checkColors();
 		}
 		if (leftBar.isMenuShowing())
 			leftBar.toggle();
 		Home.this.supportInvalidateOptionsMenu();
-		// TODO: Load the newsfeed
-		 * 
-		 */
+		prepFeed();
+	}
+
+	private void makeNewsSub() {
+		if (current != HomePage.Nyheter_SUB) {
+			viewGroup.removeAllViews();
+			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
+			current = HomePage.Nyheter_SUB;
+			checkColors();
+
+			ImageView Pic = (ImageView) findViewById(R.id.pic);
+			Button but = (Button) findViewById(R.id.button);
+			TextView rubrik = (TextView) findViewById(R.id.head);
+			TextView info = (TextView) findViewById(R.id.info);
+			TextView desc = (TextView) findViewById(R.id.desc);
+			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
+
+			rubrik.setText(listData[0].headline);
+			info.setText(listData[0].description);
+			desc.setText(listData[0].longDescription);
+			
+			if(listData[0].handler.contains(Html.fromHtml(Karlista.Ename).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.elevkaren));
+				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
+			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.PRname).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.pr));
+				separator.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
+				
+			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.Fname).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.festare));
+				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
+				
+			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.spexname).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.spex));
+				separator.setBackgroundColor(Color.parseColor(Karlista.spexcolor));
+				
+			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.IFname).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.skolif));
+				separator.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
+				
+			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.ITname).toString().toUpperCase(Locale.ENGLISH)))
+			{
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.alleit));
+				separator.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
+				
+			} else {
+				Toast.makeText(getApplicationContext(), Html.fromHtml("Nyheten kunde inte l&aumlsas in"), Toast.LENGTH_SHORT).show();
+				makeNews();
+			}
+
+
+			but.setText("Mer info");
+
+			String url = listData[0].butURL;
+			
+			final String finURL = url;
+
+			but.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					// Open the facebook page in the default browser.
+					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+							.parse(finURL));
+					startActivity(myIntent);
+
+				}
+
+			});
+
+		}
+		if (leftBar.isMenuShowing())
+			leftBar.toggle();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeKar() {
@@ -402,14 +477,12 @@ public class Home extends SherlockActivity {
 			checkColors();
 
 			ImageView Pic = (ImageView) findViewById(R.id.pic);
-			ProgressBar PB = (ProgressBar) findViewById(R.id.loadimg);
 			Button but = (Button) findViewById(R.id.button);
 			TextView rubrik = (TextView) findViewById(R.id.head);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			PB.setVisibility(View.GONE);
 			but.setText("Besök Facebooksidan");
 
 			String url = "http://facebook.com/";
@@ -539,6 +612,13 @@ public class Home extends SherlockActivity {
 
 					runOnUiThread(new Runnable() {
 						public void run() {
+							if(listData.length == 0)
+							{
+								listData = new NewsInfo[1];
+								listData[0] = new NewsInfo();
+								listData[0].headline = "Inga nyheter hittades";
+								listData[0].contentType = -1;
+							}
 							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
 									a, R.layout.newsroll, listData);
 							listView.setAdapter(itemAdapter);
@@ -554,18 +634,80 @@ public class Home extends SherlockActivity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					if (listData[position].contentType == 1) {
-						// TODO: Visa fler nyheter
-						// makeNewsFeed();
+						makeNews();
 					} else {
-						// TODO: Visa nyheten i fråga.
-						// ShowNew(listData[position].uniqeIdentifier);
+						if(listData[position].contentType != -1)
+							ShowSpecNews(listData[position].uniqeIdentifier);
 					}
 				}
 			});
-		} else if (current == HomePage.Elevkaren) {
+		} else if (current == HomePage.Nyheter) {
+			final ListView listView = (ListView) a.findViewById(R.id.feed);
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					listData = Webber.getNews("", Mode.All);
+
+					runOnUiThread(new Runnable() {
+						public void run() {
+							if(listData.length == 0)
+							{
+								listData = new NewsInfo[1];
+								listData[0] = new NewsInfo();
+								listData[0].headline = "Inga nyheter hittades";
+								listData[0].contentType = -1;
+							}
+							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
+									a, R.layout.newsroll, listData);
+							listView.setAdapter(itemAdapter);
+						}
+					});
+
+				}
+
+			}).start();
+
+			listView.setOnItemClickListener(new OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					if (listData[position].contentType == 0) {
+						ShowSpecNews(listData[position].uniqeIdentifier);
+					}
+				}
+			});
 
 		}
 
+	}
+
+	private void ShowSpecNews(final String uniqeIdentifier) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				listData = Webber.getNews(uniqeIdentifier, Mode.Specific);
+
+				runOnUiThread(new Runnable() {
+					public void run() {
+						if (listData.length > 0) {
+							makeNewsSub();
+						} else {
+							Toast.makeText(
+									getApplicationContext(),
+									Html.fromHtml("Nyheten kunde inte hittas.<br>Laddar om"),
+									Toast.LENGTH_SHORT).show();
+							prepFeed();
+						}
+					}
+				});
+
+			}
+
+		}).start();
 	}
 
 	// Check colors for the different buttons in the menu
@@ -646,8 +788,14 @@ public class Home extends SherlockActivity {
 			break;
 
 		case Nyheter:
+		case Nyheter_SUB:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
-			bar.setTitle("Nyheter");
+
+			if (current == HomePage.Nyheter)
+				bar.setTitle("Nyheter");
+			else
+				bar.setTitle(listData[0].headline);
+
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				news.setBackgroundDrawable(currcolor);
 			else
@@ -1072,6 +1220,8 @@ public class Home extends SherlockActivity {
 			}
 		} else if (current == HomePage.Elevkaren_SUB) {
 			makeKar();
+		} else if (current == HomePage.Nyheter_SUB) {
+			makeNews();
 		} else {
 			if (current != HomePage.Home) {
 				makeHome();

@@ -72,7 +72,7 @@ public class BootRunner extends Activity {
 					SS_CHECKBOX.setVisibility(View.INVISIBLE);
 					prompt.setText(Html.fromHtml("Ange L&auml;rarID (\"BcA\")"));
 				} else {
-					// checked with System.out.println, consider changing to
+					// XXX: checked with System.out.println, consider changing to
 					// InputType.XXXXX
 					inBox.setInputType(2);
 					teach.setText(Html.fromHtml("L&auml;rare"));
@@ -214,7 +214,6 @@ public class BootRunner extends Activity {
 		Button cont = (Button) findViewById(R.id.submit);
 		cont.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				System.out.println("so far so good...");
 				EditText pinBox = (EditText) findViewById(R.id.numbox);
 				pin = pinBox.getText().toString();
 				if (pin.length() >= 4) {

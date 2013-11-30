@@ -2,9 +2,16 @@ package com.alleit.alleinfo;
 
 import java.util.Calendar;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import android.content.Context;
 import android.graphics.Point;
-import android.text.Html;
 
 public class Webber {
 
@@ -146,19 +153,18 @@ public class Webber {
 		// for each new feed update
 		NewsInfo data = null;
 		feed = new NewsInfo[3];
+		NewsInfo[] temp = getNews("", Mode.All);
+		
+		if(temp.length == 0)
+			return new NewsInfo[0];
+		
 		for (int i = 0; i < 2; i++) {
-			data = new NewsInfo();
-			data.description = "En kort beskrivning av eventet.";
-			data.type = "EVENT";
-			data.handler = String.valueOf(Html.fromHtml("ELEVK&Aring;REN"));
-			data.contentType = 0;
-			data.uniqeIdentifier = null;
-			feed[i] = data;
+			feed[i] = temp[i];
 		}
 
 		// news info, show more news
 		data = new NewsInfo();
-		data.description = "Fler nyheter...";
+		data.headline = "Fler nyheter...";
 		data.type = null;
 		data.handler = null;
 		data.contentType = 1;
@@ -167,5 +173,73 @@ public class Webber {
 
 		// return value
 		return feed;
+	}
+
+	public static NewsInfo[] getNews(String uniqeIdentifier, Mode returnMode) {
+		HttpResponse response;
+		String htmlResponse;
+
+		try {
+			HttpHost targetHost = new HttpHost("teknikprogrammet.net");
+			HttpGet targetGet = new HttpGet(
+					"/AlleIT/Alleinfo/webadmin/includes/studentbody_news.php");
+			HttpClient httpClient = new DefaultHttpClient();
+			response = httpClient.execute(targetHost, targetGet);
+			HttpEntity entity = response.getEntity();
+			htmlResponse = EntityUtils.toString(entity);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return new NewsInfo[0];
+		}
+		if(htmlResponse.contains(",") == false)
+		{
+			return new NewsInfo[0];
+		}
+		String[] delimitered = htmlResponse.split(",");
+		if (returnMode == Mode.All) {
+			NewsInfo[] data = new NewsInfo[delimitered.length / 7];
+			for (int i = 0, x = 0; i < delimitered.length; i++) {
+				data[i] = new NewsInfo();
+				data[i].headline = delimitered[x];
+				x++;
+				data[i].description = delimitered[x];
+				x++;
+				data[i].longDescription = delimitered[x];
+				x++;
+				data[i].butURL = delimitered[x];
+				x++;
+				data[i].type = delimitered[x];
+				x++;
+				data[i].handler = delimitered[x];
+				x++;
+				data[i].uniqeIdentifier = delimitered[x];
+				x++;
+				data[i].contentType = 0;
+			}
+			return data;
+		} else {
+			return extractSpecificNews(uniqeIdentifier, delimitered);
+		}
+	}
+
+	private static NewsInfo[] extractSpecificNews(String uniqeIdentifier,
+			String[] delimitered) {
+		for (int i = 6; i < delimitered.length; i += 7) {
+			if (delimitered[i].contains("uniqeIdentifier")) {
+				NewsInfo[] data = new NewsInfo[1];
+				data[0] = new NewsInfo();
+				data[0].headline = delimitered[i - 6];
+				data[0].description = delimitered[i - 5];
+				data[0].longDescription = delimitered[i - 4];
+				data[0].butURL = delimitered[i - 3];
+				data[0].type = delimitered[i - 2];
+				data[0].handler = delimitered[i - 1];
+				data[0].uniqeIdentifier = delimitered[i];
+				data[0].contentType = 0;
+				return data;
+			}
+		}
+		return new NewsInfo[0];
 	}
 }
