@@ -62,12 +62,12 @@
 
     </RelativeLayout>
     
-    <RelativeLayout 
+    <RelativeLayout
         android:id="@+id/separator"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:background="#33B5E5"
-        android:layout_below="@+id/top" />
+        android:layout_below="@+id/top"
+        android:background="#FFFFFF" />
 
     <TextView
         android:id="@+id/textView2"

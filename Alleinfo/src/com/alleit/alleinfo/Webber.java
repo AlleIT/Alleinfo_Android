@@ -1,6 +1,8 @@
 package com.alleit.alleinfo;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -12,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.text.Html;
 
 public class Webber {
 
@@ -152,25 +155,32 @@ public class Webber {
 
 		// for each new feed update
 		NewsInfo data = null;
-		feed = new NewsInfo[3];
-		NewsInfo[] temp = getNews("", Mode.All);
-		
-		if(temp.length == 0)
+		List<NewsInfo> temp = Arrays.asList(getNews("", Mode.All));
+
+		if (temp.isEmpty())
 			return new NewsInfo[0];
-		
-		for (int i = 0; i < 2; i++) {
-			feed[i] = temp[i];
+
+		if (temp.size() > 2) {
+			feed = new NewsInfo[3];
+			feed[0] = temp.get(0);
+			feed[1] = temp.get(1);
+
+			// news info, show more news
+			data = new NewsInfo();
+			data.headline = "Fler nyheter...";
+			data.type = null;
+			data.handler = null;
+			data.contentType = 1;
+			data.uniqeIdentifier = null;
+			feed[2] = data;
+		} else {
+			int i = 0;
+			feed = new NewsInfo[temp.size()];
+			for (NewsInfo NI : temp) {
+				feed[i] = NI;
+				i++;
+			}
 		}
-
-		// news info, show more news
-		data = new NewsInfo();
-		data.headline = "Fler nyheter...";
-		data.type = null;
-		data.handler = null;
-		data.contentType = 1;
-		data.uniqeIdentifier = null;
-		feed[2] = data;
-
 		// return value
 		return feed;
 	}
@@ -188,32 +198,35 @@ public class Webber {
 			HttpEntity entity = response.getEntity();
 			htmlResponse = EntityUtils.toString(entity);
 		} catch (Exception e) {
-
 			e.printStackTrace();
 			return new NewsInfo[0];
 		}
-		if(htmlResponse.contains(",") == false)
-		{
+		if (htmlResponse.contains("~") == false) {
 			return new NewsInfo[0];
 		}
-		String[] delimitered = htmlResponse.split(",");
+		String[] delimitered = htmlResponse.split("~");
+
 		if (returnMode == Mode.All) {
 			NewsInfo[] data = new NewsInfo[delimitered.length / 7];
-			for (int i = 0, x = 0; i < delimitered.length; i++) {
+			for (int i = 0, x = 0; i < data.length; i++) {
 				data[i] = new NewsInfo();
-				data[i].headline = delimitered[x];
+				data[i].headline = String
+						.valueOf(Html.fromHtml(delimitered[x]));
 				x++;
-				data[i].description = delimitered[x];
+				data[i].description = String.valueOf(Html
+						.fromHtml(delimitered[x]));
 				x++;
-				data[i].longDescription = delimitered[x];
+				data[i].longDescription = String.valueOf(Html
+						.fromHtml(delimitered[x]));
 				x++;
-				data[i].butURL = delimitered[x];
+				data[i].butURL = String.valueOf(Html.fromHtml(delimitered[x]));
 				x++;
-				data[i].type = delimitered[x];
+				data[i].type = String.valueOf(Html.fromHtml(delimitered[x]));
 				x++;
-				data[i].handler = delimitered[x];
+				data[i].handler = String.valueOf(Html.fromHtml(delimitered[x]));
 				x++;
-				data[i].uniqeIdentifier = delimitered[x];
+				data[i].uniqeIdentifier = String.valueOf(Html
+						.fromHtml(delimitered[x]));
 				x++;
 				data[i].contentType = 0;
 			}
@@ -226,16 +239,23 @@ public class Webber {
 	private static NewsInfo[] extractSpecificNews(String uniqeIdentifier,
 			String[] delimitered) {
 		for (int i = 6; i < delimitered.length; i += 7) {
-			if (delimitered[i].contains("uniqeIdentifier")) {
+			if (delimitered[i].contains(uniqeIdentifier)) {
 				NewsInfo[] data = new NewsInfo[1];
 				data[0] = new NewsInfo();
-				data[0].headline = delimitered[i - 6];
-				data[0].description = delimitered[i - 5];
-				data[0].longDescription = delimitered[i - 4];
-				data[0].butURL = delimitered[i - 3];
-				data[0].type = delimitered[i - 2];
-				data[0].handler = delimitered[i - 1];
-				data[0].uniqeIdentifier = delimitered[i];
+				data[0].headline = String.valueOf(Html
+						.fromHtml(delimitered[i - 6]));
+				data[0].description = String.valueOf(Html
+						.fromHtml(delimitered[i - 5]));
+				data[0].longDescription = String.valueOf(Html
+						.fromHtml(delimitered[i - 4]));
+				data[0].butURL = String.valueOf(Html
+						.fromHtml(delimitered[i - 3]));
+				data[0].type = String
+						.valueOf(Html.fromHtml(delimitered[i - 2]));
+				data[0].handler = String.valueOf(Html
+						.fromHtml(delimitered[i - 1]));
+				data[0].uniqeIdentifier = String.valueOf(Html
+						.fromHtml(delimitered[i]));
 				data[0].contentType = 0;
 				return data;
 			}

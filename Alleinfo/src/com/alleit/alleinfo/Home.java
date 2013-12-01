@@ -1,6 +1,8 @@
 package com.alleit.alleinfo;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -330,52 +332,65 @@ public class Home extends SherlockActivity {
 			rubrik.setText(listData[0].headline);
 			info.setText(listData[0].description);
 			desc.setText(listData[0].longDescription);
-			
-			if(listData[0].handler.contains(Html.fromHtml(Karlista.Ename).toString().toUpperCase(Locale.ENGLISH)))
-			{
+
+			if (listData[0].handler.contains(Html.fromHtml(Karlista.Ename)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.elevkaren));
 				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
-			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.PRname).toString().toUpperCase(Locale.ENGLISH)))
-			{
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.pr));
-				separator.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
-				
-			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.Fname).toString().toUpperCase(Locale.ENGLISH)))
-			{
+			} else if (listData[0].handler.contains(Html
+					.fromHtml(Karlista.PRname).toString()
+					.toUpperCase(Locale.ENGLISH))) {
+				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
+
+			} else if (listData[0].handler.contains(Html
+					.fromHtml(Karlista.Fname).toString()
+					.toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.festare));
 				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
-				
-			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.spexname).toString().toUpperCase(Locale.ENGLISH)))
-			{
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.spex));
-				separator.setBackgroundColor(Color.parseColor(Karlista.spexcolor));
-				
-			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.IFname).toString().toUpperCase(Locale.ENGLISH)))
-			{
+
+			} else if (listData[0].handler.contains(Html
+					.fromHtml(Karlista.spexname).toString()
+					.toUpperCase(Locale.ENGLISH))) {
+				Pic.setImageDrawable(getResources()
+						.getDrawable(R.drawable.spex));
+				separator.setBackgroundColor(Color
+						.parseColor(Karlista.spexcolor));
+
+			} else if (listData[0].handler.contains(Html
+					.fromHtml(Karlista.IFname).toString()
+					.toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.skolif));
-				separator.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
-				
-			} else if(listData[0].handler.contains(Html.fromHtml(Karlista.ITname).toString().toUpperCase(Locale.ENGLISH)))
-			{
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
+
+			} else if (listData[0].handler.contains(Html
+					.fromHtml(Karlista.ITname).toString()
+					.toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.alleit));
-				separator.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
-				
-			} else {
-				Toast.makeText(getApplicationContext(), Html.fromHtml("Nyheten kunde inte l&aumlsas in"), Toast.LENGTH_SHORT).show();
-				makeNews();
-			}
+				separator
+						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
 
+			} else {
+				Toast.makeText(getApplicationContext(),
+						Html.fromHtml("Ingen ansvarig elevf&ouml;rening kunde hittas"),
+						Toast.LENGTH_SHORT).show();
+			}
 
 			but.setText("Mer info");
 
 			String url = listData[0].butURL;
 			
+			if(url.length() == 0)
+			{
+				but.setVisibility(View.INVISIBLE);
+			}
+
 			final String finURL = url;
 
 			but.setOnClickListener(new OnClickListener() {
@@ -608,12 +623,22 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 
-					listData = Webber.getTinyNewsFeed();
+					List<NewsInfo> temp = Arrays.asList(Webber.getTinyNewsFeed());
+
+					if (temp.isEmpty()) {
+						listData = new NewsInfo[0];
+					} else {
+						int i = 0;
+						listData = new NewsInfo[temp.size()];
+						for (NewsInfo NI : temp) {
+							listData[i] = NI;
+							i++;
+						}
+					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if(listData.length == 0)
-							{
+							if (listData.length == 0) {
 								listData = new NewsInfo[1];
 								listData[0] = new NewsInfo();
 								listData[0].headline = "Inga nyheter hittades";
@@ -636,7 +661,7 @@ public class Home extends SherlockActivity {
 					if (listData[position].contentType == 1) {
 						makeNews();
 					} else {
-						if(listData[position].contentType != -1)
+						if (listData[position].contentType != -1)
 							ShowSpecNews(listData[position].uniqeIdentifier);
 					}
 				}
@@ -648,12 +673,23 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 
-					listData = Webber.getNews("", Mode.All);
+					List<NewsInfo> temp = Arrays.asList(Webber.getNews("",
+							Mode.All));
+
+					if (temp.isEmpty()) {
+						listData = new NewsInfo[0];
+					} else {
+						int i = 0;
+						listData = new NewsInfo[temp.size()];
+						for (NewsInfo NI : temp) {
+							listData[i] = NI;
+							i++;
+						}
+					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if(listData.length == 0)
-							{
+							if (listData.length == 0) {
 								listData = new NewsInfo[1];
 								listData[0] = new NewsInfo();
 								listData[0].headline = "Inga nyheter hittades";
@@ -689,7 +725,19 @@ public class Home extends SherlockActivity {
 			@Override
 			public void run() {
 
-				listData = Webber.getNews(uniqeIdentifier, Mode.Specific);
+				List<NewsInfo> temp = Arrays.asList(Webber.getNews(
+						uniqeIdentifier, Mode.Specific));
+
+				if (temp.isEmpty()) {
+					listData = new NewsInfo[0];
+				} else {
+					int i = 0;
+					listData = new NewsInfo[temp.size()];
+					for (NewsInfo NI : temp) {
+						listData[i] = NI;
+						i++;
+					}
+				}
 
 				runOnUiThread(new Runnable() {
 					public void run() {
@@ -698,7 +746,7 @@ public class Home extends SherlockActivity {
 						} else {
 							Toast.makeText(
 									getApplicationContext(),
-									Html.fromHtml("Nyheten kunde inte hittas.<br>Laddar om"),
+									Html.fromHtml("Nyheten kunde inte hittas."),
 									Toast.LENGTH_SHORT).show();
 							prepFeed();
 						}

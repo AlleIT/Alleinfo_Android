@@ -41,6 +41,16 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 		TextView handler = (TextView) rowView.findViewById(R.id.handler);
 		handler.setText(datas[position].handler);
 
+		if (datas[position].handler != null) {
+			checkColor(handler, position);
+		} else {
+			handler.setTextColor(Color.BLACK);
+		}
+
+		return rowView;
+	}
+
+	private void checkColor(TextView handler, int position) {
 		if (datas[position].handler.contains(Html.fromHtml(Karlista.Ename)
 				.toString().toUpperCase(Locale.ENGLISH))) {
 			handler.setTextColor(Color.parseColor(Karlista.Ecolor));
@@ -72,7 +82,5 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 		} else {
 			handler.setTextColor(Color.BLACK);
 		}
-
-		return rowView;
 	}
 }
