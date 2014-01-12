@@ -11,7 +11,7 @@ public class Karlista {
 	public static String Eemail = "elevkarenalleberg@gmail.com";
 	
 	// PR "PR"
-	public static String PRname = "PR-utskottet";
+	public static String PRname = "PR";
 	public static String PRcolor = "#FFCC00";
 	public static String PRdesc = "&Auml;r det n&aring;gonting som h&auml;nder p&aring; &Aring;llebergsgymnasiet &auml;r det oss du f&aring;r reda p&aring; det av. Vi promotar allt som r&ouml;r &Aring;llebergsgymnasiets elevk&aring;r. <br><br>Det vi jobbar jobbar med l&auml;s&aring;ret 13/14 &auml;r fr&auml;mst affischer, en yearbook f&ouml;r utg&aring;ngseleverna och f&ouml;rs&auml;ljning av minir&auml;knare!<br><br>V&aring;ra l&aring;ngsiktiga m&aring;l &auml;r att g&ouml;ra skolkatalogen samt se till att premiumkorten kan anv&auml;ndas f&ouml;r att f&aring; rabatt i lokala butiker.<br><br>Tveka inte att h&ouml;ra av dig till v&aring;ran mail allebergPR@gmail.com om du undrar n&aring;gonting eller vill g&aring; med i utskottet. <br><br>Vi finns &auml;ven p&aring; instagram, allebergPR heter vi d&auml;r!";
 	public static String PRemail = "allebergPR@gmail.com";

@@ -377,7 +377,8 @@ public class Home extends SherlockActivity {
 						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
 
 			} else {
-				Toast.makeText(getApplicationContext(),
+				Toast.makeText(
+						getApplicationContext(),
 						Html.fromHtml("Ingen ansvarig elevf&ouml;rening kunde hittas"),
 						Toast.LENGTH_SHORT).show();
 			}
@@ -385,9 +386,8 @@ public class Home extends SherlockActivity {
 			but.setText("Mer info");
 
 			String url = listData[0].butURL;
-			
-			if(url.length() == 0)
-			{
+
+			if (url.length() == 0) {
 				but.setVisibility(View.INVISIBLE);
 			}
 
@@ -623,7 +623,8 @@ public class Home extends SherlockActivity {
 				@Override
 				public void run() {
 
-					List<NewsInfo> temp = Arrays.asList(Webber.getTinyNewsFeed());
+					List<NewsInfo> temp = Arrays.asList(Webber
+							.getTinyNewsFeed());
 
 					if (temp.isEmpty()) {
 						listData = new NewsInfo[0];
@@ -907,7 +908,10 @@ public class Home extends SherlockActivity {
 		WV.clearView();
 		WV.clearCache(true);
 		WV.getSettings().setJavaScriptEnabled(true);
-		WV.setVerticalScrollBarEnabled(false);
+		if (current == HomePage.Home || current == HomePage.Schema)
+			WV.setVerticalScrollBarEnabled(true);
+		else
+			WV.setVerticalScrollBarEnabled(false);
 
 		// Allow/Deny the user to click links on pages
 
@@ -1004,14 +1008,16 @@ public class Home extends SherlockActivity {
 							chosenDay, showThisWeek, xy, isPlayingSport, c);
 					runOnUiThread(new Runnable() {
 						public void run() {
-							WV.getSettings().setUseWideViewPort(false);
-							WV.getSettings().setLoadWithOverviewMode(false);
+							WV.getSettings().setUseWideViewPort(true);
+							WV.getSettings().setLoadWithOverviewMode(true);
 							WV.getSettings().setLayoutAlgorithm(
 									LayoutAlgorithm.SINGLE_COLUMN);
-							WV.getSettings().setBuiltInZoomControls(false);
-							WV.getSettings().setSupportZoom(false);
-							WV.setPadding(0, 0, 0, 0);
-							WV.setInitialScale(0);
+							WV.getSettings().setBuiltInZoomControls(true);
+							try {
+								WV.getSettings().setDisplayZoomControls(false);
+							} catch (Exception e) {
+							}
+							WV.getSettings().setSupportZoom(true);
 							WV.loadUrl(toLoad);
 						}
 					});

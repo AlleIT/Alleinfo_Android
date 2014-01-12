@@ -98,6 +98,36 @@ public class Webber {
 				}
 			}
 		} else {
+			if (playSport) {
+				if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					day++;
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 20 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
+				}
+			} else {
+				if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY
+						&& cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+					day++;
+				} else if (cal.get(Calendar.HOUR_OF_DAY) >= 16 && specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+						|| specday == -1
+						&& cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					day = 0;
+				}
+			}
+
 			week++;
 			if (week > 52)
 				week = 1;

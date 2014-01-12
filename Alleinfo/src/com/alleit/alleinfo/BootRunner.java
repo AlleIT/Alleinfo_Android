@@ -107,7 +107,7 @@ public class BootRunner extends Activity {
 			public void onClick(View v) {
 				EditText inBox = (EditText) findViewById(R.id.numbox);
 				String persnum = inBox.getText().toString();
-				if (inBox.getInputType() != 2) {
+				if (inBox.getInputType() != 2 && persnum.length() >= 3) {
 					CheckBox cb = (CheckBox) findViewById(R.id.saveCreds);
 					isPlayingSport = true;
 					number = persnum;
