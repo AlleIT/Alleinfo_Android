@@ -10,6 +10,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.alleit.Alleinfo_Android.R;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.annotation.SuppressLint;

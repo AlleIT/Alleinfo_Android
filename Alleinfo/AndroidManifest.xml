@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alleit.alleinfo"
-    android:versionCode="4"
+    package="com.alleit.Alleinfo_Android"
+    android:versionCode="1"
     android:versionName="1.0.1" >
 
     <uses-sdk
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
         <activity
-            android:name=".BootRunner"
+            android:name="com.alleit.alleinfo.BootRunner"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sherlock.Light.NoActionBar"
             android:screenOrientation="portrait"
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Home"
+            android:name="com.alleit.alleinfo.Home"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>

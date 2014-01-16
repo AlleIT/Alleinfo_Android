@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.alleit.Alleinfo_Android.R;
 
 public class BootRunner extends Activity {
 
