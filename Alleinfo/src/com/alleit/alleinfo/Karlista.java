@@ -37,6 +37,6 @@ public class Karlista {
 	// ÅlleIT "IT"
 	public static String ITname = "&Aring;lleIT";
 	public static String ITcolor = "#0099CC";
-	public static String ITdesc = "&Aring;lleIT &auml;r elevf&ouml;reningen f&ouml;r teknikintresserade elever!<br>I f&ouml;reningen utvecklar vi appen &Aring;lleinfo och l&auml;r oss arbeta tillsammans med mer avancerade projekt &quot;p&aring; riktigt&quot;.<br>Vi har ocks&aring; planer p&aring; att driva en &aring;rlig League of Legends turnering p&aring; skolan.<br><br>Vill du vara med i en teknikintresserad och rolig gemenskap? Vill du l&auml;ra dig att utveckla appar f&ouml;r Android? (Ja, vi l&auml;r dig!)<br>Tveka d&aring; inte att skicka in en intresseanm&auml;lan till oss h&auml;r via facebook!<br><br>Anslut till v&aring;r minecraftserver p&aring; teknikprogrammet.net!";
+	public static String ITdesc = "&Aring;lleIT &auml;r elevf&ouml;reningen f&ouml;r teknikintresserade elever!<br>I f&ouml;reningen utvecklar vi appen &Aring;lleinfo och l&auml;r oss arbeta tillsammans med mer avancerade projekt &quot;p&aring; riktigt&quot;.<br>Vi kommer ocks&aring; att driva en &aring;rlig League of Legends turnering p&aring; skolan.<br><br>Vill du vara med i en teknikintresserad och rolig gemenskap? Vill du l&auml;ra dig att utveckla appar f&ouml;r Android? (Ja, vi l&auml;r dig!)<br>Tveka d&aring; inte att skicka in en intresseanm&auml;lan till oss p&aring; facebook!";
 	public static String ITemail ="allebergelevit@gmail.com";
 }
