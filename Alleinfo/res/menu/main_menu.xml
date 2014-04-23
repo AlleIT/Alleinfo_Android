@@ -59,6 +59,12 @@
         android:showAsAction="always"
         android:title="@string/forward">
     </item>
+    <item
+        android:id="@+id/openInBrowser"
+        android:icon="@drawable/browser"
+        android:showAsAction="always"
+        android:title="@string/openInBrowser">
+    </item>
     <item android:id="@+id/beMember" android:title="@string/bemember" android:showAsAction="always"></item>
     <item android:id="@+id/contact" android:icon="@drawable/contact" android:title="@string/contact" android:showAsAction="always">
         <menu>

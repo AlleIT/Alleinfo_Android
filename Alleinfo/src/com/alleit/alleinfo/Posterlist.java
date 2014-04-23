@@ -1,6 +1,6 @@
 package com.alleit.alleinfo;
 
-public class Karlista {
+public class Posterlist {
 
 	// XXX: HTML-formatering i dokumentet!
 	
@@ -22,7 +22,7 @@ public class Karlista {
 	public static String Fdesc = "Hej, &Aring;llefestare h&auml;r! Vi &auml;r g&auml;nget som anordnar Falk&ouml;pings grymmaste gymnasiefester och den &aring;rliga studentbalen. Gilla sidan, s&aring; ses vi ute i vimlet!";
 	public static String Femail = "allefestare@hotmail.com";
 	
-	// Ållespex spex"
+	// Ållespex "spex"
 	public static String spexname = "&Aring;lleSpex";
 	public static String spexcolor = "#00E1ED";
 	public static String spexdesc = "Yes! &Aring;lleSpex &auml;r en f&ouml;rening p&aring; &Aring;llebergsgymnasiet som drar ig&aring;ng roliga saker p&aring; skolan som till exempel polkagrisutdelning, rosutdelning och &quot;&Aring;rets&quot;.(Det roliga som Kanong&auml;nget hade innan) Gilla oss s&aring; att ni inte missar n&aring;got skoj!";
@@ -39,4 +39,8 @@ public class Karlista {
 	public static String ITcolor = "#0099CC";
 	public static String ITdesc = "&Aring;lleIT &auml;r elevf&ouml;reningen f&ouml;r teknikintresserade elever!<br>I f&ouml;reningen utvecklar vi appen &Aring;lleinfo och l&auml;r oss arbeta tillsammans med mer avancerade projekt &quot;p&aring; riktigt&quot;.<br>Vi kommer ocks&aring; att driva en &aring;rlig League of Legends turnering p&aring; skolan.<br><br>Vill du vara med i en teknikintresserad och rolig gemenskap? Vill du l&auml;ra dig att utveckla appar f&ouml;r Android? (Ja, vi l&auml;r dig!)<br>Tveka d&aring; inte att skicka in en intresseanm&auml;lan till oss p&aring; facebook!";
 	public static String ITemail ="allebergelevit@gmail.com";
+	
+	//Ållebergsgymnasiet "Skola"
+	public static String Skolaname = "Gymnasiet";
+	public static String Skolacolor = "#6AB52C";
 }

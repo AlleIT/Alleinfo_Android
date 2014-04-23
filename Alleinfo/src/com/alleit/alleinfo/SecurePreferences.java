@@ -45,9 +45,6 @@ public class SecurePreferences {
 
 	public static class SecurePreferencesException extends RuntimeException {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		public SecurePreferencesException(Throwable e) {

@@ -1,6 +1,7 @@
 package com.alleit.alleinfo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,8 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +62,24 @@ public class BootRunner extends Activity {
 
 		// checkbox rig/niu
 		final CheckBox SS_CHECKBOX = (CheckBox) findViewById(R.id.saveSport);
+		((CheckBox) (findViewById(R.id.saveCreds)))
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked) {
+							AlertDialog.Builder PULNotice = new AlertDialog.Builder(c);
+
+							PULNotice.setMessage(c.getString(R.string.PULText));
+							PULNotice.setTitle("Hantering av personuppgifter");
+							PULNotice.setPositiveButton("OK", null);
+							PULNotice.setCancelable(false);
+							PULNotice.create().show();
+						}
+					}
+
+				});
 
 		final Button teach = (Button) findViewById(R.id.teacher);
 		teach.setOnClickListener(new OnClickListener() {
@@ -73,7 +94,8 @@ public class BootRunner extends Activity {
 					SS_CHECKBOX.setVisibility(View.INVISIBLE);
 					prompt.setText(Html.fromHtml("Ange L&auml;rarID (\"BcA\")"));
 				} else {
-					// XXX: checked with System.out.println, consider changing to
+					// XXX: checked with System.out.println, consider changing
+					// to
 					// InputType.XXXXX
 					inBox.setInputType(2);
 					teach.setText(Html.fromHtml("L&auml;rare"));
@@ -166,7 +188,8 @@ public class BootRunner extends Activity {
 						secPref.put("persNum", number);
 						secPref.put("compar", tester);
 						SP.edit().putBoolean("RequirePIN", true).commit();
-						SP.edit().putBoolean("playSports", isPlayingSport).commit();
+						SP.edit().putBoolean("playSports", isPlayingSport)
+								.commit();
 						Stored = true;
 
 					} catch (Exception e) {

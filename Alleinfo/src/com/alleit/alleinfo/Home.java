@@ -63,6 +63,7 @@ public class Home extends SherlockActivity {
 	Button home;
 	Button schedule;
 	Button food;
+	Button betyg;
 	Button news;
 	Button elevkaren;
 	Button dexter;
@@ -132,8 +133,9 @@ public class Home extends SherlockActivity {
 		 * (leftbar.xml)
 		 */
 		home = (Button) findViewById(R.id.homeSlide);
-		food = (Button) findViewById(R.id.foodSlide);
 		schedule = (Button) findViewById(R.id.schemeSlide);
+		food = (Button) findViewById(R.id.foodSlide);
+		betyg = (Button) findViewById(R.id.betygSlide);
 		news = (Button) findViewById(R.id.newsSlide);
 		elevkaren = (Button) findViewById(R.id.karSlide);
 		dexter = (Button) findViewById(R.id.dexSlide);
@@ -168,6 +170,15 @@ public class Home extends SherlockActivity {
 			}
 		});
 
+		// if user clicks on schedule button
+
+		schedule.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				makeScheme();
+			}
+		});
+
 		// if user clicks on food menu button
 
 		food.setOnClickListener(new OnClickListener() {
@@ -177,12 +188,12 @@ public class Home extends SherlockActivity {
 			}
 		});
 
-		// if user clicks on schedule button
+		// if user clicks on grade button
 
-		schedule.setOnClickListener(new OnClickListener() {
+		betyg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				makeScheme();
+				makeBetyg();
 			}
 		});
 
@@ -303,6 +314,18 @@ public class Home extends SherlockActivity {
 		prepWeb();
 	}
 
+	private void makeBetyg() {
+		if (current != HomePage.Betyg) {
+			viewGroup.removeAllViews();
+			viewGroup.addView(View.inflate(c, R.layout.betyg, null));
+			current = HomePage.Betyg;
+			checkColors();
+		}
+		leftBar.toggle();
+		Home.this.supportInvalidateOptionsMenu();
+		
+	}
+
 	private void makeNews() {
 		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
@@ -334,53 +357,60 @@ public class Home extends SherlockActivity {
 			info.setText(listData[0].description);
 			desc.setText(listData[0].longDescription);
 
-			if (listData[0].handler.contains(Html.fromHtml(Karlista.Ename)
-					.toString().toUpperCase(Locale.ENGLISH))) {
+			String handler = String.valueOf(Html.fromHtml(listData[0].handler))
+					.toUpperCase(Locale.ENGLISH);
+
+			if (handler.contains(Html.fromHtml(Posterlist.Ename).toString()
+					.toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.elevkaren));
-				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.PRname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.Ecolor));
+			} else if (handler.contains(Html.fromHtml(Posterlist.PRname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.PRcolor));
 
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.Fname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
+			} else if (handler.contains(Html.fromHtml(Posterlist.Fname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.festare));
-				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.Fcolor));
 
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.spexname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
+			} else if (handler.contains(Html.fromHtml(Posterlist.spexname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources()
 						.getDrawable(R.drawable.spex));
 				separator.setBackgroundColor(Color
-						.parseColor(Karlista.spexcolor));
+						.parseColor(Posterlist.spexcolor));
 
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.IFname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
+			} else if (handler.contains(Html.fromHtml(Posterlist.IFname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.skolif));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.IFcolor));
 
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.ITname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
+			} else if (handler.contains(Html.fromHtml(Posterlist.ITname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.alleit));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.ITcolor));
+
+			} else if (handler.contains(Html.fromHtml(Posterlist.Skolaname)
+					.toString().toUpperCase(Locale.ENGLISH))) {
+				Pic.setImageDrawable(getResources().getDrawable(
+						R.drawable.gymnasiet));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.Skolacolor));
 
 			} else {
 				Toast.makeText(
 						getApplicationContext(),
-						Html.fromHtml("Ingen ansvarig elevf&ouml;rening kunde hittas"),
+						Html.fromHtml("Ingen ansvarig nyhetspublicerare kunde hittas"),
 						Toast.LENGTH_SHORT).show();
 			}
 
@@ -509,58 +539,60 @@ public class Home extends SherlockActivity {
 			case Styrelsen:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.elevkaren));
-				rubrik.setText(Html.fromHtml(Karlista.Ename));
+				rubrik.setText(Html.fromHtml(Posterlist.Ename));
 				info.setText("");
-				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
-				desc.setText(Html.fromHtml(Karlista.Edesc));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.Ecolor));
+				desc.setText(Html.fromHtml(Posterlist.Edesc));
 				url += Webber.theboard;
 				break;
 			case PR:
 				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				rubrik.setText(Html.fromHtml(Karlista.PRname));
+				rubrik.setText(Html.fromHtml(Posterlist.PRname));
 				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
-				desc.setText(Html.fromHtml(Karlista.PRdesc));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.PRcolor));
+				desc.setText(Html.fromHtml(Posterlist.PRdesc));
 				url += Webber.PR;
 				break;
 			case allefestare:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.festare));
-				rubrik.setText(Html.fromHtml(Karlista.Fname));
+				rubrik.setText(Html.fromHtml(Posterlist.Fname));
 				info.setText("");
-				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
-				desc.setText(Html.fromHtml(Karlista.Fdesc));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.Fcolor));
+				desc.setText(Html.fromHtml(Posterlist.Fdesc));
 				url += Webber.festare;
 				break;
 			case alleSpex:
 				Pic.setImageDrawable(getResources()
 						.getDrawable(R.drawable.spex));
-				rubrik.setText(Html.fromHtml(Karlista.spexname));
+				rubrik.setText(Html.fromHtml(Posterlist.spexname));
 				info.setText("");
 				separator.setBackgroundColor(Color
-						.parseColor(Karlista.spexcolor));
-				desc.setText(Html.fromHtml(Karlista.spexdesc));
+						.parseColor(Posterlist.spexcolor));
+				desc.setText(Html.fromHtml(Posterlist.spexdesc));
 				url += Webber.spex;
 				break;
 			case SkolIF:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.skolif));
-				rubrik.setText(Html.fromHtml(Karlista.IFname));
+				rubrik.setText(Html.fromHtml(Posterlist.IFname));
 				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
-				desc.setText(Html.fromHtml(Karlista.IFdesc));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.IFcolor));
+				desc.setText(Html.fromHtml(Posterlist.IFdesc));
 				url += Webber.skolif;
 				break;
 			case alleIT:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.alleit));
-				rubrik.setText(Html.fromHtml(Karlista.ITname));
+				rubrik.setText(Html.fromHtml(Posterlist.ITname));
 				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
-				desc.setText(Html.fromHtml(Karlista.ITdesc));
+				separator.setBackgroundColor(Color
+						.parseColor(Posterlist.ITcolor));
+				desc.setText(Html.fromHtml(Posterlist.ITdesc));
 				url += Webber.IT;
 				break;
 			}
@@ -787,6 +819,11 @@ public class Home extends SherlockActivity {
 			food.setBackground(currcolor);
 
 		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+			betyg.setBackgroundDrawable(currcolor);
+		else
+			betyg.setBackground(currcolor);
+
+		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 			news.setBackgroundDrawable(currcolor);
 		else
 			news.setBackground(currcolor);
@@ -837,9 +874,18 @@ public class Home extends SherlockActivity {
 				food.setBackground(currcolor);
 			break;
 
+		case Betyg:
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
+			bar.setTitle("Betyg");
+			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				betyg.setBackgroundDrawable(currcolor);
+			else
+				betyg.setBackground(currcolor);			
+			break;
+			
 		case Nyheter:
 		case Nyheter_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 
 			if (current == HomePage.Nyheter)
 				bar.setTitle("Nyheter");
@@ -854,7 +900,7 @@ public class Home extends SherlockActivity {
 
 		case Elevkaren:
 		case Elevkaren_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
 			bar.setTitle("Elevkåren");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				elevkaren.setBackgroundDrawable(currcolor);
@@ -863,7 +909,7 @@ public class Home extends SherlockActivity {
 			break;
 
 		case Dexter:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
 			bar.setTitle("Dexter");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				dexter.setBackgroundDrawable(currcolor);
@@ -872,7 +918,7 @@ public class Home extends SherlockActivity {
 			break;
 
 		case ItsLearning:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
 			bar.setTitle("It's learning");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				itsLearning.setBackgroundDrawable(currcolor);
@@ -1132,7 +1178,9 @@ public class Home extends SherlockActivity {
 		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {
 			menu.findItem(R.id.goBack).setVisible(true);
 			menu.findItem(R.id.goForward).setVisible(true);
+			menu.findItem(R.id.openInBrowser).setVisible(true);
 		} else {
+			menu.findItem(R.id.openInBrowser).setVisible(false);
 			menu.findItem(R.id.goBack).setVisible(false);
 			menu.findItem(R.id.goForward).setVisible(false);
 		}
@@ -1213,6 +1261,11 @@ public class Home extends SherlockActivity {
 				mWebView.goForward();
 			}
 			return true;
+			
+		case R.id.openInBrowser:
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mWebView.getOriginalUrl())); 
+			startActivity(browserIntent);
+			return true;
 
 		case R.id.beMember:
 			// Open the signup page in the default browser.
@@ -1222,27 +1275,27 @@ public class Home extends SherlockActivity {
 			return true;
 
 		case R.id.contactKaren:
-			sendEmail(Karlista.Eemail);
+			sendEmail(Posterlist.Eemail);
 			return true;
 
 		case R.id.contactpr:
-			sendEmail(Karlista.PRemail);
+			sendEmail(Posterlist.PRemail);
 			return true;
 
 		case R.id.contactFestare:
-			sendEmail(Karlista.Femail);
+			sendEmail(Posterlist.Femail);
 			return true;
 
 		case R.id.contactSpex:
-			sendEmail(Karlista.spexemail);
+			sendEmail(Posterlist.spexemail);
 			return true;
 
 		case R.id.contactSkolIF:
-			sendEmail(Karlista.IFemail);
+			sendEmail(Posterlist.IFemail);
 			return true;
 
 		case R.id.contactIT:
-			sendEmail(Karlista.ITemail);
+			sendEmail(Posterlist.ITemail);
 			return true;
 
 		default:

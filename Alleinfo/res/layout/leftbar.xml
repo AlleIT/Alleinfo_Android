@@ -41,6 +41,16 @@
             android:textSize="50sp" />
 
         <Button
+            android:id="@+id/betygSlide"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:background="@null"
+            android:gravity="left|center_vertical"
+            android:text="@string/betyg"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp" />
+
+        <Button
             android:id="@+id/newsSlide"
             android:layout_width="fill_parent"
             android:layout_height="75dp"

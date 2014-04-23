@@ -1,6 +1,6 @@
 package com.alleit.alleinfo;
 
-public class KarPosts {
+public class NewsContent {
 
 	public String title;
 	public String desc;

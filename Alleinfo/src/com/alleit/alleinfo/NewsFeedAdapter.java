@@ -34,13 +34,13 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 		View rowView = inflater.inflate(R.layout.newsroll, null);
 
 		TextView desc = (TextView) rowView.findViewById(R.id.description);
-		desc.setText(datas[position].headline);
+		desc.setText(Html.fromHtml(datas[position].headline));
 
 		TextView type = (TextView) rowView.findViewById(R.id.type);
-		type.setText(datas[position].type);
+		type.setText(Html.fromHtml(datas[position].type).toString().toUpperCase(Locale.ENGLISH));
 
 		TextView handler = (TextView) rowView.findViewById(R.id.handler);
-		handler.setText(datas[position].handler);
+		handler.setText(Html.fromHtml(datas[position].handler).toString().toUpperCase(Locale.ENGLISH));
 
 		if (datas[position].handler != null) {
 			checkColor(handler, position);
@@ -51,37 +51,45 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 		return rowView;
 	}
 
-	private void checkColor(TextView handler, int position) {
-		if (datas[position].handler.contains(Html.fromHtml(Karlista.Ename)
+	private void checkColor(TextView HandTXT, int position) {
+		
+		String handler = String.valueOf(Html.fromHtml(datas[position].handler)).toUpperCase(Locale.ENGLISH);
+				
+		if (handler.contains(Html.fromHtml(Posterlist.Ename)
 				.toString().toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.Ecolor));
-		} else if (datas[position].handler.contains(Html
-				.fromHtml(Karlista.PRname).toString()
+			HandTXT.setTextColor(Color.parseColor(Posterlist.Ecolor));
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.PRname).toString()
 				.toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.PRcolor));
+			HandTXT.setTextColor(Color.parseColor(Posterlist.PRcolor));
 
-		} else if (datas[position].handler.contains(Html
-				.fromHtml(Karlista.Fname).toString()
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.Fname).toString()
 				.toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.Fcolor));
+			HandTXT.setTextColor(Color.parseColor(Posterlist.Fcolor));
 
-		} else if (datas[position].handler.contains(Html
-				.fromHtml(Karlista.spexname).toString()
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.spexname).toString()
 				.toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.spexcolor));
+			HandTXT.setTextColor(Color.parseColor(Posterlist.spexcolor));
 
-		} else if (datas[position].handler.contains(Html
-				.fromHtml(Karlista.IFname).toString()
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.IFname).toString()
 				.toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.IFcolor));
+			HandTXT.setTextColor(Color.parseColor(Posterlist.IFcolor));
 
-		} else if (datas[position].handler.contains(Html
-				.fromHtml(Karlista.ITname).toString()
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.ITname).toString()
 				.toUpperCase(Locale.ENGLISH))) {
-			handler.setTextColor(Color.parseColor(Karlista.ITcolor));
+			HandTXT.setTextColor(Color.parseColor(Posterlist.ITcolor));
+
+		} else if (handler.contains(Html
+				.fromHtml(Posterlist.Skolaname).toString()
+				.toUpperCase(Locale.ENGLISH))) {
+			HandTXT.setTextColor(Color.parseColor(Posterlist.Skolacolor));
 
 		} else {
-			handler.setTextColor(Color.BLACK);
+			HandTXT.setTextColor(Color.BLACK);
 		}
 	}
 }

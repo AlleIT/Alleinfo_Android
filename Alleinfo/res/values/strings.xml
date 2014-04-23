@@ -12,12 +12,13 @@ When handling ÅÄÖ
     <string name="home">Hem</string>
     <string name="scheme">Schema</string>
     <string name="food">Skolmat</string>
+    <string name="betyg">Betyg</string>
     <string name="itslearning">It\'s learning</string>
     <string name="elevkar">Elevk<![CDATA[å]]>ren</string>
     <string name="newr">Nyheter</string>
     <string name="dexter">Dexter</string>
     
-    <string name="news">Nyheter fr<![CDATA[å]]>n elevk<![CDATA[å]]>ren</string>
+    <string name="news">Nyheter</string>
     
     <string name="angeDittPers">Ange ditt personnummer</string>
     <string name="choosePin">V<![CDATA[ä]]>lj en PIN-kod</string>
@@ -32,6 +33,7 @@ When handling ÅÄÖ
     
     <string name="forward">Fram<![CDATA[å]]>t</string>
     <string name="back">Bak<![CDATA[å]]>t</string>
+    <string name="openInBrowser"><![CDATA[Ö]]>ppna i webbl<![CDATA[ä]]>saren</string>
     
     <string name="bemember">Bli medlem</string>
     <string name="contact">Kontakta elevkåren</string>
@@ -53,6 +55,7 @@ When handling ÅÄÖ
         <item>#6AB52C</item> <!-- Hem -->
         <item>#29b7eb</item> <!-- Schema -->
         <item>#c1cc67</item> <!-- Skolmat -->
+        <item>#DBB314</item> <!-- Betyg -->
         <item>#9c2a89</item> <!-- Nyheter -->
         <item>#445Fa9</item> <!-- Elevkåren -->
         <item>#e6332a</item> <!-- Dexter -->
@@ -72,5 +75,6 @@ When handling ÅÄÖ
     <string name="noExtra">--Ingen info--</string>
     <string name="noDesc">--Ingen beskrivning--</string>
     <string name="desc">Beskrivning:</string>
+    <string name="PULText">Dina uppgifter sparas krypterat med ditt personliga l<![CDATA[ö]]>senord och endast lokalt p<![CDATA[å]]> din enhet. Uppgifterna anv<![CDATA[ä]]>nds f<![CDATA[ö]]>r att h<![CDATA[ä]]>mta ditt personliga schema.</string>
     
 </resources>

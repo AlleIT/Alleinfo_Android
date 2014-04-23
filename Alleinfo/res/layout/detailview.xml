@@ -17,7 +17,7 @@
         android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#222222" >
+        android:background="#FFF3F3F3" >
 
         <ImageView
             android:id="@+id/pic"
@@ -37,7 +37,7 @@
             android:layout_toRightOf="@+id/pic"
             android:text="@string/noHead"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/info"
@@ -47,7 +47,7 @@
             android:layout_alignLeft="@+id/head"
             android:text="@string/noExtra"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF" />
+            android:textColor="#000000" />
 
         <Button
             android:id="@+id/button"
@@ -57,7 +57,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:text="@null"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textColorHint="#DDDDDD" />
 
     </RelativeLayout>
@@ -65,7 +65,7 @@
     <RelativeLayout
         android:id="@+id/separator"
         android:layout_width="fill_parent"
-        android:layout_height="2dp"
+        android:layout_height="5dp"
         android:layout_below="@+id/top"
         android:background="#FFFFFF" />
 
