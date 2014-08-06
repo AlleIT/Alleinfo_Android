@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    
-    <item android:id="@+id/whatWeekContainer" android:icon="@drawable/weekchoice" android:showAsAction="always" android:title="@string/weekchoice">
+    <item
+        android:id="@+id/chng_user"
+        android:icon="@drawable/chng_user"
+        android:showAsAction="always"
+        android:title="@string/chng_user">
+    </item>
+    <item
+        android:id="@+id/whatWeekContainer"
+        android:icon="@drawable/weekchoice"
+        android:showAsAction="always"
+        android:title="@string/weekchoice">
         <menu>
-            <group android:id="@+id/weekboxes" android:checkableBehavior="single">
-                <item android:id="@+id/thisWeek" android:checked="true" android:title="@string/thisweek" />
-                <item android:id="@+id/nextWeek" android:checked="false" android:title="@string/nextweek" />
+            <group
+                android:id="@+id/weekboxes"
+                android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/thisWeek"
+                    android:checked="true"
+                    android:title="@string/thisweek"/>
+                <item
+                    android:id="@+id/nextWeek"
+                    android:checked="false"
+                    android:title="@string/nextweek"/>
             </group>
         </menu>
-    </item><item
+    </item>
+    <item
         android:id="@+id/WeekDayContainer"
         android:icon="@drawable/pickday"
         android:showAsAction="always"
@@ -65,15 +83,35 @@
         android:showAsAction="always"
         android:title="@string/openInBrowser">
     </item>
-    <item android:id="@+id/beMember" android:title="@string/bemember" android:showAsAction="always"></item>
-    <item android:id="@+id/contact" android:icon="@drawable/contact" android:title="@string/contact" android:showAsAction="always">
+    <item
+        android:id="@+id/beMember"
+        android:showAsAction="always"
+        android:title="@string/bemember">
+    </item>
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/contact"
+        android:showAsAction="always"
+        android:title="@string/contact">
         <menu>
-            <item android:id="@+id/contactKaren" android:title="@string/theboard"/>
-            <item android:id="@+id/contactpr" android:title="@string/PR"/>
-            <item android:id="@+id/contactFestare" android:title="@string/festare"/>
-            <item android:id="@+id/contactSpex" android:title="@string/spex"/>
-            <item android:id="@+id/contactSkolIF" android:title="@string/skolif"/>
-            <item android:id="@+id/contactIT" android:title="@string/IT"/>
+            <item
+                android:id="@+id/contactKaren"
+                android:title="@string/theboard"/>
+            <item
+                android:id="@+id/contactpr"
+                android:title="@string/PR"/>
+            <item
+                android:id="@+id/contactFestare"
+                android:title="@string/festare"/>
+            <item
+                android:id="@+id/contactSpex"
+                android:title="@string/spex"/>
+            <item
+                android:id="@+id/contactSkolIF"
+                android:title="@string/skolif"/>
+            <item
+                android:id="@+id/contactIT"
+                android:title="@string/IT"/>
         </menu>
     </item>
 

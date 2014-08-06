@@ -32,12 +32,15 @@ public class Webber {
 
 	// URL for signing up to elevkåren
 	public static String signupAddress = "http://ebas.gymnasiet.sverigeselevkarer.se/signups/index/539";
+	
+	// IP to server
+	public static String serverAddress = "83.223.17.30"; // TODO: Change to teknikprogrammet.net when URL is back
 
 	// XXX: End Of Area
 
 	// XXX: Facebook ID:s in this area
 
-	public static String theboard = "328398517288602";
+	public static String theboard = "328398517288602"; // Styrelsen
 	public static String PR = "324024177734072";
 	public static String festare = "305522136255915";
 	public static String spex = "268351709901709";
@@ -211,7 +214,6 @@ public class Webber {
 				i++;
 			}
 		}
-		// return value
 		return feed;
 	}
 
@@ -220,7 +222,7 @@ public class Webber {
 		String htmlResponse;
 
 		try {
-			HttpHost targetHost = new HttpHost("teknikprogrammet.net");
+			HttpHost targetHost = new HttpHost(serverAddress);
 			HttpGet targetGet = new HttpGet(
 					"/AlleIT/Alleinfo/webadmin/includes/studentbody_news.php");
 			HttpClient httpClient = new DefaultHttpClient();

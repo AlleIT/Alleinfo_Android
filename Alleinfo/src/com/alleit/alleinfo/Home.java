@@ -5,18 +5,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.alleit.Alleinfo_Android.R;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,10 +24,15 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -49,10 +50,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Home extends SherlockActivity {
+public class Home extends Activity {
 
 	Drawable currcolor;
 
@@ -63,7 +65,6 @@ public class Home extends SherlockActivity {
 	Button home;
 	Button schedule;
 	Button food;
-	Button betyg;
 	Button news;
 	Button elevkaren;
 	Button dexter;
@@ -77,8 +78,8 @@ public class Home extends SherlockActivity {
 	// The user's location
 	HomePage current = HomePage.Start;
 
-	SlidingMenu leftBar;
 	ActionBar bar;
+	ActionBarDrawerToggle mDrawerToggle;
 	ViewGroup viewGroup;
 	Menu menu;
 
@@ -89,6 +90,8 @@ public class Home extends SherlockActivity {
 	Point xy;
 	Context c;
 	WebView mWebView;
+	DrawerLayout mDrawerLayout;
+	ScrollView leftBar;
 	AlertDialog AD;
 	private String number = null;
 	SharedPreferences sharedP;
@@ -105,28 +108,34 @@ public class Home extends SherlockActivity {
 
 		// Get personal number
 		Intent fromIntent = getIntent();
-		number = fromIntent.getStringExtra("number");
+		number = fromIntent.getStringExtra(PreferenceInfo.Pers_Num_Name);
 
-		sharedP = this.getPreferences(MODE_PRIVATE);
+		sharedP = getApplicationContext().getSharedPreferences(
+				PreferenceInfo.Preference_Name, MODE_PRIVATE);
 
 		if (fromIntent.getBooleanExtra("Stored", false) == false) {
-			isPlayingSport = fromIntent.getBooleanExtra("playSport", false);
+			isPlayingSport = fromIntent.getBooleanExtra(
+					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		} else {
-			isPlayingSport = sharedP.getBoolean("playSports", false);
+			isPlayingSport = sharedP.getBoolean(
+					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		}
 
-		// Set up sidebar menu
-		leftBar = new SlidingMenu(this);
-		leftBar.setMode(SlidingMenu.LEFT);
-		leftBar.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		leftBar.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		leftBar.setBehindWidth((int) (getApplicationContext().getResources()
-				.getDisplayMetrics().density * 300));
-		leftBar.setMenu(R.layout.leftbar);
+		/*
+		 * TODO: Remove // Set up sidebar menu leftBar = new SlidingMenu(this);
+		 * leftBar.setMode(SlidingMenu.LEFT);
+		 * leftBar.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		 * leftBar.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		 * leftBar.setBehindWidth((int) (getApplicationContext().getResources()
+		 * .getDisplayMetrics().density * 300));
+		 * leftBar.setMenu(R.layout.leftbar);
+		 */
 
 		c = this;
 
 		viewGroup = (ViewGroup) findViewById(R.id.content);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		leftBar = (ScrollView) findViewById(R.id.leftBarContainer);
 
 		/*
 		 * Please keep these in the same order as the actual buttons
@@ -135,7 +144,6 @@ public class Home extends SherlockActivity {
 		home = (Button) findViewById(R.id.homeSlide);
 		schedule = (Button) findViewById(R.id.schemeSlide);
 		food = (Button) findViewById(R.id.foodSlide);
-		betyg = (Button) findViewById(R.id.betygSlide);
 		news = (Button) findViewById(R.id.newsSlide);
 		elevkaren = (Button) findViewById(R.id.karSlide);
 		dexter = (Button) findViewById(R.id.dexSlide);
@@ -150,10 +158,12 @@ public class Home extends SherlockActivity {
 			xy = new Point(display.getWidth(), display.getHeight());
 		}
 
-		bar = getSupportActionBar();
-		bar.setDisplayHomeAsUpEnabled(false);
+		bar = getActionBar();
+		bar.setDisplayHomeAsUpEnabled(true);
 		bar.setHomeButtonEnabled(true);
+		bar.setBackgroundDrawable(new ColorDrawable(0xff222222));
 		colorlist = getResources().getStringArray(R.array.colors);
+		SetUpLeftBar();
 		makeHome();
 
 		/*
@@ -185,15 +195,6 @@ public class Home extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				makeFood();
-			}
-		});
-
-		// if user clicks on grade button
-
-		betyg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeBetyg();
 			}
 		});
 
@@ -232,6 +233,31 @@ public class Home extends SherlockActivity {
 				makeItsLearning();
 			}
 		});
+	}
+
+	private void SetUpLeftBar() {
+
+		mDrawerToggle = new ActionBarDrawerToggle(
+				this, mDrawerLayout, /* DrawerLayout object */
+				R.drawable.ic_navigation_drawer, /*
+										 * nav drawer image to replace 'Up'
+										 * caret
+										 */
+				R.string.app_name, /*
+									 * "open drawer" description for
+									 * accessibility
+									 */
+				R.string.app_name /* "close drawer" description for accessibility */
+		);
+		mDrawerLayout.post(new Runnable() {
+
+			@Override
+			public void run() {
+				mDrawerToggle.syncState();
+			}
+		});
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
 	}
 
 	/*
@@ -282,9 +308,7 @@ public class Home extends SherlockActivity {
 			prepWeb();
 			prepFeed();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeScheme() {
@@ -296,9 +320,7 @@ public class Home extends SherlockActivity {
 			showThisWeek = true;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -309,21 +331,8 @@ public class Home extends SherlockActivity {
 			current = HomePage.Mat;
 			checkColors();
 		}
-		leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
-	}
-
-	private void makeBetyg() {
-		if (current != HomePage.Betyg) {
-			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.betyg, null));
-			current = HomePage.Betyg;
-			checkColors();
-		}
-		leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
-		
 	}
 
 	private void makeNews() {
@@ -333,9 +342,7 @@ public class Home extends SherlockActivity {
 			current = HomePage.Nyheter;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepFeed();
 	}
 
@@ -439,9 +446,7 @@ public class Home extends SherlockActivity {
 			});
 
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeKar() {
@@ -510,9 +515,7 @@ public class Home extends SherlockActivity {
 			});
 
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeKarSub(StudentAssembly SA) {
@@ -614,9 +617,7 @@ public class Home extends SherlockActivity {
 			});
 
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeDexter() {
@@ -626,9 +627,7 @@ public class Home extends SherlockActivity {
 			current = HomePage.Dexter;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -639,9 +638,7 @@ public class Home extends SherlockActivity {
 			current = HomePage.ItsLearning;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -792,8 +789,6 @@ public class Home extends SherlockActivity {
 		}).start();
 	}
 
-	// Check colors for the different buttons in the menu
-
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public void checkColors() {
@@ -801,51 +796,18 @@ public class Home extends SherlockActivity {
 		currcolor = new ColorDrawable(Color.TRANSPARENT);
 
 		// Reset the colors of all the buttons in the sidebar
-		// Please keep these in the same order as the actual buttons
 
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			home.setBackgroundDrawable(currcolor);
-		else
-			home.setBackground(currcolor);
+		LinearLayout container = (LinearLayout) findViewById(R.id.slideContainer);
+		for (int i = 0; i < (container).getChildCount(); i++) {
+			Button b = (Button) container.getChildAt(i);
 
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			schedule.setBackgroundDrawable(currcolor);
-		else
-			schedule.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			food.setBackgroundDrawable(currcolor);
-		else
-			food.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			betyg.setBackgroundDrawable(currcolor);
-		else
-			betyg.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			news.setBackgroundDrawable(currcolor);
-		else
-			news.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			elevkaren.setBackgroundDrawable(currcolor);
-		else
-			elevkaren.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			dexter.setBackgroundDrawable(currcolor);
-		else
-			dexter.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			itsLearning.setBackgroundDrawable(currcolor);
-		else
-			itsLearning.setBackground(currcolor);
+			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				b.setBackgroundDrawable(currcolor);
+			else
+				b.setBackground(currcolor);
+		}
 
 		switch (current) {
-
-		// which case, depends on what button the user clicks on
 
 		case Home:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
@@ -874,15 +836,6 @@ public class Home extends SherlockActivity {
 				food.setBackground(currcolor);
 			break;
 
-		case Betyg:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
-			bar.setTitle("Betyg");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				betyg.setBackgroundDrawable(currcolor);
-			else
-				betyg.setBackground(currcolor);			
-			break;
-			
 		case Nyheter:
 		case Nyheter_SUB:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
@@ -937,8 +890,6 @@ public class Home extends SherlockActivity {
 			break;
 		}
 	}
-
-	// progressbar, show loading when web is loading
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
@@ -1147,8 +1098,14 @@ public class Home extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		mDrawerLayout.closeDrawers();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
+
+		if (current == HomePage.Home || current == HomePage.Schema)
+			menu.findItem(R.id.chng_user).setVisible(true);
+		else
+			menu.findItem(R.id.chng_user).setVisible(false);
 
 		if (current == HomePage.Schema) {
 			menu.findItem(R.id.WeekDayContainer).setVisible(true);
@@ -1159,7 +1116,9 @@ public class Home extends SherlockActivity {
 
 				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 16
-						&& !sharedP.getBoolean("playSports", false)
+						&& !sharedP.getBoolean(
+								PreferenceInfo.Extended_Schedule_Display_Name,
+								false)
 						|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 20) {
 					showThisWeek = false;
@@ -1196,13 +1155,45 @@ public class Home extends SherlockActivity {
 		return true;
 	}
 
-	// toggle
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+          }
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			leftBar.toggle();
+
+		// Change user = Home and Schedule
+		case R.id.chng_user:
+			AlertDialog.Builder chng_user_notice = new AlertDialog.Builder(c);
+
+			chng_user_notice.setMessage(c.getString(R.string.chng_user_notice));
+			chng_user_notice.setTitle("Byta anv\u00E4ndare?");
+			chng_user_notice.setPositiveButton(
+					c.getString(android.R.string.yes),
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
+									.commit();
+
+							AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
+									c);
+
+							restart_app_notice.setMessage(c
+									.getString(R.string.restart_app_notice));
+							restart_app_notice
+									.setTitle("Appen m\u00E5ste startas om");
+							restart_app_notice.setPositiveButton(
+									c.getString(android.R.string.ok), null);
+							restart_app_notice.setCancelable(false);
+							restart_app_notice.create().show();
+						}
+					});
+			chng_user_notice.setNegativeButton(
+					c.getString(android.R.string.no), null);
+			chng_user_notice.setCancelable(false);
+			chng_user_notice.create().show();
 			return true;
 
 			// Schedule
@@ -1261,9 +1252,10 @@ public class Home extends SherlockActivity {
 				mWebView.goForward();
 			}
 			return true;
-			
+
 		case R.id.openInBrowser:
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mWebView.getOriginalUrl())); 
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(mWebView.getOriginalUrl()));
 			startActivity(browserIntent);
 			return true;
 
@@ -1306,18 +1298,16 @@ public class Home extends SherlockActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			leftBar.toggle();
+			mDrawerLayout.openDrawer(leftBar);
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// go back to home screen
-
 	@Override
 	public void onBackPressed() {
-		if (leftBar.isMenuShowing()) {
-			leftBar.toggle();
+		if (mDrawerLayout.isDrawerVisible(leftBar)) {
+			mDrawerLayout.closeDrawers();
 			return;
 		}
 		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {

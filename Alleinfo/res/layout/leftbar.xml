@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:id="@+id/leftBarContainer"
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
     android:background="#222222"
     android:scrollbars="none" >
 
     <LinearLayout
+        android:id="@+id/slideContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -16,6 +19,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/home"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
@@ -26,6 +30,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/scheme"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
@@ -36,17 +41,8 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/food"
-            android:textColor="#FFFFFF"
-            android:textSize="50sp" />
-
-        <Button
-            android:id="@+id/betygSlide"
-            android:layout_width="fill_parent"
-            android:layout_height="75dp"
-            android:background="@null"
-            android:gravity="left|center_vertical"
-            android:text="@string/betyg"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
 
@@ -56,6 +52,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/newr"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
@@ -66,6 +63,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/elevkar"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
@@ -76,6 +74,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/dexter"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
@@ -86,6 +85,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:gravity="left|center_vertical"
+            android:paddingLeft="10dp"
             android:text="@string/itslearning"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />

@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--
-Use
-<![CDATA[char]]>
-When handling ÅÄÖ
--->
-
 <resources>
-    <string name="app_name"><![CDATA[Å]]>lleinfo</string>
-    <string name="settings">Inst<![CDATA[ä]]>llningar</string>
+    <string name="app_name">\u00C5lleinfo</string>
+    
+    <string name="settings">Inst\u00E4llningar</string>
+    
+    <string name="chng_user">Byt anv\u00E4ndare</string>
+    
+    <string name="chng_user_notice">\u00C4r du s\u00E4ker p\u00E5 att du vill byta anv\u00E4ndare?</string>
+    <string name="restart_app_notice">Anv\u00E4ndarbytet sker n\u00E4sta g\u00E5ng appen startas.</string>
+    
     <string name="home">Hem</string>
     <string name="scheme">Schema</string>
     <string name="food">Skolmat</string>
     <string name="betyg">Betyg</string>
     <string name="itslearning">It\'s learning</string>
-    <string name="elevkar">Elevk<![CDATA[å]]>ren</string>
+    <string name="elevkar">Elevk\u00E5ren</string>
     <string name="newr">Nyheter</string>
     <string name="dexter">Dexter</string>
     
     <string name="news">Nyheter</string>
     
     <string name="angeDittPers">Ange ditt personnummer</string>
-    <string name="choosePin">V<![CDATA[ä]]>lj en PIN-kod</string>
+    <string name="choosePin">V\u00E4lj en PIN-kod</string>
     <string name="angeDinPin">Ange din PIN-kod</string>
-    <string name="cont">Forts<![CDATA[ä]]>tt</string>
-    <string name="change">Byt anv<![CDATA[ä]]>ndare</string>
+    <string name="cont">Forts\u00E4tt</string>
+    <string name="change">Byt anv\u00E4ndare</string>
     <string name="abort">Avbryt</string>
-    <string name="teacher">Lärare</string>
-    <string name="tryagain">F<![CDATA[ö]]>rs<![CDATA[ö]]>k igen</string>
+    <string name="teacher">L\u00E4rare</string>
+    <string name="tryagain">F\u00F6rs\u00F6k igen</string>
     <string name="savecred">Spara</string>
     <string name="saveSport">RIG/NIU/LIU</string>
     
-    <string name="forward">Fram<![CDATA[å]]>t</string>
-    <string name="back">Bak<![CDATA[å]]>t</string>
-    <string name="openInBrowser"><![CDATA[Ö]]>ppna i webbl<![CDATA[ä]]>saren</string>
+    <string name="forward">Fram\u00E5t</string>
+    <string name="back">Bak\u00E5t</string>
+    <string name="openInBrowser">\u00D6ppna i webbl\u00E4saren</string>
     
     <string name="bemember">Bli medlem</string>
     <string name="contact">Kontakta elevkåren</string>
     
     <string name="weekchoice">Vecka</string>
     <string name="day">Dag</string>
-    <string name="mon">M<![CDATA[å]]>ndag</string>
+    <string name="mon">M\u00E5ndag</string>
     <string name="tis">Tisdag</string>
     <string name="ons">Onsdag</string>
     <string name="tors">Torsdag</string>
@@ -49,7 +50,7 @@ When handling ÅÄÖ
     <string name="chngpers">Byt person</string>
 
     <string name="thisweek">Denna vecka</string>
-    <string name="nextweek">N<![CDATA[ä]]>sta vecka</string>
+    <string name="nextweek">N\u00E4sta vecka</string>
     
     <string-array name="colors">
         <item>#6AB52C</item> <!-- Hem -->
@@ -64,10 +65,10 @@ When handling ÅÄÖ
     
     <string name="theboard">Styrelsen</string>
     <string name="PR">PR</string>
-    <string name="festare"><![CDATA[Å]]>llefestare</string>
+    <string name="festare">\u00C5llefestare</string>
     <string name="spex">ÅlleSpex</string>
     <string name="skolif">Skol IF</string>
-    <string name="IT"><![CDATA[Å]]>lleIT</string>
+    <string name="IT">\u00C5lleIT</string>
     <string name="utskott">Utskott</string>
     <string name="foreningar">Föreningar</string>
     
@@ -75,6 +76,9 @@ When handling ÅÄÖ
     <string name="noExtra">--Ingen info--</string>
     <string name="noDesc">--Ingen beskrivning--</string>
     <string name="desc">Beskrivning:</string>
-    <string name="PULText">Dina uppgifter sparas krypterat med ditt personliga l<![CDATA[ö]]>senord och endast lokalt p<![CDATA[å]]> din enhet. Uppgifterna anv<![CDATA[ä]]>nds f<![CDATA[ö]]>r att h<![CDATA[ä]]>mta ditt personliga schema.</string>
+    <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r \u00C5lleinfos data inte kopierats till extern lagring.)</string>
+    
+    <!-- Short description of why the user needs to input his/her credentials again to log on to the app -->
+    <string name="dataEraseNote">Denna uppdateringen av \u00C5lleinfo kr\u00E4ver inte l\u00E4ngre ett l\u00F6senord, men du beh\u00F6ver tyv\u00E4rr fylla i dina uppgifter igen.</string>
     
 </resources>

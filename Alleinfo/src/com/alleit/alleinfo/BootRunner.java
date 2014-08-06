@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +17,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.alleit.Alleinfo_Android.R;
 
 public class BootRunner extends Activity {
@@ -26,42 +25,61 @@ public class BootRunner extends Activity {
 	String pin;
 	SharedPreferences SP;
 	String MY_PREFS = "";
-	SecurePreferences secPref;
 	private String number;
 	Context c;
-	DialogCodes returnCode;
-	Boolean isPlayingSport = false;
-	ViewGroup viewGroup;
+	Boolean shouldExtendScheduleTime = false;
 	Boolean Stored = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.board);
-		viewGroup = (ViewGroup) findViewById(R.id.content);
-		SP = this.getPreferences(MODE_PRIVATE);
+		SP = getApplicationContext().getSharedPreferences(
+				PreferenceInfo.Preference_Name, MODE_PRIVATE);
 
-		isPlayingSport = SP.getBoolean("playSports", false);
+		int currentVersion = SP.getInt(
+				PreferenceInfo.Current_Version_Code_Name, -1);
+		number = SP.getString(PreferenceInfo.Pers_Num_Name, "");
+
+		if (currentVersion != PreferenceInfo.currentVersionCode) {
+			if (number != "") {
+				/*
+				 * XXX: If data that should be saved across users is added,
+				 * change to edit().remove("keyname").commit()
+				 */
+				SP.edit().clear().commit();
+
+				number = "";
+
+				AlertDialog.Builder deleted_app_data_notice = new AlertDialog.Builder(
+						this);
+
+				deleted_app_data_notice.setMessage(this
+						.getString(R.string.dataEraseNote));
+				deleted_app_data_notice.setTitle("Ny uppdatering");
+				deleted_app_data_notice.setPositiveButton(
+						this.getString(android.R.string.ok), null);
+				deleted_app_data_notice.setCancelable(false);
+				deleted_app_data_notice.create().show();
+			}
+		}
+
+		number = SP.getString(PreferenceInfo.Pers_Num_Name, "");
+		shouldExtendScheduleTime = SP.getBoolean(
+				PreferenceInfo.Extended_Schedule_Display_Name, false);
 
 		c = this;
-		returnCode = DialogCodes.noError;
-		if (SP.getBoolean("RequirePIN", false)) {
-			// asks the user to write his/her pin code to get access to the
-			// application
-			InputPinDialog();
-		} else {
-			// Request personal number on start of the application
+		if (number == "") {
+			setContentView(R.layout.requestnum);
 			requestPersNumString();
-		}
+		} else
+			startApp();
 
 	}
 
 	public void requestPersNumString() {
-		viewGroup.removeAllViews();
-		viewGroup.addView(View.inflate(c, R.layout.requestnum, null));
 
 		// checkbox rig/niu
-		final CheckBox SS_CHECKBOX = (CheckBox) findViewById(R.id.saveSport);
+		final CheckBox RIGbox = (CheckBox) findViewById(R.id.saveSport);
 		((CheckBox) (findViewById(R.id.saveCreds)))
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -69,7 +87,8 @@ public class BootRunner extends Activity {
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						if (isChecked) {
-							AlertDialog.Builder PULNotice = new AlertDialog.Builder(c);
+							AlertDialog.Builder PULNotice = new AlertDialog.Builder(
+									c);
 
 							PULNotice.setMessage(c.getString(R.string.PULText));
 							PULNotice.setTitle("Hantering av personuppgifter");
@@ -88,10 +107,13 @@ public class BootRunner extends Activity {
 			public void onClick(View v) {
 				EditText inBox = (EditText) findViewById(R.id.numbox);
 				TextView prompt = (TextView) findViewById(R.id.prompttext);
+
+				inBox.setText("");
+
 				if (teach.getText() != "Elev") {
 					inBox.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 					teach.setText("Elev");
-					SS_CHECKBOX.setVisibility(View.INVISIBLE);
+					RIGbox.setVisibility(View.INVISIBLE);
 					prompt.setText(Html.fromHtml("Ange L&auml;rarID (\"BcA\")"));
 				} else {
 					// XXX: checked with System.out.println, consider changing
@@ -99,48 +121,46 @@ public class BootRunner extends Activity {
 					// InputType.XXXXX
 					inBox.setInputType(2);
 					teach.setText(Html.fromHtml("L&auml;rare"));
-					SS_CHECKBOX.setVisibility(View.VISIBLE);
+					RIGbox.setVisibility(View.VISIBLE);
 					prompt.setText(R.string.angeDittPers);
 				}
 			}
 
 		});
 
-		Button gotoPin = (Button) findViewById(R.id.angepin);
-		// check if pin code is saved
-		if (SP.getBoolean("RequirePIN", false)) {
-
-			gotoPin.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					InputPinDialog();
-
-				}
-
-			});
-		} else {
-			gotoPin.setVisibility(View.GONE);
-		}
-
-		// check if the personal number has the right length
-
 		Button cont = (Button) findViewById(R.id.submit);
 		cont.setOnClickListener(new OnClickListener() {
+
 			public void onClick(View v) {
+
 				EditText inBox = (EditText) findViewById(R.id.numbox);
 				String persnum = inBox.getText().toString();
+
+				// If user is a teacher
 				if (inBox.getInputType() != 2 && persnum.length() >= 3) {
-					CheckBox cb = (CheckBox) findViewById(R.id.saveCreds);
-					isPlayingSport = true;
+					CheckBox saveBox = (CheckBox) findViewById(R.id.saveCreds);
+					shouldExtendScheduleTime = true;
 					number = persnum;
 
-					if (cb.isChecked()) {
-						// if user clicks the "save button", save it.
-						SaveCredDialog();
+					if (saveBox.isChecked()) {
+						SP.edit()
+								.putString(PreferenceInfo.Pers_Num_Name, number)
+								.commit();
+						SP.edit()
+								.putBoolean(
+										PreferenceInfo.Extended_Schedule_Display_Name,
+										shouldExtendScheduleTime).commit();
+						SP.edit()
+								.putInt(PreferenceInfo.Current_Version_Code_Name,
+										PreferenceInfo.currentVersionCode)
+								.commit();
+
+						Stored = true;
 					} else {
-						handleResponse();
+						startApp();
 					}
+
+					// else if user is a student
 				} else if (persnum.length() == 10 || persnum.length() == 12) {
 					if (persnum.length() == 12) {
 						persnum = persnum.substring(2);
@@ -148,14 +168,29 @@ public class BootRunner extends Activity {
 					persnum = persnum.substring(0, 6) + "-"
 							+ persnum.substring(6);
 					number = persnum;
-					CheckBox cb = (CheckBox) findViewById(R.id.saveCreds);
+					CheckBox saveBox = (CheckBox) findViewById(R.id.saveCreds);
 
-					if (cb.isChecked()) {
-						isPlayingSport = SS_CHECKBOX.isChecked();
-						// if user clicks the "save button", save it.
-						SaveCredDialog();
+					// if user wish to save their login information
+					if (saveBox.isChecked()) {
+						shouldExtendScheduleTime = RIGbox.isChecked();
+
+						SP.edit()
+								.putString(PreferenceInfo.Pers_Num_Name, number)
+								.commit();
+						SP.edit()
+								.putBoolean(
+										PreferenceInfo.Extended_Schedule_Display_Name,
+										shouldExtendScheduleTime).commit();
+						SP.edit()
+								.putInt(PreferenceInfo.Current_Version_Code_Name,
+										PreferenceInfo.currentVersionCode)
+								.commit();
+
+						Stored = true;
+
+						startApp();
 					} else {
-						handleResponse();
+						startApp();
 					}
 
 				} else {
@@ -169,150 +204,12 @@ public class BootRunner extends Activity {
 
 	}
 
-	// save cred
-	public void SaveCredDialog() {
-		viewGroup.removeAllViews();
-		viewGroup.addView(View.inflate(c, R.layout.createpin, null));
-
-		Button cont = (Button) findViewById(R.id.submit);
-		cont.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-
-				EditText pinBox = (EditText) findViewById(R.id.numbox);
-				pin = pinBox.getText().toString();
-				if (pin.length() >= 4) {
-					String tester = "abcd1234";
-					try {
-						secPref = new SecurePreferences(c, "Creds", pin, true);
-						secPref.clear();
-						secPref.put("persNum", number);
-						secPref.put("compar", tester);
-						SP.edit().putBoolean("RequirePIN", true).commit();
-						SP.edit().putBoolean("playSports", isPlayingSport)
-								.commit();
-						Stored = true;
-
-					} catch (Exception e) {
-						e.printStackTrace();
-						Toast.makeText(c, "N&aring;got gick fel",
-								Toast.LENGTH_SHORT).show();
-
-						returnCode = DialogCodes.noError;
-						handleResponse();
-						return;
-					}
-					returnCode = DialogCodes.noError;
-					handleResponse();
-				} else {
-					Toast.makeText(
-							c,
-							"PIN-koden m&aring;ste minst vara p&aring; 4 tecken",
-							Toast.LENGTH_SHORT).show();
-					return;
-				}
-			}
-
-		});
-
-		// if the user abort the saving operation
-
-		Button abor = (Button) findViewById(R.id.abort);
-		abor.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Toast.makeText(c, "Personnumret sparades inte",
-						Toast.LENGTH_LONG).show();
-				returnCode = DialogCodes.noError;
-				handleResponse();
-			}
-		});
-
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-	}
-
-	// input pin dialog
-	public void InputPinDialog() {
-		viewGroup.removeAllViews();
-		viewGroup.addView(View.inflate(c, R.layout.requestpin, null));
-
-		Button cont = (Button) findViewById(R.id.submit);
-		cont.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				EditText pinBox = (EditText) findViewById(R.id.numbox);
-				pin = pinBox.getText().toString();
-				if (pin.length() >= 4) {
-					String persona = null;
-
-					secPref = new SecurePreferences(c, "Creds", pin, true);
-					String tester = secPref.getString("compar");
-					if (tester == null || tester.length() == 0) {
-						Toast.makeText(
-								c,
-								Html.fromHtml("L&ouml;senordet st&auml;mmer inte"),
-								Toast.LENGTH_SHORT).show();
-						return;
-					}
-
-					if (tester.equals("abcd1234")) {
-						persona = secPref.getString("persNum");
-					} else {
-						Toast.makeText(
-								c,
-								Html.fromHtml("L&ouml;senordet st&auml;mmer inte"),
-								Toast.LENGTH_SHORT).show();
-						return;
-					}
-					number = persona;
-					Stored = true;
-					returnCode = DialogCodes.noError;
-					handleResponse();
-				} else {
-					Toast.makeText(
-							c,
-							Html.fromHtml("PIN-koden m&aring;ste minst vara p&aring; 4 tecken"),
-							Toast.LENGTH_SHORT).show();
-					return;
-				}
-			}
-		});
-
-		// change user
-
-		Button chngUsr = (Button) findViewById(R.id.chuser);
-		chngUsr.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				requestPersNumString();
-			}
-		});
-	}
-
-	// prepare for launch
-
-	public void handleResponse() {
-		switch (returnCode) {
-		case abort:
-		case exit:
-		case Error:
-			finish();
-			break;
-		case noError:
-			startApp();
-			break;
-		default:
-			Toast.makeText(getApplicationContext(),
-					Html.fromHtml("N&aring;got gick fel"), Toast.LENGTH_SHORT)
-					.show();
-			finish();
-			break;
-		}
-	}
-
 	// start the application
 	public void startApp() {
 		Intent intent = new Intent("com.alleit.alleinfo.HOME");
-		intent.putExtra("number", number);
-		intent.putExtra("playSport", isPlayingSport);
+		intent.putExtra(PreferenceInfo.Pers_Num_Name, number);
+		intent.putExtra(PreferenceInfo.Extended_Schedule_Display_Name,
+				shouldExtendScheduleTime);
 		intent.putExtra("Stored", Stored);
 		startActivity(intent);
 		finish();
