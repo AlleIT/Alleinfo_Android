@@ -104,9 +104,6 @@
                 android:id="@+id/contactFestare"
                 android:title="@string/festare"/>
             <item
-                android:id="@+id/contactSpex"
-                android:title="@string/spex"/>
-            <item
                 android:id="@+id/contactSkolIF"
                 android:title="@string/skolif"/>
             <item

@@ -3,8 +3,6 @@ package com.alleit.alleinfo;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
 import com.alleit.Alleinfo_Android.R;
 
 import android.annotation.SuppressLint;
@@ -353,73 +351,38 @@ public class Home extends Activity {
 			current = HomePage.Nyheter_SUB;
 			checkColors();
 
-			ImageView Pic = (ImageView) findViewById(R.id.pic);
+			final ImageView Pic = (ImageView) findViewById(R.id.pic);
+			final ProgressBar imgLoadBar = (ProgressBar) findViewById(R.id.imageLoadBar);
 			Button but = (Button) findViewById(R.id.button);
-			TextView rubrik = (TextView) findViewById(R.id.head);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			rubrik.setText(listData[0].headline);
-			info.setText(listData[0].description);
-			desc.setText(listData[0].longDescription);
+			info.setText(listData[0].shortInfo);
+			desc.setText(listData[0].description);
 
-			String handler = String.valueOf(Html.fromHtml(listData[0].handler))
-					.toUpperCase(Locale.ENGLISH);
+			//TODO: Pic.setImageDrawable
+			
+			imgLoadBar.setVisibility(View.VISIBLE);
+			
+			new Thread(new Runnable() {
 
-			if (handler.contains(Html.fromHtml(Posterlist.Ename).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.elevkaren));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.Ecolor));
-			} else if (handler.contains(Html.fromHtml(Posterlist.PRname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.PRcolor));
+				@Override
+				public void run() {
+					final Drawable img = Webber.getImg(getApplicationContext(), listData[0].rawHandler);
+					
+					runOnUiThread(new Runnable() {
+						public void run() {
+							imgLoadBar.setVisibility(View.INVISIBLE);
+							Pic.setImageDrawable(img);
+						}
+					});
 
-			} else if (handler.contains(Html.fromHtml(Posterlist.Fname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.festare));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.Fcolor));
+				}
 
-			} else if (handler.contains(Html.fromHtml(Posterlist.spexname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources()
-						.getDrawable(R.drawable.spex));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.spexcolor));
-
-			} else if (handler.contains(Html.fromHtml(Posterlist.IFname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.skolif));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.IFcolor));
-
-			} else if (handler.contains(Html.fromHtml(Posterlist.ITname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.alleit));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.ITcolor));
-
-			} else if (handler.contains(Html.fromHtml(Posterlist.Skolaname)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.gymnasiet));
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.Skolacolor));
-
-			} else {
-				Toast.makeText(
-						getApplicationContext(),
-						Html.fromHtml("Ingen ansvarig nyhetspublicerare kunde hittas"),
-						Toast.LENGTH_SHORT).show();
-			}
+			}).start();
+			
+			separator.setBackgroundColor(Color.parseColor(listData[0].color));
 
 			but.setText("Mer info");
 
@@ -437,10 +400,15 @@ public class Home extends Activity {
 				public void onClick(View v) {
 
 					// Open the facebook page in the default browser.
+					try {
 					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
 							.parse(finURL));
 					startActivity(myIntent);
 
+					} catch (Exception e) {
+						e.printStackTrace();
+						Toast.makeText(getApplicationContext(), "Sidan kunde inte laddas", Toast.LENGTH_SHORT).show();
+					}
 				}
 
 			});
@@ -460,7 +428,6 @@ public class Home extends Activity {
 			LinearLayout theboardbut = (LinearLayout) findViewById(R.id.ebg);
 			LinearLayout prbut = (LinearLayout) findViewById(R.id.prbg);
 			LinearLayout festarebut = (LinearLayout) findViewById(R.id.festarebg);
-			LinearLayout spexbut = (LinearLayout) findViewById(R.id.spexbg);
 			LinearLayout skolifbut = (LinearLayout) findViewById(R.id.ifbg);
 			LinearLayout alleitbut = (LinearLayout) findViewById(R.id.itbg);
 
@@ -486,14 +453,6 @@ public class Home extends Activity {
 				@Override
 				public void onClick(View v) {
 					makeKarSub(StudentAssembly.allefestare);
-				}
-
-			});
-			spexbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.alleSpex);
 				}
 
 			});
@@ -525,9 +484,9 @@ public class Home extends Activity {
 			current = HomePage.Elevkaren_SUB;
 			checkColors();
 
+			final ProgressBar imgLoadBar = (ProgressBar) findViewById(R.id.imageLoadBar);
 			ImageView Pic = (ImageView) findViewById(R.id.pic);
 			Button but = (Button) findViewById(R.id.button);
-			TextView rubrik = (TextView) findViewById(R.id.head);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
@@ -536,65 +495,52 @@ public class Home extends Activity {
 
 			String url = "http://facebook.com/";
 
-			// Describṕtions picked up from facebook
+			imgLoadBar.setVisibility(View.INVISIBLE);
+			// Descriptions picked up from facebook
 			// XXX: These need to be updated or kept up to date in some way.
+			// XXX: Fix is under way for this!
 			switch (SA) {
 			case Styrelsen:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.elevkaren));
-				rubrik.setText(Html.fromHtml(Posterlist.Ename));
 				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.Ecolor));
+				bar.setTitle(Html.fromHtml(Posterlist.Ename));
+				// Separator setBackgroundColor
 				desc.setText(Html.fromHtml(Posterlist.Edesc));
 				url += Webber.theboard;
 				break;
 			case PR:
 				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				rubrik.setText(Html.fromHtml(Posterlist.PRname));
 				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.PRcolor));
+				bar.setTitle(Html.fromHtml(Posterlist.PRname));
+				// Separator setBackgroundColor
 				desc.setText(Html.fromHtml(Posterlist.PRdesc));
 				url += Webber.PR;
 				break;
 			case allefestare:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.festare));
-				rubrik.setText(Html.fromHtml(Posterlist.Fname));
+				bar.setTitle(Html.fromHtml(Posterlist.Fname));
 				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.Fcolor));
+				// Separator setBackgroundColor
 				desc.setText(Html.fromHtml(Posterlist.Fdesc));
 				url += Webber.festare;
-				break;
-			case alleSpex:
-				Pic.setImageDrawable(getResources()
-						.getDrawable(R.drawable.spex));
-				rubrik.setText(Html.fromHtml(Posterlist.spexname));
-				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.spexcolor));
-				desc.setText(Html.fromHtml(Posterlist.spexdesc));
-				url += Webber.spex;
 				break;
 			case SkolIF:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.skolif));
-				rubrik.setText(Html.fromHtml(Posterlist.IFname));
+				bar.setTitle(Html.fromHtml(Posterlist.IFname));
 				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.IFcolor));
+				// Separator setBackgroundColor
 				desc.setText(Html.fromHtml(Posterlist.IFdesc));
 				url += Webber.skolif;
 				break;
 			case alleIT:
 				Pic.setImageDrawable(getResources().getDrawable(
 						R.drawable.alleit));
-				rubrik.setText(Html.fromHtml(Posterlist.ITname));
+				bar.setTitle(Html.fromHtml(Posterlist.ITname));
 				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Posterlist.ITcolor));
+				// Separator setBackgroundColor
 				desc.setText(Html.fromHtml(Posterlist.ITdesc));
 				url += Webber.IT;
 				break;
@@ -777,7 +723,7 @@ public class Home extends Activity {
 						} else {
 							Toast.makeText(
 									getApplicationContext(),
-									Html.fromHtml("Nyheten kunde inte hittas."),
+									"Nyheten kunde inte hittas.",
 									Toast.LENGTH_SHORT).show();
 							prepFeed();
 						}
@@ -1277,11 +1223,7 @@ public class Home extends Activity {
 		case R.id.contactFestare:
 			sendEmail(Posterlist.Femail);
 			return true;
-
-		case R.id.contactSpex:
-			sendEmail(Posterlist.spexemail);
-			return true;
-
+			
 		case R.id.contactSkolIF:
 			sendEmail(Posterlist.IFemail);
 			return true;

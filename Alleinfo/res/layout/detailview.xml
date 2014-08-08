@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:background="#222222"
     android:orientation="vertical" >
-    
-    <!--  makes the RelativeLayout parent fill the screen -->
-    <View 
+
+    <!-- makes the RelativeLayout parent fill the screen -->
+
+    <View
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/top"
@@ -19,23 +20,39 @@
         android:layout_alignParentTop="true"
         android:background="#FFF3F3F3" >
 
-        <ImageView
-            android:id="@+id/pic"
+        <RelativeLayout
+            android:id="@+id/picContainer"
             android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@null" />
+            android:layout_marginLeft="10dp" >
 
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@null" />
+
+            <ProgressBar
+                android:id="@+id/imageLoadBar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+        
         <TextView
-            android:id="@+id/head"
+            android:id="@+id/shortInfoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/pic"
-            android:text="@string/noHead"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/picContainer"
+            android:text="@string/shortInfo"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#000000" />
 
@@ -43,8 +60,9 @@
             android:id="@+id/info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/head"
-            android:layout_alignLeft="@+id/head"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/shortInfoText"
+            android:layout_toRightOf="@+id/picContainer"
             android:text="@string/noExtra"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#000000" />
@@ -53,15 +71,15 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/info"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/picContainer"
             android:text="@null"
             android:textColor="#000000"
             android:textColorHint="#DDDDDD" />
-
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/separator"
         android:layout_width="fill_parent"
@@ -78,9 +96,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/desc"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF" />
-    
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -90,14 +108,13 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp" >
 
-    <TextView
-        android:id="@+id/desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/noDesc"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#FFFFFF" />
-    
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noDesc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFFFFF" />
     </ScrollView>
 
 </RelativeLayout>
