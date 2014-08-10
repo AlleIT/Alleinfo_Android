@@ -37,7 +37,6 @@
     <string name="openInBrowser">\u00D6ppna i webbl\u00E4saren</string>
     
     <string name="bemember">Bli medlem</string>
-    <string name="contact">Kontakta elevkåren</string>
     
     <string name="weekchoice">Vecka</string>
     <string name="day">Dag</string>
@@ -63,17 +62,10 @@
         <item>#F07F0A</item> <!-- It's learning -->
     </string-array>
     
-    <string name="theboard">Styrelsen</string>
-    <string name="PR">PR</string>
-    <string name="festare">\u00C5llefestare</string>
-    <string name="skolif">Skol IF</string>
-    <string name="IT">\u00C5lleIT</string>
-    <string name="utskott">Utskott</string>
-    <string name="foreningar">F\u00F6reningar</string>
-    
     <string name="noHead">--Ingen rubrik--</string>
     <string name="noExtra">--Ingen info--</string>
     <string name="noDesc">--Ingen beskrivning--</string>
+    <string name="noName">Inget namn</string>
     <string name="shortInfo">Kort info:</string>
     <string name="desc">Beskrivning:</string>
     <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r \u00C5lleinfos data inte kopierats till extern lagring.)</string>

@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.alleit.Alleinfo_Android.R;
 
-public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
+public class NewsFeedAdapter extends ArrayAdapter<NewsData> {
 	private Activity c;
-	private NewsInfo[] datas;
+	private NewsData[] datas;
 
 	public NewsFeedAdapter(Activity context, int textViewResourceId,
-			NewsInfo[] objects) {
+			NewsData[] objects) {
 		super(context, textViewResourceId, objects);
 		c = context;
 		datas = objects;
@@ -34,7 +34,7 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsInfo> {
 
 		TextView handler = (TextView) rowView.findViewById(R.id.handler);
 		handler.setText(datas[position].handler.toUpperCase(Locale.ENGLISH));
-
+		
 		handler.setTextColor(Color.parseColor(datas[position].color));
 
 		return rowView;

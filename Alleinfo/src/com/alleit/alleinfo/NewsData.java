@@ -1,7 +1,9 @@
 package com.alleit.alleinfo;
 
+import android.graphics.drawable.Drawable;
+
 // information about the news
-public class NewsInfo {
+public class NewsData {
 	public String headline = "";
 	public String shortInfo = "";
 	public String description = "";
@@ -11,5 +13,6 @@ public class NewsInfo {
 	public String rawHandler = "";
 	public String color = "";
 	public String uniqeIdentifier = "";
-	public int contentType = -2;
+	public Drawable image;
+	public ContentType contentType = ContentType.NoNews;
 }

@@ -88,28 +88,5 @@
         android:showAsAction="always"
         android:title="@string/bemember">
     </item>
-    <item
-        android:id="@+id/contact"
-        android:icon="@drawable/contact"
-        android:showAsAction="always"
-        android:title="@string/contact">
-        <menu>
-            <item
-                android:id="@+id/contactKaren"
-                android:title="@string/theboard"/>
-            <item
-                android:id="@+id/contactpr"
-                android:title="@string/PR"/>
-            <item
-                android:id="@+id/contactFestare"
-                android:title="@string/festare"/>
-            <item
-                android:id="@+id/contactSkolIF"
-                android:title="@string/skolif"/>
-            <item
-                android:id="@+id/contactIT"
-                android:title="@string/IT"/>
-        </menu>
-    </item>
 
 </menu>

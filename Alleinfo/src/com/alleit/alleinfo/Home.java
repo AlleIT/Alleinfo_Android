@@ -3,6 +3,7 @@ package com.alleit.alleinfo;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
 import com.alleit.Alleinfo_Android.R;
 
 import android.annotation.SuppressLint;
@@ -26,6 +27,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -81,7 +83,6 @@ public class Home extends Activity {
 	ViewGroup viewGroup;
 	Menu menu;
 
-	// TODO: Convert chosenDay to enum for simplicity
 	int chosenDay = -1;
 
 	Boolean showThisWeek = true;
@@ -94,7 +95,8 @@ public class Home extends Activity {
 	private String number = null;
 	SharedPreferences sharedP;
 	String pin = null;
-	NewsInfo[] listData;
+	NewsData[] newsListData;
+	PosterData[] posterListData;
 	Boolean isPlayingSport;
 
 	@SuppressWarnings("deprecation")
@@ -118,16 +120,6 @@ public class Home extends Activity {
 			isPlayingSport = sharedP.getBoolean(
 					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		}
-
-		/*
-		 * TODO: Remove // Set up sidebar menu leftBar = new SlidingMenu(this);
-		 * leftBar.setMode(SlidingMenu.LEFT);
-		 * leftBar.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		 * leftBar.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		 * leftBar.setBehindWidth((int) (getApplicationContext().getResources()
-		 * .getDisplayMetrics().density * 300));
-		 * leftBar.setMenu(R.layout.leftbar);
-		 */
 
 		c = this;
 
@@ -235,17 +227,18 @@ public class Home extends Activity {
 
 	private void SetUpLeftBar() {
 
-		mDrawerToggle = new ActionBarDrawerToggle(
-				this, mDrawerLayout, /* DrawerLayout object */
-				R.drawable.ic_navigation_drawer, /*
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, /*
+																		 * DrawerLayout
+																		 * object
+																		 */
+		R.drawable.ic_navigation_drawer, /*
 										 * nav drawer image to replace 'Up'
 										 * caret
 										 */
-				R.string.app_name, /*
-									 * "open drawer" description for
-									 * accessibility
-									 */
-				R.string.app_name /* "close drawer" description for accessibility */
+		R.string.app_name, /*
+							 * "open drawer" description for accessibility
+							 */
+		R.string.app_name /* "close drawer" description for accessibility */
 		);
 		mDrawerLayout.post(new Runnable() {
 
@@ -336,57 +329,37 @@ public class Home extends Activity {
 	private void makeNews() {
 		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.news, null));
+			viewGroup.addView(View.inflate(c, R.layout.list, null));
 			current = HomePage.Nyheter;
 			checkColors();
+			prepFeed();
 		}
 		Home.this.invalidateOptionsMenu();
-		prepFeed();
 	}
 
-	private void makeNewsSub() {
+	private void makeNewsSub(NewsData data) {
 		if (current != HomePage.Nyheter_SUB) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Nyheter_SUB;
 			checkColors();
 
-			final ImageView Pic = (ImageView) findViewById(R.id.pic);
-			final ProgressBar imgLoadBar = (ProgressBar) findViewById(R.id.imageLoadBar);
+			ImageView Pic = (ImageView) findViewById(R.id.pic);
 			Button but = (Button) findViewById(R.id.button);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			info.setText(listData[0].shortInfo);
-			desc.setText(listData[0].description);
+			info.setText(data.shortInfo);
+			desc.setText(data.description);
 
-			//TODO: Pic.setImageDrawable
-			
-			imgLoadBar.setVisibility(View.VISIBLE);
-			
-			new Thread(new Runnable() {
+			Pic.setImageDrawable(data.image);
 
-				@Override
-				public void run() {
-					final Drawable img = Webber.getImg(getApplicationContext(), listData[0].rawHandler);
-					
-					runOnUiThread(new Runnable() {
-						public void run() {
-							imgLoadBar.setVisibility(View.INVISIBLE);
-							Pic.setImageDrawable(img);
-						}
-					});
-
-				}
-
-			}).start();
-			
-			separator.setBackgroundColor(Color.parseColor(listData[0].color));
+			separator.setBackgroundColor(Color.parseColor(data.color));
 
 			but.setText("Mer info");
 
-			String url = listData[0].butURL;
+			String url = data.butURL;
 
 			if (url.length() == 0) {
 				but.setVisibility(View.INVISIBLE);
@@ -401,13 +374,15 @@ public class Home extends Activity {
 
 					// Open the facebook page in the default browser.
 					try {
-					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-							.parse(finURL));
-					startActivity(myIntent);
+						Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+								.parse(finURL));
+						startActivity(myIntent);
 
 					} catch (Exception e) {
 						e.printStackTrace();
-						Toast.makeText(getApplicationContext(), "Sidan kunde inte laddas", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),
+								"Sidan kunde inte laddas", Toast.LENGTH_SHORT)
+								.show();
 					}
 				}
 
@@ -420,140 +395,115 @@ public class Home extends Activity {
 	private void makeKar() {
 		if (current != HomePage.Elevkaren) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.elevkar, null));
+			viewGroup.addView(View.inflate(c, R.layout.list, null));
+			HomePage lastPage = current;
 			current = HomePage.Elevkaren;
 			checkColors();
 
-			// "buttons" for the various student assemblies
-			LinearLayout theboardbut = (LinearLayout) findViewById(R.id.ebg);
-			LinearLayout prbut = (LinearLayout) findViewById(R.id.prbg);
-			LinearLayout festarebut = (LinearLayout) findViewById(R.id.festarebg);
-			LinearLayout skolifbut = (LinearLayout) findViewById(R.id.ifbg);
-			LinearLayout alleitbut = (LinearLayout) findViewById(R.id.itbg);
+			final Activity a = this;
+			final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
+			final ListView elevkarListView = (ListView) findViewById(R.id.feed);
 
-			// Clickevents
-			theboardbut.setOnClickListener(new OnClickListener() {
+			if (lastPage != HomePage.Elevkaren_SUB) {
+				LoadEntriesBar.setVisibility(View.VISIBLE);
 
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						final PosterData[] temp = Webber.getKarInfo(c);
+
+						runOnUiThread(new Runnable() {
+							public void run() {
+								if (temp.length == 0) {
+									posterListData = new PosterData[1];
+									posterListData[0] = new PosterData();
+									posterListData[0].name = "Fel :'(";
+									posterListData[0].color = "#FFFFFF";
+									posterListData[0].logo = c
+											.getResources()
+											.getDrawable(
+													android.R.drawable.ic_menu_report_image);
+								} else {
+									posterListData = temp;
+								}
+								elevkarListView.setDividerHeight((int) TypedValue
+										.applyDimension(
+												TypedValue.COMPLEX_UNIT_DIP, 0,
+												getResources()
+														.getDisplayMetrics()));
+
+								ElevkarEntriesAdapter itemAdapter = new ElevkarEntriesAdapter(
+										a, R.layout.elevkar_entry,
+										posterListData);
+								elevkarListView.setAdapter(itemAdapter);
+								LoadEntriesBar.setVisibility(View.INVISIBLE);
+							}
+						});
+
+					}
+
+				}).start();
+			} else {
+				elevkarListView.setDividerHeight((int) TypedValue
+						.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0,
+								getResources().getDisplayMetrics()));
+
+				ElevkarEntriesAdapter itemAdapter = new ElevkarEntriesAdapter(
+						a, R.layout.elevkar_entry, posterListData);
+				elevkarListView.setAdapter(itemAdapter);
+				LoadEntriesBar.setVisibility(View.INVISIBLE);
+
+			}
+
+			elevkarListView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.Styrelsen);
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					if (posterListData.length <= 1)
+						return;
+
+					makeKarSub(position);
 				}
-
 			});
-			prbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.PR);
-				}
-
-			});
-			festarebut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.allefestare);
-				}
-
-			});
-			skolifbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.SkolIF);
-				}
-
-			});
-			alleitbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.alleIT);
-				}
-
-			});
-
 		}
 		Home.this.invalidateOptionsMenu();
 	}
 
-	private void makeKarSub(StudentAssembly SA) {
+	private void makeKarSub(int position) {
 		if (current != HomePage.Elevkaren_SUB) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Elevkaren_SUB;
 			checkColors();
 
-			final ProgressBar imgLoadBar = (ProgressBar) findViewById(R.id.imageLoadBar);
+			final String finURL = posterListData[position].socialLink;
+
 			ImageView Pic = (ImageView) findViewById(R.id.pic);
 			Button but = (Button) findViewById(R.id.button);
+			TextView infoHead = (TextView) findViewById(R.id.shortInfoText);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			but.setText("Besök Facebooksidan");
+			infoHead.setVisibility(View.INVISIBLE);
+			info.setText("");
 
-			String url = "http://facebook.com/";
+			bar.setTitle(posterListData[position].name);
 
-			imgLoadBar.setVisibility(View.INVISIBLE);
-			// Descriptions picked up from facebook
-			// XXX: These need to be updated or kept up to date in some way.
-			// XXX: Fix is under way for this!
-			switch (SA) {
-			case Styrelsen:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.elevkaren));
-				info.setText("");
-				bar.setTitle(Html.fromHtml(Posterlist.Ename));
-				// Separator setBackgroundColor
-				desc.setText(Html.fromHtml(Posterlist.Edesc));
-				url += Webber.theboard;
-				break;
-			case PR:
-				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				info.setText("");
-				bar.setTitle(Html.fromHtml(Posterlist.PRname));
-				// Separator setBackgroundColor
-				desc.setText(Html.fromHtml(Posterlist.PRdesc));
-				url += Webber.PR;
-				break;
-			case allefestare:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.festare));
-				bar.setTitle(Html.fromHtml(Posterlist.Fname));
-				info.setText("");
-				// Separator setBackgroundColor
-				desc.setText(Html.fromHtml(Posterlist.Fdesc));
-				url += Webber.festare;
-				break;
-			case SkolIF:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.skolif));
-				bar.setTitle(Html.fromHtml(Posterlist.IFname));
-				info.setText("");
-				// Separator setBackgroundColor
-				desc.setText(Html.fromHtml(Posterlist.IFdesc));
-				url += Webber.skolif;
-				break;
-			case alleIT:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.alleit));
-				bar.setTitle(Html.fromHtml(Posterlist.ITname));
-				info.setText("");
-				// Separator setBackgroundColor
-				desc.setText(Html.fromHtml(Posterlist.ITdesc));
-				url += Webber.IT;
-				break;
-			}
+			Pic.setImageDrawable(posterListData[position].logo);
 
-			final String finURL = url;
+			desc.setText(posterListData[position].description);
 
+			separator.setBackgroundColor(Color
+					.parseColor(posterListData[position].color));
+
+			but.setText("Sociala medier");
 			but.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 
-					// Open the facebook page in the default browser.
 					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
 							.parse(finURL));
 					startActivity(myIntent);
@@ -594,36 +544,40 @@ public class Home extends Activity {
 		final Activity a = this;
 		if (current == HomePage.Home) {
 			final ListView listView = (ListView) a.findViewById(R.id.mininew);
+			final ProgressBar miniNewsPBar = (ProgressBar) a
+					.findViewById(R.id.miniNewsPBar);
+			miniNewsPBar.setVisibility(View.VISIBLE);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					List<NewsInfo> temp = Arrays.asList(Webber
-							.getTinyNewsFeed());
+					List<NewsData> temp = Arrays.asList(Webber
+							.getTinyNewsFeed(c));
 
 					if (temp.isEmpty()) {
-						listData = new NewsInfo[0];
+						newsListData = new NewsData[0];
 					} else {
 						int i = 0;
-						listData = new NewsInfo[temp.size()];
-						for (NewsInfo NI : temp) {
-							listData[i] = NI;
+						newsListData = new NewsData[temp.size()];
+						for (NewsData NI : temp) {
+							newsListData[i] = NI;
 							i++;
 						}
 					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if (listData.length == 0) {
-								listData = new NewsInfo[1];
-								listData[0] = new NewsInfo();
-								listData[0].headline = "Inga nyheter hittades";
-								listData[0].contentType = -1;
+							if (newsListData.length == 0) {
+								newsListData = new NewsData[1];
+								newsListData[0] = new NewsData();
+								newsListData[0].headline = "Inga nyheter hittades";
+								newsListData[0].contentType = ContentType.NoNews;
 							}
 							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, listData);
+									a, R.layout.newsroll, newsListData);
 							listView.setAdapter(itemAdapter);
+							miniNewsPBar.setVisibility(View.INVISIBLE);
 						}
 					});
 
@@ -635,46 +589,47 @@ public class Home extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					if (listData[position].contentType == 1) {
+					if (newsListData[position].contentType == ContentType.ShowMoreNews) {
 						makeNews();
-					} else {
-						if (listData[position].contentType != -1)
-							ShowSpecNews(listData[position].uniqeIdentifier);
-					}
+					} else if (newsListData[position].contentType == ContentType.News)
+						makeNewsSub(newsListData[position]);
+
 				}
 			});
 		} else if (current == HomePage.Nyheter) {
+			final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
 			final ListView listView = (ListView) a.findViewById(R.id.feed);
+			LoadEntriesBar.setVisibility(View.VISIBLE);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					List<NewsInfo> temp = Arrays.asList(Webber.getNews("",
-							Mode.All));
+					List<NewsData> temp = Arrays.asList(Webber.getNews(c, ""));
 
 					if (temp.isEmpty()) {
-						listData = new NewsInfo[0];
+						newsListData = new NewsData[0];
 					} else {
 						int i = 0;
-						listData = new NewsInfo[temp.size()];
-						for (NewsInfo NI : temp) {
-							listData[i] = NI;
+						newsListData = new NewsData[temp.size()];
+						for (NewsData NI : temp) {
+							newsListData[i] = NI;
 							i++;
 						}
 					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if (listData.length == 0) {
-								listData = new NewsInfo[1];
-								listData[0] = new NewsInfo();
-								listData[0].headline = "Inga nyheter hittades";
-								listData[0].contentType = -1;
+							if (newsListData.length == 0) {
+								newsListData = new NewsData[1];
+								newsListData[0] = new NewsData();
+								newsListData[0].headline = "Inga nyheter hittades";
+								newsListData[0].contentType = ContentType.NoNews;
 							}
 							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, listData);
+									a, R.layout.newsroll, newsListData);
 							listView.setAdapter(itemAdapter);
+							LoadEntriesBar.setVisibility(View.INVISIBLE);
 						}
 					});
 
@@ -686,53 +641,14 @@ public class Home extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					if (listData[position].contentType == 0) {
-						ShowSpecNews(listData[position].uniqeIdentifier);
+					if (newsListData[position].contentType == ContentType.News) {
+						makeNewsSub(newsListData[position]);
 					}
 				}
 			});
 
 		}
 
-	}
-
-	private void ShowSpecNews(final String uniqeIdentifier) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				List<NewsInfo> temp = Arrays.asList(Webber.getNews(
-						uniqeIdentifier, Mode.Specific));
-
-				if (temp.isEmpty()) {
-					listData = new NewsInfo[0];
-				} else {
-					int i = 0;
-					listData = new NewsInfo[temp.size()];
-					for (NewsInfo NI : temp) {
-						listData[i] = NI;
-						i++;
-					}
-				}
-
-				runOnUiThread(new Runnable() {
-					public void run() {
-						if (listData.length > 0) {
-							makeNewsSub();
-						} else {
-							Toast.makeText(
-									getApplicationContext(),
-									"Nyheten kunde inte hittas.",
-									Toast.LENGTH_SHORT).show();
-							prepFeed();
-						}
-					}
-				});
-
-			}
-
-		}).start();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -789,7 +705,7 @@ public class Home extends Activity {
 			if (current == HomePage.Nyheter)
 				bar.setTitle("Nyheter");
 			else
-				bar.setTitle(listData[0].headline);
+				bar.setTitle(newsListData[0].headline);
 
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				news.setBackgroundDrawable(currcolor);
@@ -1036,12 +952,6 @@ public class Home extends Activity {
 		});
 	}
 
-	private void sendEmail(String recipant) {
-		Uri uri = Uri.parse("mailto:" + recipant);
-		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-		startActivity(intent);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mDrawerLayout.closeDrawers();
@@ -1090,22 +1000,19 @@ public class Home extends Activity {
 			menu.findItem(R.id.goForward).setVisible(false);
 		}
 
-		if (current == HomePage.Elevkaren || current == HomePage.Elevkaren_SUB) {
+		if (current == HomePage.Elevkaren || current == HomePage.Elevkaren_SUB)
 			menu.findItem(R.id.beMember).setVisible(true);
-			menu.findItem(R.id.contact).setVisible(true);
-		} else {
+		else
 			menu.findItem(R.id.beMember).setVisible(false);
-			menu.findItem(R.id.contact).setVisible(false);
-		}
 
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-          }
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
 		switch (item.getItemId()) {
 
 		// Change user = Home and Schedule
@@ -1210,26 +1117,6 @@ public class Home extends Activity {
 			Intent myIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse(Webber.signupAddress));
 			startActivity(myIntent);
-			return true;
-
-		case R.id.contactKaren:
-			sendEmail(Posterlist.Eemail);
-			return true;
-
-		case R.id.contactpr:
-			sendEmail(Posterlist.PRemail);
-			return true;
-
-		case R.id.contactFestare:
-			sendEmail(Posterlist.Femail);
-			return true;
-			
-		case R.id.contactSkolIF:
-			sendEmail(Posterlist.IFemail);
-			return true;
-
-		case R.id.contactIT:
-			sendEmail(Posterlist.ITemail);
 			return true;
 
 		default:

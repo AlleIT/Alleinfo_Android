@@ -52,7 +52,7 @@
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:contentDescription="@string/IT"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/alleit" />
 
         <CheckBox

@@ -204,35 +204,34 @@ public class Webber {
 		return schemesearch;
 	}
 
-	// get tiny news feed
-	public static NewsInfo[] getTinyNewsFeed() {
-		NewsInfo[] feed;
+	// get tiny news feed displayed on HomePage.Home
+	public static NewsData[] getTinyNewsFeed(Context c) {
+		NewsData[] feed;
 
-		// for each new feed update
-		NewsInfo data = null;
-		List<NewsInfo> temp = Arrays.asList(getNews("", Mode.All));
+		NewsData data = null;
+		List<NewsData> temp = Arrays.asList(getNews(c, ""));
 
 		if (temp.isEmpty())
-			return new NewsInfo[0];
+			return new NewsData[0];
 
 		if (temp.size() > 2) {
-			feed = new NewsInfo[3];
+			feed = new NewsData[3];
 			feed[0] = temp.get(0);
 			feed[1] = temp.get(1);
 
 			// news info, show more news
-			data = new NewsInfo();
+			data = new NewsData();
 			data.headline = "Fler nyheter...";
 			data.type = "";
 			data.handler = "";
 			data.color = "#FFFFFF";
-			data.contentType = 1;
+			data.contentType = ContentType.ShowMoreNews;
 			data.uniqeIdentifier = null;
 			feed[2] = data;
 		} else {
 			int i = 0;
-			feed = new NewsInfo[temp.size()];
-			for (NewsInfo NI : temp) {
+			feed = new NewsData[temp.size()];
+			for (NewsData NI : temp) {
 				feed[i] = NI;
 				i++;
 			}
@@ -240,7 +239,7 @@ public class Webber {
 		return feed;
 	}
 
-	public static NewsInfo[] getNews(String uniqeIdentifier, Mode returnMode) {
+	public static NewsData[] getNews(Context c, String uniqeIdentifier) {
 		HttpResponse response;
 		JSONArray jsonResponse;
 
@@ -253,130 +252,169 @@ public class Webber {
 
 			if (jsonResponse.length() == 0) {
 				System.out.println("Servern gav ett tomt svar");
-				return new NewsInfo[0];
+				return new NewsData[0];
+			}
+			NewsData[] data = new NewsData[jsonResponse.length()];
+
+			List<String> imageRequest = new ArrayList<String>();
+
+			for (int i = 0; i < jsonResponse.length(); i++) {
+				JSONObject jsonObject = jsonResponse.getJSONObject(i);
+
+				data[i] = new NewsData();
+
+				data[i].headline = String.valueOf(Html.fromHtml(jsonObject
+						.getString("headline")));
+
+				data[i].shortInfo = String.valueOf(Html.fromHtml(jsonObject
+						.getString("shortInfo")));
+
+				data[i].description = String.valueOf(Html.fromHtml(jsonObject
+						.getString("description")));
+
+				data[i].butURL = String.valueOf(Html.fromHtml(jsonObject
+						.getString("butURL")));
+
+				data[i].type = String.valueOf(Html.fromHtml(jsonObject
+						.getString("type")));
+
+				data[i].handler = String.valueOf(Html.fromHtml(jsonObject
+						.getString("handler")));
+
+				data[i].rawHandler = jsonObject.getString("handler");
+
+				data[i].color = String.valueOf(Html.fromHtml(jsonObject
+						.getString("color")));
+
+				imageRequest.add(jsonObject.getString("handler"));
+
+				data[i].uniqeIdentifier = String.valueOf(Html
+						.fromHtml(jsonObject.getString("id")));
+
+				data[i].contentType = ContentType.News;
 			}
 
-			if (returnMode == Mode.All) {
-				NewsInfo[] data = new NewsInfo[jsonResponse.length()];
-
-				for (int i = 0; i < jsonResponse.length(); i++) {
-					JSONObject jsonObject = jsonResponse.getJSONObject(i);
-
-					data[i] = new NewsInfo();
-
-					data[i].headline = String.valueOf(Html.fromHtml(jsonObject
-							.getString("headline")));
-
-					data[i].shortInfo = String.valueOf(Html.fromHtml(jsonObject
-							.getString("shortInfo")));
-
-					data[i].description = String.valueOf(Html
-							.fromHtml(jsonObject.getString("description")));
-
-					data[i].butURL = String.valueOf(Html.fromHtml(jsonObject
-							.getString("butURL")));
-
-					data[i].type = String.valueOf(Html.fromHtml(jsonObject
-							.getString("type")));
-
-					data[i].handler = String.valueOf(Html.fromHtml(jsonObject
-							.getString("handler")));
-
-					data[i].rawHandler = String.valueOf(jsonObject
-							.getString("handler"));
-
-					data[i].color = String.valueOf(Html.fromHtml(jsonObject
-							.getString("color")));
-
-					data[i].uniqeIdentifier = String.valueOf(Html
-							.fromHtml(jsonObject.getString("id")));
-
-					data[i].contentType = 0;
-				}
-				return data;
-			} else {
-				for (int i = 0; i < jsonResponse.length(); i++) {
-					if (jsonResponse.getJSONObject(i).getString("id")
-							.equals(uniqeIdentifier)) {
-
-						JSONObject jsonObject = jsonResponse.getJSONObject(i);
-
-						NewsInfo[] data = new NewsInfo[1];
-
-						data[0] = new NewsInfo();
-
-						data[0].headline = String.valueOf(Html
-								.fromHtml(jsonObject.getString("headline")));
-
-						data[0].shortInfo = String.valueOf(Html
-								.fromHtml(jsonObject.getString("shortInfo")));
-
-						data[0].description = String.valueOf(Html
-								.fromHtml(jsonObject.getString("description")));
-
-						data[0].butURL = String.valueOf(Html
-								.fromHtml(jsonObject.getString("butURL")));
-
-						data[0].type = String.valueOf(Html.fromHtml(jsonObject
-								.getString("type")));
-
-						data[0].handler = String.valueOf(Html
-								.fromHtml(jsonObject.getString("handler")));
-
-						data[0].rawHandler = String.valueOf(jsonObject
-								.getString("handler"));
-
-						data[0].color = String.valueOf(Html.fromHtml(jsonObject
-								.getString("color")));
-
-						data[0].uniqeIdentifier = String.valueOf(Html
-								.fromHtml(jsonObject.getString("id")));
-
-						data[0].contentType = 0;
-						return data;
+			for (int i = 0; i < imageRequest.size(); i++)
+				for (int x = i + 1; x < imageRequest.size(); x++)
+					if (imageRequest.get(i).equalsIgnoreCase(
+							imageRequest.get(x))) {
+						imageRequest.remove(x);
+						x--;
 					}
-				}
-				return new NewsInfo[0];
+
+			for (String str : imageRequest) {
+				Drawable d = getImg(c, "", str);
+
+				for (int i = 0; i < data.length; i++)
+					if (data[i].rawHandler.equalsIgnoreCase(str))
+						data[i].image = d;
 			}
+
+			return data;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new NewsInfo[0];
+			return new NewsData[0];
 		}
 
 	}
 
-	public static Drawable getImg(Context c, String handler) {
+	public static PosterData[] getKarInfo(Context c) {
 		HttpResponse response;
 		JSONArray jsonResponse;
 
 		try {
-			// Get ImageURL
 			HttpClient httpClient = new DefaultHttpClient();
-			HttpPost post = new HttpPost(serverAddress + PosterPath);
 
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("handler", handler));
+			response = httpClient.execute(new HttpGet(serverAddress
+					+ PosterPath));
 
-			post.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
-
-			response = httpClient.execute(post);
 			HttpEntity entity = response.getEntity();
 
 			String ans = EntityUtils.toString(entity);
 
 			if (ans.equals("request failed") || ans.equals("") || ans == null) {
 				System.out
-						.println("Servern gav ett ov\u00E4ntat svar n\u00E4r bilden skulle h\u00E4mtas");
+						.println("Servern gav ett ov\u00E4ntat svar n\u00E4r info skulle h\u00E4mtas; getKarInfo");
 				System.out.println("Svar: \"" + ans + "\"");
-				return c.getResources().getDrawable(
-						android.R.drawable.ic_menu_report_image);
+				return new PosterData[0];
 			}
 
 			jsonResponse = new JSONArray(ans);
 
-			// Get Image
-			URL url = new URL(jsonResponse.getJSONObject(0).getString(
-					"logoPath"));
+			PosterData[] data = new PosterData[jsonResponse.length()];
+
+			for (int i = 0; i < jsonResponse.length(); i++) {
+				JSONObject jsonObject = jsonResponse.getJSONObject(i);
+				
+				data[i] = new PosterData();
+
+				data[i].name = String.valueOf(Html.fromHtml(jsonObject
+						.getString("handler")));
+				data[i].handler = jsonObject.getString("handler");
+				data[i].color = jsonObject.getString("color");
+				data[i].description = String.valueOf(Html.fromHtml(jsonObject
+						.getString("description")));
+				data[i].socialLink = jsonObject.getString("socialLink");
+				data[i].logo = getImg(c, jsonObject.getString("logoPath"), "");
+			}
+
+			return data;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new PosterData[0];
+		}
+
+	}
+
+	private static Drawable getImg(Context c, String link, String rawHandler) {
+		try {
+
+			if (link.length() == 0) {
+				HttpResponse response;
+				JSONArray jsonResponse;
+
+				try {
+					HttpClient httpClient = new DefaultHttpClient();
+					HttpPost post = new HttpPost(serverAddress + PosterPath);
+
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
+							1);
+
+					nameValuePairs.add(new BasicNameValuePair("handler",
+							rawHandler));
+
+					post.setEntity(new UrlEncodedFormEntity(nameValuePairs,
+							"UTF-8"));
+
+					response = httpClient.execute(post);
+
+					HttpEntity entity = response.getEntity();
+
+					String ans = EntityUtils.toString(entity);
+
+					if (ans.equals("request failed") || ans.equals("")
+							|| ans == null) {
+						System.out
+								.println("Servern gav ett ov\u00E4ntat svar n\u00E4r bilden skulle h\u00E4mtas");
+						System.out.println("Svar: \"" + ans + "\"");
+
+						return c.getResources().getDrawable(
+								android.R.drawable.ic_menu_report_image);
+					}
+
+					jsonResponse = new JSONArray(ans);
+
+					link = jsonResponse.getJSONObject(0).getString("logoPath");
+
+				} catch (Exception e) {
+					e.printStackTrace();
+
+					return c.getResources().getDrawable(
+							android.R.drawable.ic_menu_report_image);
+				}
+			}
+
+			URL url = new URL(link);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(5000);
 			conn.setReadTimeout(10000);
