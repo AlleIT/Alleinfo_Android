@@ -11,7 +11,7 @@ public class NewsData {
 	public String type = "";
 	public String handler = "";
 	public String rawHandler = "";
-	public String color = "";
+	public String color = "#000000";
 	public String uniqeIdentifier = "";
 	public Drawable image;
 	public ContentType contentType = ContentType.NoNews;

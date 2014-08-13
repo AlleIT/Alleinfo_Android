@@ -419,7 +419,7 @@ public class Home extends Activity {
 									posterListData = new PosterData[1];
 									posterListData[0] = new PosterData();
 									posterListData[0].name = "Fel :'(";
-									posterListData[0].color = "#FFFFFF";
+									posterListData[0].color = "#000000";
 									posterListData[0].logo = c
 											.getResources()
 											.getDrawable(

@@ -30,7 +30,7 @@
             android:paddingLeft="30dp"
             android:text="@string/noName"
             android:textColor="#FFFFFF"
-            android:textSize="45sp" />
+            android:textSize="40sp" />
     </LinearLayout>
 
 </RelativeLayout>

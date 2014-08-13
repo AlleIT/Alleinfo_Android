@@ -49,7 +49,7 @@ public class Webber {
 	private static String serverAddress = "http://83.223.17.30"; // TODO: Change
 																	// to
 																	// teknikprogrammet.net
-																	// when URL
+																	// when domain
 																	// is back
 
 	// Url to news
@@ -57,17 +57,6 @@ public class Webber {
 
 	// Url to information about posters
 	private static String PosterPath = "/AlleIT/Alleinfo/webbadmin/includes/poster_info.php";
-
-	// XXX: End Of Area
-
-	// XXX: Facebook ID:s in this area
-
-	public static String theboard = "328398517288602"; // Styrelsen
-	public static String PR = "324024177734072";
-	public static String festare = "305522136255915";
-	public static String spex = "268351709901709";
-	public static String skolif = "547561921942120";
-	public static String IT = "1403614713207231";
 
 	// XXX: End Of Area
 
