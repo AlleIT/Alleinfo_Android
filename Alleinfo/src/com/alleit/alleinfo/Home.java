@@ -3,20 +3,15 @@ package com.alleit.alleinfo;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.alleit.Alleinfo_Android.R;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -28,10 +23,16 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -49,10 +50,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Home extends SherlockActivity {
+public class Home extends Activity {
 
 	Drawable currcolor;
 
@@ -76,23 +78,25 @@ public class Home extends SherlockActivity {
 	// The user's location
 	HomePage current = HomePage.Start;
 
-	SlidingMenu leftBar;
 	ActionBar bar;
+	ActionBarDrawerToggle mDrawerToggle;
 	ViewGroup viewGroup;
 	Menu menu;
 
-	// TODO: Convert chosenDay to enum for simplicity
 	int chosenDay = -1;
 
 	Boolean showThisWeek = true;
 	Point xy;
 	Context c;
 	WebView mWebView;
+	DrawerLayout mDrawerLayout;
+	ScrollView leftBar;
 	AlertDialog AD;
 	private String number = null;
 	SharedPreferences sharedP;
 	String pin = null;
-	NewsInfo[] listData;
+	NewsData[] newsListData;
+	PosterData[] posterListData;
 	Boolean isPlayingSport;
 
 	@SuppressWarnings("deprecation")
@@ -104,36 +108,32 @@ public class Home extends SherlockActivity {
 
 		// Get personal number
 		Intent fromIntent = getIntent();
-		number = fromIntent.getStringExtra("number");
+		number = fromIntent.getStringExtra(PreferenceInfo.Pers_Num_Name);
 
-		sharedP = this.getPreferences(MODE_PRIVATE);
+		sharedP = getApplicationContext().getSharedPreferences(
+				PreferenceInfo.Preference_Name, MODE_PRIVATE);
 
 		if (fromIntent.getBooleanExtra("Stored", false) == false) {
-			isPlayingSport = fromIntent.getBooleanExtra("playSport", false);
+			isPlayingSport = fromIntent.getBooleanExtra(
+					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		} else {
-			isPlayingSport = sharedP.getBoolean("playSports", false);
+			isPlayingSport = sharedP.getBoolean(
+					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		}
-
-		// Set up sidebar menu
-		leftBar = new SlidingMenu(this);
-		leftBar.setMode(SlidingMenu.LEFT);
-		leftBar.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		leftBar.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		leftBar.setBehindWidth((int) (getApplicationContext().getResources()
-				.getDisplayMetrics().density * 300));
-		leftBar.setMenu(R.layout.leftbar);
 
 		c = this;
 
 		viewGroup = (ViewGroup) findViewById(R.id.content);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		leftBar = (ScrollView) findViewById(R.id.leftBarContainer);
 
 		/*
 		 * Please keep these in the same order as the actual buttons
 		 * (leftbar.xml)
 		 */
 		home = (Button) findViewById(R.id.homeSlide);
-		food = (Button) findViewById(R.id.foodSlide);
 		schedule = (Button) findViewById(R.id.schemeSlide);
+		food = (Button) findViewById(R.id.foodSlide);
 		news = (Button) findViewById(R.id.newsSlide);
 		elevkaren = (Button) findViewById(R.id.karSlide);
 		dexter = (Button) findViewById(R.id.dexSlide);
@@ -148,10 +148,12 @@ public class Home extends SherlockActivity {
 			xy = new Point(display.getWidth(), display.getHeight());
 		}
 
-		bar = getSupportActionBar();
-		bar.setDisplayHomeAsUpEnabled(false);
+		bar = getActionBar();
+		bar.setDisplayHomeAsUpEnabled(true);
 		bar.setHomeButtonEnabled(true);
+		bar.setBackgroundDrawable(new ColorDrawable(0xff222222));
 		colorlist = getResources().getStringArray(R.array.colors);
+		SetUpLeftBar();
 		makeHome();
 
 		/*
@@ -168,21 +170,21 @@ public class Home extends SherlockActivity {
 			}
 		});
 
-		// if user clicks on food menu button
-
-		food.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeFood();
-			}
-		});
-
 		// if user clicks on schedule button
 
 		schedule.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				makeScheme();
+			}
+		});
+
+		// if user clicks on food menu button
+
+		food.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				makeFood();
 			}
 		});
 
@@ -221,6 +223,32 @@ public class Home extends SherlockActivity {
 				makeItsLearning();
 			}
 		});
+	}
+
+	private void SetUpLeftBar() {
+
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, /*
+																		 * DrawerLayout
+																		 * object
+																		 */
+		R.drawable.ic_navigation_drawer, /*
+										 * nav drawer image to replace 'Up'
+										 * caret
+										 */
+		R.string.app_name, /*
+							 * "open drawer" description for accessibility
+							 */
+		R.string.app_name /* "close drawer" description for accessibility */
+		);
+		mDrawerLayout.post(new Runnable() {
+
+			@Override
+			public void run() {
+				mDrawerToggle.syncState();
+			}
+		});
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
 	}
 
 	/*
@@ -271,9 +299,7 @@ public class Home extends SherlockActivity {
 			prepWeb();
 			prepFeed();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeScheme() {
@@ -285,9 +311,7 @@ public class Home extends SherlockActivity {
 			showThisWeek = true;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -298,25 +322,22 @@ public class Home extends SherlockActivity {
 			current = HomePage.Mat;
 			checkColors();
 		}
-		leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
 	private void makeNews() {
 		if (current != HomePage.Nyheter) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.news, null));
+			viewGroup.addView(View.inflate(c, R.layout.list, null));
 			current = HomePage.Nyheter;
 			checkColors();
+			prepFeed();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
-		prepFeed();
+		Home.this.invalidateOptionsMenu();
 	}
 
-	private void makeNewsSub() {
+	private void makeNewsSub(NewsData data) {
 		if (current != HomePage.Nyheter_SUB) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
@@ -325,68 +346,20 @@ public class Home extends SherlockActivity {
 
 			ImageView Pic = (ImageView) findViewById(R.id.pic);
 			Button but = (Button) findViewById(R.id.button);
-			TextView rubrik = (TextView) findViewById(R.id.head);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			rubrik.setText(listData[0].headline);
-			info.setText(listData[0].description);
-			desc.setText(listData[0].longDescription);
+			info.setText(data.shortInfo);
+			desc.setText(data.description);
 
-			if (listData[0].handler.contains(Html.fromHtml(Karlista.Ename)
-					.toString().toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.elevkaren));
-				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.PRname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
+			Pic.setImageDrawable(data.image);
 
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.Fname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.festare));
-				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
-
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.spexname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources()
-						.getDrawable(R.drawable.spex));
-				separator.setBackgroundColor(Color
-						.parseColor(Karlista.spexcolor));
-
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.IFname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.skolif));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
-
-			} else if (listData[0].handler.contains(Html
-					.fromHtml(Karlista.ITname).toString()
-					.toUpperCase(Locale.ENGLISH))) {
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.alleit));
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
-
-			} else {
-				Toast.makeText(
-						getApplicationContext(),
-						Html.fromHtml("Ingen ansvarig elevf&ouml;rening kunde hittas"),
-						Toast.LENGTH_SHORT).show();
-			}
+			separator.setBackgroundColor(Color.parseColor(data.color));
 
 			but.setText("Mer info");
 
-			String url = listData[0].butURL;
+			String url = data.butURL;
 
 			if (url.length() == 0) {
 				but.setVisibility(View.INVISIBLE);
@@ -400,179 +373,137 @@ public class Home extends SherlockActivity {
 				public void onClick(View v) {
 
 					// Open the facebook page in the default browser.
-					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-							.parse(finURL));
-					startActivity(myIntent);
+					try {
+						Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+								.parse(finURL));
+						startActivity(myIntent);
 
+					} catch (Exception e) {
+						e.printStackTrace();
+						Toast.makeText(getApplicationContext(),
+								"Sidan kunde inte laddas", Toast.LENGTH_SHORT)
+								.show();
+					}
 				}
 
 			});
 
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeKar() {
 		if (current != HomePage.Elevkaren) {
 			viewGroup.removeAllViews();
-			viewGroup.addView(View.inflate(c, R.layout.elevkar, null));
+			viewGroup.addView(View.inflate(c, R.layout.list, null));
+			HomePage lastPage = current;
 			current = HomePage.Elevkaren;
 			checkColors();
 
-			// "buttons" for the various student assemblies
-			LinearLayout theboardbut = (LinearLayout) findViewById(R.id.ebg);
-			LinearLayout prbut = (LinearLayout) findViewById(R.id.prbg);
-			LinearLayout festarebut = (LinearLayout) findViewById(R.id.festarebg);
-			LinearLayout spexbut = (LinearLayout) findViewById(R.id.spexbg);
-			LinearLayout skolifbut = (LinearLayout) findViewById(R.id.ifbg);
-			LinearLayout alleitbut = (LinearLayout) findViewById(R.id.itbg);
+			final Activity a = this;
+			final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
+			final ListView elevkarListView = (ListView) findViewById(R.id.feed);
 
-			// Clickevents
-			theboardbut.setOnClickListener(new OnClickListener() {
+			if (lastPage != HomePage.Elevkaren_SUB) {
+				LoadEntriesBar.setVisibility(View.VISIBLE);
 
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						final PosterData[] temp = Webber.getKarInfo(c);
+
+						runOnUiThread(new Runnable() {
+							public void run() {
+								if (temp.length == 0) {
+									posterListData = new PosterData[1];
+									posterListData[0] = new PosterData();
+									posterListData[0].name = "Fel :'(";
+									posterListData[0].color = "#000000";
+									posterListData[0].logo = c
+											.getResources()
+											.getDrawable(
+													android.R.drawable.ic_menu_report_image);
+								} else {
+									posterListData = temp;
+								}
+								elevkarListView.setDividerHeight((int) TypedValue
+										.applyDimension(
+												TypedValue.COMPLEX_UNIT_DIP, 0,
+												getResources()
+														.getDisplayMetrics()));
+
+								ElevkarEntriesAdapter itemAdapter = new ElevkarEntriesAdapter(
+										a, R.layout.elevkar_entry,
+										posterListData);
+								elevkarListView.setAdapter(itemAdapter);
+								LoadEntriesBar.setVisibility(View.INVISIBLE);
+							}
+						});
+
+					}
+
+				}).start();
+			} else {
+				elevkarListView.setDividerHeight((int) TypedValue
+						.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 0,
+								getResources().getDisplayMetrics()));
+
+				ElevkarEntriesAdapter itemAdapter = new ElevkarEntriesAdapter(
+						a, R.layout.elevkar_entry, posterListData);
+				elevkarListView.setAdapter(itemAdapter);
+				LoadEntriesBar.setVisibility(View.INVISIBLE);
+
+			}
+
+			elevkarListView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.Styrelsen);
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					if (posterListData.length <= 1)
+						return;
+
+					makeKarSub(position);
 				}
-
 			});
-			prbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.PR);
-				}
-
-			});
-			festarebut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.allefestare);
-				}
-
-			});
-			spexbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.alleSpex);
-				}
-
-			});
-			skolifbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.SkolIF);
-				}
-
-			});
-			alleitbut.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					makeKarSub(StudentAssembly.alleIT);
-				}
-
-			});
-
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
-	private void makeKarSub(StudentAssembly SA) {
+	private void makeKarSub(int position) {
 		if (current != HomePage.Elevkaren_SUB) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Elevkaren_SUB;
 			checkColors();
 
+			final String finURL = posterListData[position].socialLink;
+
 			ImageView Pic = (ImageView) findViewById(R.id.pic);
 			Button but = (Button) findViewById(R.id.button);
-			TextView rubrik = (TextView) findViewById(R.id.head);
+			TextView infoHead = (TextView) findViewById(R.id.shortInfoText);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
 
-			but.setText("Besök Facebooksidan");
+			infoHead.setVisibility(View.INVISIBLE);
+			info.setText("");
 
-			String url = "http://facebook.com/";
+			bar.setTitle(posterListData[position].name);
 
-			// Describṕtions picked up from facebook
-			// XXX: These need to be updated or kept up to date in some way.
-			switch (SA) {
-			case Styrelsen:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.elevkaren));
-				rubrik.setText(Html.fromHtml(Karlista.Ename));
-				info.setText("");
-				separator.setBackgroundColor(Color.parseColor(Karlista.Ecolor));
-				desc.setText(Html.fromHtml(Karlista.Edesc));
-				url += Webber.theboard;
-				break;
-			case PR:
-				Pic.setImageDrawable(getResources().getDrawable(R.drawable.pr));
-				rubrik.setText(Html.fromHtml(Karlista.PRname));
-				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.PRcolor));
-				desc.setText(Html.fromHtml(Karlista.PRdesc));
-				url += Webber.PR;
-				break;
-			case allefestare:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.festare));
-				rubrik.setText(Html.fromHtml(Karlista.Fname));
-				info.setText("");
-				separator.setBackgroundColor(Color.parseColor(Karlista.Fcolor));
-				desc.setText(Html.fromHtml(Karlista.Fdesc));
-				url += Webber.festare;
-				break;
-			case alleSpex:
-				Pic.setImageDrawable(getResources()
-						.getDrawable(R.drawable.spex));
-				rubrik.setText(Html.fromHtml(Karlista.spexname));
-				info.setText("");
-				separator.setBackgroundColor(Color
-						.parseColor(Karlista.spexcolor));
-				desc.setText(Html.fromHtml(Karlista.spexdesc));
-				url += Webber.spex;
-				break;
-			case SkolIF:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.skolif));
-				rubrik.setText(Html.fromHtml(Karlista.IFname));
-				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.IFcolor));
-				desc.setText(Html.fromHtml(Karlista.IFdesc));
-				url += Webber.skolif;
-				break;
-			case alleIT:
-				Pic.setImageDrawable(getResources().getDrawable(
-						R.drawable.alleit));
-				rubrik.setText(Html.fromHtml(Karlista.ITname));
-				info.setText("");
-				separator
-						.setBackgroundColor(Color.parseColor(Karlista.ITcolor));
-				desc.setText(Html.fromHtml(Karlista.ITdesc));
-				url += Webber.IT;
-				break;
-			}
+			Pic.setImageDrawable(posterListData[position].logo);
 
-			final String finURL = url;
+			desc.setText(posterListData[position].description);
 
+			separator.setBackgroundColor(Color
+					.parseColor(posterListData[position].color));
+
+			but.setText("Sociala medier");
 			but.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
 
-					// Open the facebook page in the default browser.
 					Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
 							.parse(finURL));
 					startActivity(myIntent);
@@ -582,9 +513,7 @@ public class Home extends SherlockActivity {
 			});
 
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 	}
 
 	private void makeDexter() {
@@ -594,9 +523,7 @@ public class Home extends SherlockActivity {
 			current = HomePage.Dexter;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -607,9 +534,7 @@ public class Home extends SherlockActivity {
 			current = HomePage.ItsLearning;
 			checkColors();
 		}
-		if (leftBar.isMenuShowing())
-			leftBar.toggle();
-		Home.this.supportInvalidateOptionsMenu();
+		Home.this.invalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -619,36 +544,40 @@ public class Home extends SherlockActivity {
 		final Activity a = this;
 		if (current == HomePage.Home) {
 			final ListView listView = (ListView) a.findViewById(R.id.mininew);
+			final ProgressBar miniNewsPBar = (ProgressBar) a
+					.findViewById(R.id.miniNewsPBar);
+			miniNewsPBar.setVisibility(View.VISIBLE);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					List<NewsInfo> temp = Arrays.asList(Webber
-							.getTinyNewsFeed());
+					List<NewsData> temp = Arrays.asList(Webber
+							.getTinyNewsFeed(c));
 
 					if (temp.isEmpty()) {
-						listData = new NewsInfo[0];
+						newsListData = new NewsData[0];
 					} else {
 						int i = 0;
-						listData = new NewsInfo[temp.size()];
-						for (NewsInfo NI : temp) {
-							listData[i] = NI;
+						newsListData = new NewsData[temp.size()];
+						for (NewsData NI : temp) {
+							newsListData[i] = NI;
 							i++;
 						}
 					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if (listData.length == 0) {
-								listData = new NewsInfo[1];
-								listData[0] = new NewsInfo();
-								listData[0].headline = "Inga nyheter hittades";
-								listData[0].contentType = -1;
+							if (newsListData.length == 0) {
+								newsListData = new NewsData[1];
+								newsListData[0] = new NewsData();
+								newsListData[0].headline = "Inga nyheter hittades";
+								newsListData[0].contentType = ContentType.NoNews;
 							}
 							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, listData);
+									a, R.layout.newsroll, newsListData);
 							listView.setAdapter(itemAdapter);
+							miniNewsPBar.setVisibility(View.INVISIBLE);
 						}
 					});
 
@@ -660,46 +589,47 @@ public class Home extends SherlockActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					if (listData[position].contentType == 1) {
+					if (newsListData[position].contentType == ContentType.ShowMoreNews) {
 						makeNews();
-					} else {
-						if (listData[position].contentType != -1)
-							ShowSpecNews(listData[position].uniqeIdentifier);
-					}
+					} else if (newsListData[position].contentType == ContentType.News)
+						makeNewsSub(newsListData[position]);
+
 				}
 			});
 		} else if (current == HomePage.Nyheter) {
+			final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
 			final ListView listView = (ListView) a.findViewById(R.id.feed);
+			LoadEntriesBar.setVisibility(View.VISIBLE);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 
-					List<NewsInfo> temp = Arrays.asList(Webber.getNews("",
-							Mode.All));
+					List<NewsData> temp = Arrays.asList(Webber.getNews(c, ""));
 
 					if (temp.isEmpty()) {
-						listData = new NewsInfo[0];
+						newsListData = new NewsData[0];
 					} else {
 						int i = 0;
-						listData = new NewsInfo[temp.size()];
-						for (NewsInfo NI : temp) {
-							listData[i] = NI;
+						newsListData = new NewsData[temp.size()];
+						for (NewsData NI : temp) {
+							newsListData[i] = NI;
 							i++;
 						}
 					}
 
 					runOnUiThread(new Runnable() {
 						public void run() {
-							if (listData.length == 0) {
-								listData = new NewsInfo[1];
-								listData[0] = new NewsInfo();
-								listData[0].headline = "Inga nyheter hittades";
-								listData[0].contentType = -1;
+							if (newsListData.length == 0) {
+								newsListData = new NewsData[1];
+								newsListData[0] = new NewsData();
+								newsListData[0].headline = "Inga nyheter hittades";
+								newsListData[0].contentType = ContentType.NoNews;
 							}
 							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, listData);
+									a, R.layout.newsroll, newsListData);
 							listView.setAdapter(itemAdapter);
+							LoadEntriesBar.setVisibility(View.INVISIBLE);
 						}
 					});
 
@@ -711,8 +641,8 @@ public class Home extends SherlockActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					if (listData[position].contentType == 0) {
-						ShowSpecNews(listData[position].uniqeIdentifier);
+					if (newsListData[position].contentType == ContentType.News) {
+						makeNewsSub(newsListData[position]);
 					}
 				}
 			});
@@ -721,47 +651,6 @@ public class Home extends SherlockActivity {
 
 	}
 
-	private void ShowSpecNews(final String uniqeIdentifier) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				List<NewsInfo> temp = Arrays.asList(Webber.getNews(
-						uniqeIdentifier, Mode.Specific));
-
-				if (temp.isEmpty()) {
-					listData = new NewsInfo[0];
-				} else {
-					int i = 0;
-					listData = new NewsInfo[temp.size()];
-					for (NewsInfo NI : temp) {
-						listData[i] = NI;
-						i++;
-					}
-				}
-
-				runOnUiThread(new Runnable() {
-					public void run() {
-						if (listData.length > 0) {
-							makeNewsSub();
-						} else {
-							Toast.makeText(
-									getApplicationContext(),
-									Html.fromHtml("Nyheten kunde inte hittas."),
-									Toast.LENGTH_SHORT).show();
-							prepFeed();
-						}
-					}
-				});
-
-			}
-
-		}).start();
-	}
-
-	// Check colors for the different buttons in the menu
-
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	public void checkColors() {
@@ -769,46 +658,18 @@ public class Home extends SherlockActivity {
 		currcolor = new ColorDrawable(Color.TRANSPARENT);
 
 		// Reset the colors of all the buttons in the sidebar
-		// Please keep these in the same order as the actual buttons
 
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			home.setBackgroundDrawable(currcolor);
-		else
-			home.setBackground(currcolor);
+		LinearLayout container = (LinearLayout) findViewById(R.id.slideContainer);
+		for (int i = 0; i < (container).getChildCount(); i++) {
+			Button b = (Button) container.getChildAt(i);
 
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			schedule.setBackgroundDrawable(currcolor);
-		else
-			schedule.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			food.setBackgroundDrawable(currcolor);
-		else
-			food.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			news.setBackgroundDrawable(currcolor);
-		else
-			news.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			elevkaren.setBackgroundDrawable(currcolor);
-		else
-			elevkaren.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			dexter.setBackgroundDrawable(currcolor);
-		else
-			dexter.setBackground(currcolor);
-
-		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-			itsLearning.setBackgroundDrawable(currcolor);
-		else
-			itsLearning.setBackground(currcolor);
+			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+				b.setBackgroundDrawable(currcolor);
+			else
+				b.setBackground(currcolor);
+		}
 
 		switch (current) {
-
-		// which case, depends on what button the user clicks on
 
 		case Home:
 			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
@@ -839,12 +700,12 @@ public class Home extends SherlockActivity {
 
 		case Nyheter:
 		case Nyheter_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[3]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 
 			if (current == HomePage.Nyheter)
 				bar.setTitle("Nyheter");
 			else
-				bar.setTitle(listData[0].headline);
+				bar.setTitle(newsListData[0].headline);
 
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				news.setBackgroundDrawable(currcolor);
@@ -854,7 +715,7 @@ public class Home extends SherlockActivity {
 
 		case Elevkaren:
 		case Elevkaren_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
 			bar.setTitle("Elevkåren");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				elevkaren.setBackgroundDrawable(currcolor);
@@ -863,7 +724,7 @@ public class Home extends SherlockActivity {
 			break;
 
 		case Dexter:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
 			bar.setTitle("Dexter");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				dexter.setBackgroundDrawable(currcolor);
@@ -872,7 +733,7 @@ public class Home extends SherlockActivity {
 			break;
 
 		case ItsLearning:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
+			currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
 			bar.setTitle("It's learning");
 			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
 				itsLearning.setBackgroundDrawable(currcolor);
@@ -891,8 +752,6 @@ public class Home extends SherlockActivity {
 			break;
 		}
 	}
-
-	// progressbar, show loading when web is loading
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
@@ -1093,16 +952,16 @@ public class Home extends SherlockActivity {
 		});
 	}
 
-	private void sendEmail(String recipant) {
-		Uri uri = Uri.parse("mailto:" + recipant);
-		Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-		startActivity(intent);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		mDrawerLayout.closeDrawers();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
+
+		if (current == HomePage.Home || current == HomePage.Schema)
+			menu.findItem(R.id.chng_user).setVisible(true);
+		else
+			menu.findItem(R.id.chng_user).setVisible(false);
 
 		if (current == HomePage.Schema) {
 			menu.findItem(R.id.WeekDayContainer).setVisible(true);
@@ -1113,7 +972,9 @@ public class Home extends SherlockActivity {
 
 				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 16
-						&& !sharedP.getBoolean("playSports", false)
+						&& !sharedP.getBoolean(
+								PreferenceInfo.Extended_Schedule_Display_Name,
+								false)
 						|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 20) {
 					showThisWeek = false;
@@ -1132,29 +993,60 @@ public class Home extends SherlockActivity {
 		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {
 			menu.findItem(R.id.goBack).setVisible(true);
 			menu.findItem(R.id.goForward).setVisible(true);
+			menu.findItem(R.id.openInBrowser).setVisible(true);
 		} else {
+			menu.findItem(R.id.openInBrowser).setVisible(false);
 			menu.findItem(R.id.goBack).setVisible(false);
 			menu.findItem(R.id.goForward).setVisible(false);
 		}
 
-		if (current == HomePage.Elevkaren || current == HomePage.Elevkaren_SUB) {
+		if (current == HomePage.Elevkaren || current == HomePage.Elevkaren_SUB)
 			menu.findItem(R.id.beMember).setVisible(true);
-			menu.findItem(R.id.contact).setVisible(true);
-		} else {
+		else
 			menu.findItem(R.id.beMember).setVisible(false);
-			menu.findItem(R.id.contact).setVisible(false);
-		}
 
 		return true;
 	}
 
-	// toggle
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			leftBar.toggle();
+
+		// Change user = Home and Schedule
+		case R.id.chng_user:
+			AlertDialog.Builder chng_user_notice = new AlertDialog.Builder(c);
+
+			chng_user_notice.setMessage(c.getString(R.string.chng_user_notice));
+			chng_user_notice.setTitle("Byta anv\u00E4ndare?");
+			chng_user_notice.setPositiveButton(
+					c.getString(android.R.string.yes),
+					new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
+									.commit();
+
+							AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
+									c);
+
+							restart_app_notice.setMessage(c
+									.getString(R.string.restart_app_notice));
+							restart_app_notice
+									.setTitle("Appen m\u00E5ste startas om");
+							restart_app_notice.setPositiveButton(
+									c.getString(android.R.string.ok), null);
+							restart_app_notice.setCancelable(false);
+							restart_app_notice.create().show();
+						}
+					});
+			chng_user_notice.setNegativeButton(
+					c.getString(android.R.string.no), null);
+			chng_user_notice.setCancelable(false);
+			chng_user_notice.create().show();
 			return true;
 
 			// Schedule
@@ -1214,35 +1106,17 @@ public class Home extends SherlockActivity {
 			}
 			return true;
 
+		case R.id.openInBrowser:
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+					Uri.parse(mWebView.getOriginalUrl()));
+			startActivity(browserIntent);
+			return true;
+
 		case R.id.beMember:
 			// Open the signup page in the default browser.
 			Intent myIntent = new Intent(Intent.ACTION_VIEW,
 					Uri.parse(Webber.signupAddress));
 			startActivity(myIntent);
-			return true;
-
-		case R.id.contactKaren:
-			sendEmail(Karlista.Eemail);
-			return true;
-
-		case R.id.contactpr:
-			sendEmail(Karlista.PRemail);
-			return true;
-
-		case R.id.contactFestare:
-			sendEmail(Karlista.Femail);
-			return true;
-
-		case R.id.contactSpex:
-			sendEmail(Karlista.spexemail);
-			return true;
-
-		case R.id.contactSkolIF:
-			sendEmail(Karlista.IFemail);
-			return true;
-
-		case R.id.contactIT:
-			sendEmail(Karlista.ITemail);
 			return true;
 
 		default:
@@ -1253,18 +1127,16 @@ public class Home extends SherlockActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			leftBar.toggle();
+			mDrawerLayout.openDrawer(leftBar);
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// go back to home screen
-
 	@Override
 	public void onBackPressed() {
-		if (leftBar.isMenuShowing()) {
-			leftBar.toggle();
+		if (mDrawerLayout.isDrawerVisible(leftBar)) {
+			mDrawerLayout.closeDrawers();
 			return;
 		}
 		if (current == HomePage.ItsLearning || current == HomePage.Dexter) {

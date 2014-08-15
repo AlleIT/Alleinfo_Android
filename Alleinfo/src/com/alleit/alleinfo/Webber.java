@@ -1,19 +1,31 @@
 package com.alleit.alleinfo;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 
 public class Webber {
@@ -33,16 +45,18 @@ public class Webber {
 	// URL for signing up to elevkåren
 	public static String signupAddress = "http://ebas.gymnasiet.sverigeselevkarer.se/signups/index/539";
 
-	// XXX: End Of Area
+	// IP to server
+	private static String serverAddress = "http://83.223.17.30"; // TODO: Change
+																	// to
+																	// teknikprogrammet.net
+																	// when domain
+																	// is back
 
-	// XXX: Facebook ID:s in this area
+	// Url to news
+	private static String NewsPath = "/AlleIT/Alleinfo/webbadmin/includes/studentbody_news.php";
 
-	public static String theboard = "328398517288602";
-	public static String PR = "324024177734072";
-	public static String festare = "305522136255915";
-	public static String spex = "268351709901709";
-	public static String skolif = "547561921942120";
-	public static String IT = "1403614713207231";
+	// Url to information about posters
+	private static String PosterPath = "/AlleIT/Alleinfo/webbadmin/includes/poster_info.php";
 
 	// XXX: End Of Area
 
@@ -179,117 +193,230 @@ public class Webber {
 		return schemesearch;
 	}
 
-	// get tiny news feed
-	public static NewsInfo[] getTinyNewsFeed() {
-		NewsInfo[] feed;
+	// get tiny news feed displayed on HomePage.Home
+	public static NewsData[] getTinyNewsFeed(Context c) {
+		NewsData[] feed;
 
-		// for each new feed update
-		NewsInfo data = null;
-		List<NewsInfo> temp = Arrays.asList(getNews("", Mode.All));
+		NewsData data = null;
+		List<NewsData> temp = Arrays.asList(getNews(c, ""));
 
 		if (temp.isEmpty())
-			return new NewsInfo[0];
+			return new NewsData[0];
 
 		if (temp.size() > 2) {
-			feed = new NewsInfo[3];
+			feed = new NewsData[3];
 			feed[0] = temp.get(0);
 			feed[1] = temp.get(1);
 
 			// news info, show more news
-			data = new NewsInfo();
+			data = new NewsData();
 			data.headline = "Fler nyheter...";
-			data.type = null;
-			data.handler = null;
-			data.contentType = 1;
+			data.type = "";
+			data.handler = "";
+			data.color = "#FFFFFF";
+			data.contentType = ContentType.ShowMoreNews;
 			data.uniqeIdentifier = null;
 			feed[2] = data;
 		} else {
 			int i = 0;
-			feed = new NewsInfo[temp.size()];
-			for (NewsInfo NI : temp) {
+			feed = new NewsData[temp.size()];
+			for (NewsData NI : temp) {
 				feed[i] = NI;
 				i++;
 			}
 		}
-		// return value
 		return feed;
 	}
 
-	public static NewsInfo[] getNews(String uniqeIdentifier, Mode returnMode) {
+	public static NewsData[] getNews(Context c, String uniqeIdentifier) {
 		HttpResponse response;
-		String htmlResponse;
+		JSONArray jsonResponse;
 
 		try {
-			HttpHost targetHost = new HttpHost("teknikprogrammet.net");
-			HttpGet targetGet = new HttpGet(
-					"/AlleIT/Alleinfo/webadmin/includes/studentbody_news.php");
 			HttpClient httpClient = new DefaultHttpClient();
-			response = httpClient.execute(targetHost, targetGet);
+			response = httpClient
+					.execute(new HttpGet(serverAddress + NewsPath));
 			HttpEntity entity = response.getEntity();
-			htmlResponse = EntityUtils.toString(entity);
+			jsonResponse = new JSONArray(EntityUtils.toString(entity));
+
+			if (jsonResponse.length() == 0) {
+				System.out.println("Servern gav ett tomt svar");
+				return new NewsData[0];
+			}
+			NewsData[] data = new NewsData[jsonResponse.length()];
+
+			List<String> imageRequest = new ArrayList<String>();
+
+			for (int i = 0; i < jsonResponse.length(); i++) {
+				JSONObject jsonObject = jsonResponse.getJSONObject(i);
+
+				data[i] = new NewsData();
+
+				data[i].headline = String.valueOf(Html.fromHtml(jsonObject
+						.getString("headline")));
+
+				data[i].shortInfo = String.valueOf(Html.fromHtml(jsonObject
+						.getString("shortInfo")));
+
+				data[i].description = String.valueOf(Html.fromHtml(jsonObject
+						.getString("description")));
+
+				data[i].butURL = String.valueOf(Html.fromHtml(jsonObject
+						.getString("butURL")));
+
+				data[i].type = String.valueOf(Html.fromHtml(jsonObject
+						.getString("type")));
+
+				data[i].handler = String.valueOf(Html.fromHtml(jsonObject
+						.getString("handler")));
+
+				data[i].rawHandler = jsonObject.getString("handler");
+
+				data[i].color = String.valueOf(Html.fromHtml(jsonObject
+						.getString("color")));
+
+				imageRequest.add(jsonObject.getString("handler"));
+
+				data[i].uniqeIdentifier = String.valueOf(Html
+						.fromHtml(jsonObject.getString("id")));
+
+				data[i].contentType = ContentType.News;
+			}
+
+			for (int i = 0; i < imageRequest.size(); i++)
+				for (int x = i + 1; x < imageRequest.size(); x++)
+					if (imageRequest.get(i).equalsIgnoreCase(
+							imageRequest.get(x))) {
+						imageRequest.remove(x);
+						x--;
+					}
+
+			for (String str : imageRequest) {
+				Drawable d = getImg(c, "", str);
+
+				for (int i = 0; i < data.length; i++)
+					if (data[i].rawHandler.equalsIgnoreCase(str))
+						data[i].image = d;
+			}
+
+			return data;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new NewsInfo[0];
+			return new NewsData[0];
 		}
-		if (htmlResponse.contains("~") == false) {
-			return new NewsInfo[0];
-		}
-		String[] delimitered = htmlResponse.split("~");
 
-		if (returnMode == Mode.All) {
-			NewsInfo[] data = new NewsInfo[delimitered.length / 7];
-			for (int i = 0, x = 0; i < data.length; i++) {
-				data[i] = new NewsInfo();
-				data[i].headline = String
-						.valueOf(Html.fromHtml(delimitered[x]));
-				x++;
-				data[i].description = String.valueOf(Html
-						.fromHtml(delimitered[x]));
-				x++;
-				data[i].longDescription = String.valueOf(Html
-						.fromHtml(delimitered[x]));
-				x++;
-				data[i].butURL = String.valueOf(Html.fromHtml(delimitered[x]));
-				x++;
-				data[i].type = String.valueOf(Html.fromHtml(delimitered[x]));
-				x++;
-				data[i].handler = String.valueOf(Html.fromHtml(delimitered[x]));
-				x++;
-				data[i].uniqeIdentifier = String.valueOf(Html
-						.fromHtml(delimitered[x]));
-				x++;
-				data[i].contentType = 0;
-			}
-			return data;
-		} else {
-			return extractSpecificNews(uniqeIdentifier, delimitered);
-		}
 	}
 
-	private static NewsInfo[] extractSpecificNews(String uniqeIdentifier,
-			String[] delimitered) {
-		for (int i = 6; i < delimitered.length; i += 7) {
-			if (delimitered[i].contains(uniqeIdentifier)) {
-				NewsInfo[] data = new NewsInfo[1];
-				data[0] = new NewsInfo();
-				data[0].headline = String.valueOf(Html
-						.fromHtml(delimitered[i - 6]));
-				data[0].description = String.valueOf(Html
-						.fromHtml(delimitered[i - 5]));
-				data[0].longDescription = String.valueOf(Html
-						.fromHtml(delimitered[i - 4]));
-				data[0].butURL = String.valueOf(Html
-						.fromHtml(delimitered[i - 3]));
-				data[0].type = String
-						.valueOf(Html.fromHtml(delimitered[i - 2]));
-				data[0].handler = String.valueOf(Html
-						.fromHtml(delimitered[i - 1]));
-				data[0].uniqeIdentifier = String.valueOf(Html
-						.fromHtml(delimitered[i]));
-				data[0].contentType = 0;
-				return data;
+	public static PosterData[] getKarInfo(Context c) {
+		HttpResponse response;
+		JSONArray jsonResponse;
+
+		try {
+			HttpClient httpClient = new DefaultHttpClient();
+
+			response = httpClient.execute(new HttpGet(serverAddress
+					+ PosterPath));
+
+			HttpEntity entity = response.getEntity();
+
+			String ans = EntityUtils.toString(entity);
+
+			if (ans.equals("request failed") || ans.equals("") || ans == null) {
+				System.out
+						.println("Servern gav ett ov\u00E4ntat svar n\u00E4r info skulle h\u00E4mtas; getKarInfo");
+				System.out.println("Svar: \"" + ans + "\"");
+				return new PosterData[0];
 			}
+
+			jsonResponse = new JSONArray(ans);
+
+			PosterData[] data = new PosterData[jsonResponse.length()];
+
+			for (int i = 0; i < jsonResponse.length(); i++) {
+				JSONObject jsonObject = jsonResponse.getJSONObject(i);
+				
+				data[i] = new PosterData();
+
+				data[i].name = String.valueOf(Html.fromHtml(jsonObject
+						.getString("handler")));
+				data[i].handler = jsonObject.getString("handler");
+				data[i].color = jsonObject.getString("color");
+				data[i].description = String.valueOf(Html.fromHtml(jsonObject
+						.getString("description")));
+				data[i].socialLink = jsonObject.getString("socialLink");
+				data[i].logo = getImg(c, jsonObject.getString("logoPath"), "");
+			}
+
+			return data;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new PosterData[0];
 		}
-		return new NewsInfo[0];
+
+	}
+
+	private static Drawable getImg(Context c, String link, String rawHandler) {
+		try {
+
+			if (link.length() == 0) {
+				HttpResponse response;
+				JSONArray jsonResponse;
+
+				try {
+					HttpClient httpClient = new DefaultHttpClient();
+					HttpPost post = new HttpPost(serverAddress + PosterPath);
+
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(
+							1);
+
+					nameValuePairs.add(new BasicNameValuePair("handler",
+							rawHandler));
+
+					post.setEntity(new UrlEncodedFormEntity(nameValuePairs,
+							"UTF-8"));
+
+					response = httpClient.execute(post);
+
+					HttpEntity entity = response.getEntity();
+
+					String ans = EntityUtils.toString(entity);
+
+					if (ans.equals("request failed") || ans.equals("")
+							|| ans == null) {
+						System.out
+								.println("Servern gav ett ov\u00E4ntat svar n\u00E4r bilden skulle h\u00E4mtas");
+						System.out.println("Svar: \"" + ans + "\"");
+
+						return c.getResources().getDrawable(
+								android.R.drawable.ic_menu_report_image);
+					}
+
+					jsonResponse = new JSONArray(ans);
+
+					link = jsonResponse.getJSONObject(0).getString("logoPath");
+
+				} catch (Exception e) {
+					e.printStackTrace();
+
+					return c.getResources().getDrawable(
+							android.R.drawable.ic_menu_report_image);
+				}
+			}
+
+			URL url = new URL(link);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(10000);
+			conn.setInstanceFollowRedirects(false);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			return new BitmapDrawable(c.getResources(),
+					BitmapFactory.decodeStream(is));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return c.getResources().getDrawable(
+					android.R.drawable.ic_menu_report_image);
+		}
+
 	}
 }

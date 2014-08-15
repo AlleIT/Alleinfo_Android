@@ -112,7 +112,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mininew"
+        android:layout_above="@+id/divider"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="4dp"
         android:text="@string/news"
@@ -120,19 +120,35 @@
         android:textColor="#222222" />
 
     <View
+        android:id="@+id/divider"
         android:layout_width="fill_parent"
         android:layout_height="1px"
-        android:layout_below="@+id/textView2"
+        android:layout_above="@+id/miniNewsContainer"
         android:background="#222222" />
 
-    <ListView
-        android:id="@+id/mininew"
+    <RelativeLayout
+        android:id="@+id/miniNewsContainer"
         android:layout_width="fill_parent"
         android:layout_height="176dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1px" >
-    </ListView>
+        android:layout_alignParentBottom="true" >
+
+        <ListView
+            android:id="@+id/mininew"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:divider="#CCCCCC"
+            android:dividerHeight="1px" >
+        </ListView>
+
+        <ProgressBar
+            android:id="@+id/miniNewsPBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
