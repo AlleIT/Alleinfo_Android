@@ -68,7 +68,7 @@
     <string name="noName">Inget namn</string>
     <string name="shortInfo">Kort info:</string>
     <string name="desc">Beskrivning:</string>
-    <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r \u00C5lleinfos data inte kopierats till extern lagring.)</string>
+    <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast appen \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r appens \u00C5lleinfos data inte kopierats till extern lagring.)</string>
     
     <!-- Short description of why the user needs to input his/her credentials again to log on to the app -->
     <string name="dataEraseNote">Denna uppdateringen av \u00C5lleinfo kr\u00E4ver inte l\u00E4ngre ett l\u00F6senord, men du beh\u00F6ver tyv\u00E4rr fylla i dina uppgifter igen.</string>
