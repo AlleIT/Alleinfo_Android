@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\debug\assets" />
+    </dataSet>
+
+</merger>
