@@ -1,11 +1,5 @@
 package com.alleit.alleinfo;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import com.alleit.Alleinfo_Android.R;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -37,11 +31,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.LayoutAlgorithm;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -54,7 +50,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alleit.Alleinfo_Android.R;
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+
 public class Home extends Activity {
+
+	//<editor-fold> Variables
 
 	Drawable currcolor;
 
@@ -99,6 +103,8 @@ public class Home extends Activity {
 	PosterData[] posterListData;
 	Boolean isPlayingSport;
 
+	//</editor-fold>
+
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
 	@Override
@@ -113,7 +119,7 @@ public class Home extends Activity {
 		sharedP = getApplicationContext().getSharedPreferences(
 				PreferenceInfo.Preference_Name, MODE_PRIVATE);
 
-		if (fromIntent.getBooleanExtra("Stored", false) == false) {
+		if (!fromIntent.getBooleanExtra("Stored", false)) {
 			isPlayingSport = fromIntent.getBooleanExtra(
 					PreferenceInfo.Extended_Schedule_Display_Name, false);
 		} else {
@@ -160,8 +166,7 @@ public class Home extends Activity {
 		 * XXX: OnClick listeners for sidebar Please keep these in the same
 		 * order as the actual buttons
 		 */
-
-		// if user clicks on home menu button
+		// <editor-fold> left bar onClickListener set-up
 
 		home.setOnClickListener(new OnClickListener() {
 			@Override
@@ -223,6 +228,8 @@ public class Home extends Activity {
 				makeItsLearning();
 			}
 		});
+
+		// </editor-fold>
 	}
 
 	private void SetUpLeftBar() {
@@ -231,14 +238,14 @@ public class Home extends Activity {
 																		 * DrawerLayout
 																		 * object
 																		 */
-		R.drawable.ic_navigation_drawer, /*
+				R.drawable.ic_navigation_drawer, /*
 										 * nav drawer image to replace 'Up'
 										 * caret
 										 */
-		R.string.app_name, /*
+				R.string.app_name, /*
 							 * "open drawer" description for accessibility
 							 */
-		R.string.app_name /* "close drawer" description for accessibility */
+				R.string.app_name /* "close drawer" description for accessibility */
 		);
 		mDrawerLayout.post(new Runnable() {
 
@@ -251,10 +258,7 @@ public class Home extends Activity {
 
 	}
 
-	/*
-	 * XXX: makeXxx() Prepare the various pages here. Keep the methods in the
-	 * same order as the actual buttons please.
-	 */
+	// <editor-fold>: makeXxx() Prepare the various pages here. Keep the methods in the same order as the actual buttons please.
 
 	private void makeHome() {
 		chosenDay = -1;
@@ -268,27 +272,27 @@ public class Home extends Activity {
 			todWeek = (TextView) findViewById(R.id.weekShow);
 			Calendar cal = Calendar.getInstance();
 			switch (cal.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				todDay.setText(Html.fromHtml("M&aring;ndag"));
-				break;
-			case Calendar.TUESDAY:
-				todDay.setText("Tisdag");
-				break;
-			case Calendar.WEDNESDAY:
-				todDay.setText("Onsdag");
-				break;
-			case Calendar.THURSDAY:
-				todDay.setText("Torsdag");
-				break;
-			case Calendar.FRIDAY:
-				todDay.setText("Fredag");
-				break;
-			case Calendar.SATURDAY:
-				todDay.setText(Html.fromHtml("L&ouml;rdag"));
-				break;
-			case Calendar.SUNDAY:
-				todDay.setText(Html.fromHtml("S&ouml;ndag"));
-				break;
+				case Calendar.MONDAY:
+					todDay.setText(Html.fromHtml("M&aring;ndag"));
+					break;
+				case Calendar.TUESDAY:
+					todDay.setText("Tisdag");
+					break;
+				case Calendar.WEDNESDAY:
+					todDay.setText("Onsdag");
+					break;
+				case Calendar.THURSDAY:
+					todDay.setText("Torsdag");
+					break;
+				case Calendar.FRIDAY:
+					todDay.setText("Fredag");
+					break;
+				case Calendar.SATURDAY:
+					todDay.setText(Html.fromHtml("L&ouml;rdag"));
+					break;
+				case Calendar.SUNDAY:
+					todDay.setText(Html.fromHtml("S&ouml;ndag"));
+					break;
 			}
 			todDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
 					+ "/" + String.valueOf(cal.get(Calendar.MONTH) + 1) + " - "
@@ -337,14 +341,36 @@ public class Home extends Activity {
 		Home.this.invalidateOptionsMenu();
 	}
 
-	private void makeNewsSub(NewsData data) {
+	private void makeNewsSub(final NewsData data) {
 		if (current != HomePage.Nyheter_SUB) {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Nyheter_SUB;
 			checkColors();
 
-			ImageView Pic = (ImageView) findViewById(R.id.pic);
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					final ProgressBar imageLoadBar = (ProgressBar) findViewById(R.id.ImageLoadPB);
+					imageLoadBar.setVisibility(View.VISIBLE);
+					final Drawable image = data.Image(c);
+					runOnUiThread(new Runnable() {
+						public void run() {
+							try {
+								Animation fadeInTransition = AnimationUtils.loadAnimation(c, R.anim.fadein);
+								ImageView Pic = (ImageView) findViewById(R.id.pic);
+								Pic.setImageDrawable(image);
+								Pic.startAnimation(fadeInTransition);
+								imageLoadBar.setVisibility(View.GONE);
+							} catch (Exception e) {
+								// The user probably exited the news screen before the image was loaded. Don't worry about it.
+							}
+						}
+					});
+				}
+			}).start();
+
 			Button but = (Button) findViewById(R.id.button);
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
@@ -352,8 +378,6 @@ public class Home extends Activity {
 
 			info.setText(data.shortInfo);
 			desc.setText(data.description);
-
-			Pic.setImageDrawable(data.image);
 
 			separator.setBackgroundColor(Color.parseColor(data.color));
 
@@ -459,7 +483,7 @@ public class Home extends Activity {
 			elevkarListView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
+				                        int position, long id) {
 					if (posterListData.length <= 1)
 						return;
 
@@ -538,8 +562,6 @@ public class Home extends Activity {
 		prepWeb();
 	}
 
-	// get all the latest news from elevkaren
-
 	private void prepFeed() {
 		final Activity a = this;
 		if (current == HomePage.Home) {
@@ -553,7 +575,7 @@ public class Home extends Activity {
 				public void run() {
 
 					List<NewsData> temp = Arrays.asList(Webber
-							.getTinyNewsFeed(c));
+							.getTinyNewsFeed());
 
 					if (temp.isEmpty()) {
 						newsListData = new NewsData[0];
@@ -588,7 +610,7 @@ public class Home extends Activity {
 			listView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
+				                        int position, long id) {
 					if (newsListData[position].contentType == ContentType.ShowMoreNews) {
 						makeNews();
 					} else if (newsListData[position].contentType == ContentType.News)
@@ -605,7 +627,7 @@ public class Home extends Activity {
 				@Override
 				public void run() {
 
-					List<NewsData> temp = Arrays.asList(Webber.getNews(c, ""));
+					List<NewsData> temp = Arrays.asList(Webber.getNews());
 
 					if (temp.isEmpty()) {
 						newsListData = new NewsData[0];
@@ -640,7 +662,7 @@ public class Home extends Activity {
 			listView.setOnItemClickListener(new OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
+				                        int position, long id) {
 					if (newsListData[position].contentType == ContentType.News) {
 						makeNewsSub(newsListData[position]);
 					}
@@ -650,6 +672,7 @@ public class Home extends Activity {
 		}
 
 	}
+	// </editor-fold>
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("NewApi")
@@ -671,90 +694,90 @@ public class Home extends Activity {
 
 		switch (current) {
 
-		case Home:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-			bar.setTitle("Hem");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				home.setBackgroundDrawable(currcolor);
-			else
-				home.setBackground(currcolor);
-			break;
+			case Home:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
+				bar.setTitle("Hem");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					home.setBackgroundDrawable(currcolor);
+				else
+					home.setBackground(currcolor);
+				break;
 
-		case Schema:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[1]));
-			bar.setTitle("Schema");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				schedule.setBackgroundDrawable(currcolor);
-			else
-				schedule.setBackground(currcolor);
-			break;
+			case Schema:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[1]));
+				bar.setTitle("Schema");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					schedule.setBackgroundDrawable(currcolor);
+				else
+					schedule.setBackground(currcolor);
+				break;
 
-		case Mat:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[2]));
-			bar.setTitle("Skolmat");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				food.setBackgroundDrawable(currcolor);
-			else
-				food.setBackground(currcolor);
-			break;
+			case Mat:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[2]));
+				bar.setTitle("Skolmat");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					food.setBackgroundDrawable(currcolor);
+				else
+					food.setBackground(currcolor);
+				break;
 
-		case Nyheter:
-		case Nyheter_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
+			case Nyheter:
+			case Nyheter_SUB:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
 
-			if (current == HomePage.Nyheter)
-				bar.setTitle("Nyheter");
-			else
-				bar.setTitle(newsListData[0].headline);
+				if (current == HomePage.Nyheter)
+					bar.setTitle("Nyheter");
+				else
+					bar.setTitle(newsListData[0].headline);
 
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				news.setBackgroundDrawable(currcolor);
-			else
-				news.setBackground(currcolor);
-			break;
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					news.setBackgroundDrawable(currcolor);
+				else
+					news.setBackground(currcolor);
+				break;
 
-		case Elevkaren:
-		case Elevkaren_SUB:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
-			bar.setTitle("Elevkåren");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				elevkaren.setBackgroundDrawable(currcolor);
-			else
-				elevkaren.setBackground(currcolor);
-			break;
+			case Elevkaren:
+			case Elevkaren_SUB:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
+				bar.setTitle("Elevkåren");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					elevkaren.setBackgroundDrawable(currcolor);
+				else
+					elevkaren.setBackground(currcolor);
+				break;
 
-		case Dexter:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
-			bar.setTitle("Dexter");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				dexter.setBackgroundDrawable(currcolor);
-			else
-				dexter.setBackground(currcolor);
-			break;
+			case Dexter:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
+				bar.setTitle("Dexter");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					dexter.setBackgroundDrawable(currcolor);
+				else
+					dexter.setBackground(currcolor);
+				break;
 
-		case ItsLearning:
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
-			bar.setTitle("It's learning");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				itsLearning.setBackgroundDrawable(currcolor);
-			else
-				itsLearning.setBackground(currcolor);
-			break;
+			case ItsLearning:
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
+				bar.setTitle("It's learning");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					itsLearning.setBackgroundDrawable(currcolor);
+				else
+					itsLearning.setBackground(currcolor);
+				break;
 
-		default:
-			current = HomePage.Home;
-			currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-			bar.setTitle("Hem");
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				home.setBackgroundDrawable(currcolor);
-			else
-				home.setBackground(currcolor);
-			break;
+			default:
+				current = HomePage.Home;
+				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
+				bar.setTitle("Hem");
+				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+					home.setBackgroundDrawable(currcolor);
+				else
+					home.setBackground(currcolor);
+				break;
 		}
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({ "SetJavaScriptEnabled", "NewApi" })
+	@SuppressLint({"SetJavaScriptEnabled", "NewApi"})
 	public void prepWeb() {
 		final WebView WV;
 		WV = (WebView) findViewById(R.id.webber);
@@ -806,12 +829,12 @@ public class Home extends Activity {
 			// if SSL certificate doesn't work, don't show any error
 
 			public void onReceivedSslError(WebView view,
-					SslErrorHandler handler, SslError error) {
+			                               SslErrorHandler handler, SslError error) {
 				handler.proceed();
 			}
 
 			public void onReceivedError(WebView view, int errorCode,
-					String description, String failingUrl) {
+			                            String description, String failingUrl) {
 				lasturl = failingUrl;
 				WV.loadUrl("about:blank");
 				tryAgain(WV, PB, progress, retry, "Sidan kunde inte laddas",
@@ -932,7 +955,7 @@ public class Home extends Activity {
 	}
 
 	private void tryAgain(final WebView WV, ProgressBar PB, TextView progress,
-			final Button retry, String message, final String lasturl) {
+	                      final Button retry, String message, final String lasturl) {
 		PB.setVisibility(View.GONE);
 		progress.setText(message);
 		progress.setVisibility(View.VISIBLE);
@@ -952,6 +975,7 @@ public class Home extends Activity {
 		});
 	}
 
+	// <editor-fold> Menu stuff
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mDrawerLayout.closeDrawers();
@@ -973,8 +997,8 @@ public class Home extends Activity {
 				if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 16
 						&& !sharedP.getBoolean(
-								PreferenceInfo.Extended_Schedule_Display_Name,
-								false)
+						PreferenceInfo.Extended_Schedule_Display_Name,
+						false)
 						|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY
 						&& cal.get(Calendar.HOUR_OF_DAY) > 20) {
 					showThisWeek = false;
@@ -1015,115 +1039,118 @@ public class Home extends Activity {
 		}
 		switch (item.getItemId()) {
 
-		// Change user = Home and Schedule
-		case R.id.chng_user:
-			AlertDialog.Builder chng_user_notice = new AlertDialog.Builder(c);
+			// Change user = Home and Schedule
+			case R.id.chng_user:
+				AlertDialog.Builder chng_user_notice = new AlertDialog.Builder(c);
 
-			chng_user_notice.setMessage(c.getString(R.string.chng_user_notice));
-			chng_user_notice.setTitle("Byta anv\u00E4ndare?");
-			chng_user_notice.setPositiveButton(
-					c.getString(android.R.string.yes),
-					new DialogInterface.OnClickListener() {
+				chng_user_notice.setMessage(c.getString(R.string.chng_user_notice));
+				chng_user_notice.setTitle("Byta anv\u00E4ndare?");
+				chng_user_notice.setPositiveButton(
+						c.getString(android.R.string.yes),
+						new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
-									.commit();
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
+										.commit();
 
-							AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
-									c);
+								AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
+										c);
 
-							restart_app_notice.setMessage(c
-									.getString(R.string.restart_app_notice));
-							restart_app_notice
-									.setTitle("Appen m\u00E5ste startas om");
-							restart_app_notice.setPositiveButton(
-									c.getString(android.R.string.ok), null);
-							restart_app_notice.setCancelable(false);
-							restart_app_notice.create().show();
-						}
-					});
-			chng_user_notice.setNegativeButton(
-					c.getString(android.R.string.no), null);
-			chng_user_notice.setCancelable(false);
-			chng_user_notice.create().show();
-			return true;
+								restart_app_notice.setMessage(c
+										.getString(R.string.restart_app_notice));
+								restart_app_notice
+										.setTitle("Appen m\u00E5ste startas om");
+								restart_app_notice.setPositiveButton(
+										c.getString(android.R.string.ok), null);
+								restart_app_notice.setCancelable(false);
+								restart_app_notice.create().show();
+							}
+						});
+				chng_user_notice.setNegativeButton(
+						c.getString(android.R.string.no), null);
+				chng_user_notice.setCancelable(false);
+				chng_user_notice.create().show();
+				return true;
 
 			// Schedule
 
-		case R.id.mandag:
-			chosenDay = 1;
-			prepWeb();
-			return true;
+			case R.id.mandag:
+				chosenDay = 1;
+				prepWeb();
+				return true;
 
-		case R.id.tisdag:
-			chosenDay = 2;
-			prepWeb();
-			return true;
+			case R.id.tisdag:
+				chosenDay = 2;
+				prepWeb();
+				return true;
 
-		case R.id.onsdag:
-			chosenDay = 3;
-			prepWeb();
-			return true;
+			case R.id.onsdag:
+				chosenDay = 3;
+				prepWeb();
+				return true;
 
-		case R.id.torsdag:
-			chosenDay = 4;
-			prepWeb();
-			return true;
+			case R.id.torsdag:
+				chosenDay = 4;
+				prepWeb();
+				return true;
 
-		case R.id.fredag:
-			chosenDay = 5;
-			prepWeb();
-			return true;
+			case R.id.fredag:
+				chosenDay = 5;
+				prepWeb();
+				return true;
 
-		case R.id.wholeWeek:
-			chosenDay = 0;
-			prepWeb();
-			return true;
+			case R.id.wholeWeek:
+				chosenDay = 0;
+				prepWeb();
+				return true;
 
-		case R.id.thisWeek:
-			item.setChecked(true);
-			showThisWeek = true;
-			prepWeb();
-			return true;
+			case R.id.thisWeek:
+				item.setChecked(true);
+				showThisWeek = true;
+				prepWeb();
+				return true;
 
-		case R.id.nextWeek:
-			showThisWeek = false;
-			item.setChecked(true);
-			prepWeb();
-			return true;
+			case R.id.nextWeek:
+				showThisWeek = false;
+				item.setChecked(true);
+				prepWeb();
+				return true;
 
 			// It's learning
-		case R.id.goBack:
-			if (mWebView.canGoBack() == true) {
-				mWebView.goBack();
-			}
-			return true;
+			case R.id.goBack:
+				if (mWebView.canGoBack() == true) {
+					mWebView.goBack();
+				}
+				return true;
 
-		case R.id.goForward:
-			if (mWebView.canGoForward() == true) {
-				mWebView.goForward();
-			}
-			return true;
+			case R.id.goForward:
+				if (mWebView.canGoForward() == true) {
+					mWebView.goForward();
+				}
+				return true;
 
-		case R.id.openInBrowser:
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse(mWebView.getOriginalUrl()));
-			startActivity(browserIntent);
-			return true;
+			case R.id.openInBrowser:
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+						Uri.parse(mWebView.getOriginalUrl()));
+				startActivity(browserIntent);
+				return true;
 
-		case R.id.beMember:
-			// Open the signup page in the default browser.
-			Intent myIntent = new Intent(Intent.ACTION_VIEW,
-					Uri.parse(Webber.signupAddress));
-			startActivity(myIntent);
-			return true;
+			case R.id.beMember:
+				// Open the signup page in the default browser.
+				Intent myIntent = new Intent(Intent.ACTION_VIEW,
+						Uri.parse(Webber.signupAddress));
+				startActivity(myIntent);
+				return true;
 
-		default:
-			return super.onOptionsItemSelected(item);
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 
+	//</editor-fold>
+
+	//<editor-fold> Button press handlers
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -1158,5 +1185,6 @@ public class Home extends Activity {
 
 		}
 	}
+	//</editor-fold>
 
 }

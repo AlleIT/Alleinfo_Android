@@ -1,12 +1,11 @@
 package com.alleit.alleinfo;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.text.Html;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -21,12 +20,13 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.text.Html;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 public class Webber {
 
@@ -61,7 +61,7 @@ public class Webber {
 
 	// render schedule
 	public static String renderSchedule(String number, int specday,
-			Boolean showThisWeek, Point screenSize, Boolean playSport, Context c) {
+	                                    Boolean showThisWeek, Point screenSize, Boolean playSport, Context c) {
 		Calendar cal = Calendar.getInstance();
 
 		int day = 0;
@@ -150,26 +150,26 @@ public class Webber {
 			day = specday;
 
 		switch (day) {
-		case 0:
-		case 1:
-		case 2:
-			break;
+			case 0:
+			case 1:
+			case 2:
+				break;
 
-		case 3:
-			day = 4;
-			break;
+			case 3:
+				day = 4;
+				break;
 
-		case 4:
-			day = 8;
-			break;
+			case 4:
+				day = 8;
+				break;
 
-		case 5:
-			day = 16;
-			break;
+			case 5:
+				day = 16;
+				break;
 
-		default:
-			day = 0;
-			break;
+			default:
+				day = 0;
+				break;
 		}
 
 		// web url for schedule
@@ -193,11 +193,11 @@ public class Webber {
 	}
 
 	// get tiny news feed displayed on HomePage.Home
-	public static NewsData[] getTinyNewsFeed(Context c) {
+	public static NewsData[] getTinyNewsFeed() {
 		NewsData[] feed;
 
-		NewsData data = null;
-		List<NewsData> temp = Arrays.asList(getNews(c, ""));
+		NewsData data;
+		List<NewsData> temp = Arrays.asList(getNews());
 
 		if (temp.isEmpty())
 			return new NewsData[0];
@@ -214,7 +214,7 @@ public class Webber {
 			data.handler = "";
 			data.color = "#FFFFFF";
 			data.contentType = ContentType.ShowMoreNews;
-			data.uniqeIdentifier = null;
+			data.uniqueIdentifier = null;
 			feed[2] = data;
 		} else {
 			int i = 0;
@@ -227,7 +227,7 @@ public class Webber {
 		return feed;
 	}
 
-	public static NewsData[] getNews(Context c, String uniqeIdentifier) {
+	public static NewsData[] getNews() {
 		HttpResponse response;
 		JSONArray jsonResponse;
 
@@ -244,8 +244,6 @@ public class Webber {
 			}
 
 			NewsData[] data = new NewsData[jsonResponse.length()];
-
-			List<String> imageRequest = new ArrayList<String>();
 
 			for (int i = 0; i < jsonResponse.length(); i++) {
 				JSONObject jsonObject = jsonResponse.getJSONObject(i);
@@ -275,28 +273,10 @@ public class Webber {
 				data[i].color = String.valueOf(Html.fromHtml(jsonObject
 						.getString("color")));
 
-				imageRequest.add(jsonObject.getString("handler"));
-
-				data[i].uniqeIdentifier = String.valueOf(Html
+				data[i].uniqueIdentifier = String.valueOf(Html
 						.fromHtml(jsonObject.getString("id")));
 
 				data[i].contentType = ContentType.News;
-			}
-
-			for (int i = 0; i < imageRequest.size(); i++)
-				for (int x = i + 1; x < imageRequest.size(); x++)
-					if (imageRequest.get(i).equalsIgnoreCase(
-							imageRequest.get(x))) {
-						imageRequest.remove(x);
-						x--;
-					}
-
-			for (String str : imageRequest) {
-				Drawable d = getImg(c, "", str);
-
-				for (int i = 0; i < data.length; i++)
-					if (data[i].rawHandler.equalsIgnoreCase(str))
-						data[i].image = d;
 			}
 
 			return data;
@@ -321,7 +301,7 @@ public class Webber {
 
 			String ans = EntityUtils.toString(entity);
 
-			if (ans.equals("request failed") || ans.equals("") || ans == null) {
+			if (ans.equals("request failed") || ans.equals("")) {
 				System.out
 						.println("Servern gav ett ov\u00E4ntat svar n\u00E4r info skulle h\u00E4mtas; getKarInfo");
 				System.out.println("Svar: \"" + ans + "\"");
@@ -334,7 +314,7 @@ public class Webber {
 
 			for (int i = 0; i < jsonResponse.length(); i++) {
 				JSONObject jsonObject = jsonResponse.getJSONObject(i);
-				
+
 				data[i] = new PosterData();
 
 				data[i].name = String.valueOf(Html.fromHtml(jsonObject
@@ -355,7 +335,7 @@ public class Webber {
 
 	}
 
-	private static Drawable getImg(Context c, String link, String rawHandler) {
+	public static Drawable getImg(Context c, String link, String rawHandler) {
 		try {
 
 			if (link.length() == 0) {
@@ -381,8 +361,7 @@ public class Webber {
 
 					String ans = EntityUtils.toString(entity);
 
-					if (ans.equals("request failed") || ans.equals("")
-							|| ans == null) {
+					if (ans.equals("request failed") || ans.equals("")) {
 						System.out
 								.println("Servern gav ett ov\u00E4ntat svar n\u00E4r bilden skulle h\u00E4mtas");
 						System.out.println("Svar: \"" + ans + "\"");

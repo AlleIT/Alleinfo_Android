@@ -1,5 +1,6 @@
 package com.alleit.alleinfo;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 // information about the news
@@ -12,7 +13,11 @@ public class NewsData {
 	public String handler = "";
 	public String rawHandler = "";
 	public String color = "#000000";
-	public String uniqeIdentifier = "";
-	public Drawable image;
+	public String uniqueIdentifier = "";
 	public ContentType contentType = ContentType.NoNews;
+
+	public Drawable Image(Context c)
+	{
+		return Webber.getImg(c, "",  rawHandler);
+	}
 }
