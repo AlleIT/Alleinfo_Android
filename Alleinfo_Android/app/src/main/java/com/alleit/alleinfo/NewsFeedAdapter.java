@@ -28,6 +28,7 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsData> {
 		
 		TextView desc = (TextView) rowView.findViewById(R.id.description);
 		desc.setText(datas[position].headline);
+		desc.setSelected(true);
 
 		TextView type = (TextView) rowView.findViewById(R.id.type);
 		type.setText(datas[position].type.toUpperCase(Locale.ENGLISH));

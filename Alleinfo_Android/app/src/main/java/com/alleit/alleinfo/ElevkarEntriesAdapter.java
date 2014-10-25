@@ -29,6 +29,7 @@ public class ElevkarEntriesAdapter extends ArrayAdapter<PosterData> {
 		
 		TextView name = (TextView) rowView.findViewById(R.id.KarName);
 		name.setText(datas[position].name);
+		name.setSelected(true);
 		
 		ImageView logo = (ImageView) rowView.findViewById(R.id.KarLogo);
 		logo.setImageDrawable(datas[position].logo);

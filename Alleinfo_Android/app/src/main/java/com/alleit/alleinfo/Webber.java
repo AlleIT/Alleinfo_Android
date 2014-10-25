@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -382,7 +383,7 @@ public class Webber {
 				}
 			}
 
-			URL url = new URL(serverAddress + UtskottsBildPath + link);
+			URL url = new URL(serverAddress + UtskottsBildPath + URLEncoder.encode(link, "UTF-8").replace("+", "%20"));
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(5000);
 			conn.setReadTimeout(10000);

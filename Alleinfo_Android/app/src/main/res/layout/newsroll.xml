@@ -10,8 +10,13 @@
         android:id="@+id/description"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.65"
+        android:layout_weight="0.6"
         android:gravity="left|center"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:freezesText="true"
+        android:scrollHorizontally="true"
         android:text="@null"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="16sp" />
@@ -20,7 +25,7 @@
         android:id="@+id/specKeep"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.35"
+        android:layout_weight="0.4"
         android:orientation="vertical" >
 
         <TextView
@@ -32,7 +37,9 @@
             android:text="@null"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#FF0000"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/handler"
@@ -43,7 +50,9 @@
             android:text="@null"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#0000FF"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:singleLine="true" />
     </LinearLayout>
 
 </LinearLayout>
