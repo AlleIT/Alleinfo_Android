@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merger version="2" >
 
+    <dataSet config="21.0.0" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\res" />
+    </dataSet>
     <dataSet config="main" >
         <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res" >
+            <file
+                name="fadein"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\anim\fadein.xml"
+                qualifiers=""
+                type="anim" />
             <file
                 name="alleit"
                 path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable\alleit.png"
@@ -279,35 +287,35 @@
                     <item>
 #6AB52C
                     </item>
-                    <!-- Hem -->
+ <!-- Hem -->
                     <item>
 #29b7eb
                     </item>
-                    <!-- Schema -->
+ <!-- Schema -->
                     <item>
 #c1cc67
                     </item>
-                    <!-- Skolmat -->
+ <!-- Skolmat -->
                     <item>
 #DBB314
                     </item>
-                    <!-- Betyg -->
+ <!-- Betyg -->
                     <item>
 #9c2a89
                     </item>
-                    <!-- Nyheter -->
+ <!-- Nyheter -->
                     <item>
 #445Fa9
                     </item>
-                    <!-- Elevkåren -->
+ <!-- Elevkåren -->
                     <item>
 #e6332a
                     </item>
-                    <!-- Dexter -->
+ <!-- Dexter -->
                     <item>
 #F07F0A
                     </item>
-                    <!-- It's learning -->
+ <!-- It's learning -->
                 </string-array>
 
                 <string name="openInBrowser" >\u00D6ppna i webbl\u00E4saren
@@ -389,11 +397,6 @@
                     name="LoginTheme"
                     parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
             </file>
-            <file
-                name="fadein"
-                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\anim\fadein.xml"
-                qualifiers=""
-                type="anim" />
         </source>
         <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\generated\debug" />
