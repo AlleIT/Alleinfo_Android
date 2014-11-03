@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-13e9d61c5251cd184f765ea570684d002a4c6a49.jar"
+        jar="C:\Users\Zakinishi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+    <item
+        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-8de6cad471ee40831e41d9289d9131b88075bb17.jar"
+        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+    <item
+        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-2eecf84d8f4c7af6710478427ea09ac43a774a5c.jar"
+        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.0.2"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+
+</pre-dex-items>

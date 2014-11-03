@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="21.0.0" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\res" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res" >
+            <file
+                name="fadein"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\anim\fadein.xml"
+                qualifiers=""
+                type="anim" />
+            <file
+                name="alleit"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable\alleit.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="biglogo"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable\biglogo.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="news_list_item_style"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable\news_list_item_style.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="back"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\back.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="browser"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\browser.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="chng_user"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\chng_user.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="forward"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\forward.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_navigation_drawer"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\ic_navigation_drawer.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="pickday"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\pickday.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="weekchoice"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-hdpi\weekchoice.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="back"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\back.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="browser"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\browser.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="chng_user"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\chng_user.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="forward"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\forward.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_navigation_drawer"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\ic_navigation_drawer.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="pickday"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\pickday.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="weekchoice"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-mdpi\weekchoice.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="back"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\back.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="browser"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\browser.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="chng_user"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\chng_user.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="forward"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\forward.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_navigation_drawer"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\ic_navigation_drawer.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="pickday"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\pickday.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="weekchoice"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xhdpi\weekchoice.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_navigation_drawer"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xxhdpi\ic_navigation_drawer.png"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\drawable-xxxhdpi\ic_launcher.png"
+                qualifiers="xxxhdpi-v4"
+                type="drawable" />
+            <file
+                name="board"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\board.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="detailview"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\detailview.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="elevkar_entry"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\elevkar_entry.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="home"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\home.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="leftbar"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\leftbar.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\list.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="newsroll"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\newsroll.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="requestnum"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\requestnum.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="webber"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\layout\webber.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="main_menu"
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\menu\main_menu.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\values\color.xml"
+                qualifiers="" >
+                <color name="alleit" >#0099CC
+                </color>
+                <color name="prclick" >#DDAA00
+                </color>
+                <color name="festarehover" >#AA11FF
+                </color>
+                <color name="theboardhover" >#667FCB
+                </color>
+                <color name="prhover" >#FFDD11
+                </color>
+                <color name="alleithover" >#00BBEE
+                </color>
+                <color name="pr" >#FFCC00
+                </color>
+                <color name="festareclick" >#7700DD
+                </color>
+                <color name="theboardclick" >#223D87
+                </color>
+                <color name="alleitclick" >#0077AA
+                </color>
+                <color name="theboard" >#445FA9
+                </color>
+                <color name="skolifclick" >#DD0753
+                </color>
+                <color name="skolif" >#FF1975
+                </color>
+                <color name="skolifhover" >#FF3B97
+                </color>
+                <color name="festare" >#9900FF
+                </color>
+                <color name="white" >#fff
+                </color>
+            </file>
+            <file
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\values\strings.xml"
+                qualifiers="" >
+                <string name="change" >Byt anv\u00E4ndare
+                </string>
+                <string name="desc" >Beskrivning:
+                </string>
+                <string name="newr" >Nyheter
+                </string>
+                <string name="news" >Nyheter
+                </string>
+                <string name="restart_app_notice" >Anv\u00E4ndarbytet sker n\u00E4sta g\u00E5ng appen startas.
+                </string>
+                <string name="chngpers" >Byt person
+                </string>
+                <string name="settings" >Inst\u00E4llningar
+                </string>
+                <string name="angeDittPers" >Ange ditt personnummer
+                </string>
+                <string name="tis" >Tisdag
+                </string>
+                <string name="home" >Hem
+                </string>
+                <string name="chng_user" >Byt anv\u00E4ndare
+                </string>
+                <string name="food" >Skolmat
+                </string>
+                <string name="chng_user_notice" >\u00C4r du s\u00E4ker p\u00E5 att du vill byta anv\u00E4ndare?
+                </string>
+                <string name="scheme" >Schema
+                </string>
+                <string name="PULText" >Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast appen \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r appens \u00C5lleinfos data inte kopierats till extern lagring.)
+                </string>
+                <string name="ons" >Onsdag
+                </string>
+
+                <string-array name="colors" >
+                    <item>
+#6AB52C
+                    </item>
+                    <!-- Hem -->
+                    <item>
+#29b7eb
+                    </item>
+                    <!-- Schema -->
+                    <item>
+#c1cc67
+                    </item>
+                    <!-- Skolmat -->
+                    <item>
+#DBB314
+                    </item>
+                    <!-- Betyg -->
+                    <item>
+#9c2a89
+                    </item>
+                    <!-- Nyheter -->
+                    <item>
+#445Fa9
+                    </item>
+                    <!-- Elevkåren -->
+                    <item>
+#e6332a
+                    </item>
+                    <!-- Dexter -->
+                    <item>
+#F07F0A
+                    </item>
+                    <!-- It's learning -->
+                </string-array>
+
+                <string name="openInBrowser" >\u00D6ppna i webbl\u00E4saren
+                </string>
+                <string name="thisweek" >Denna vecka
+                </string>
+                <string name="dataEraseNote" >Denna uppdateringen av \u00C5lleinfo kr\u00E4ver inte l\u00E4ngre ett l\u00F6senord, men du beh\u00F6ver tyv\u00E4rr fylla i dina uppgifter igen.
+                </string>
+                <string name="abort" >Avbryt
+                </string>
+                <string name="week" >Veckovy
+                </string>
+                <string name="mon" >M\u00E5ndag
+                </string>
+                <string name="noExtra" >--Ingen info--
+                </string>
+                <string name="app_name" >\u00C5lleinfo
+                </string>
+                <string name="noName" >Inget namn
+                </string>
+                <string name="back" >Bak\u00E5t
+                </string>
+                <string name="bemember" >Bli medlem
+                </string>
+                <string name="dexter" >Dexter
+                </string>
+                <string name="teacher" >L\u00E4rare
+                </string>
+                <string name="savecred" >Spara
+                </string>
+                <string name="saveSport" >RIG/NIU/LIU
+                </string>
+                <string name="shortInfo" >Kort info:
+                </string>
+                <string name="tors" >Torsdag
+                </string>
+                <string name="angeDinPin" >Ange din PIN-kod
+                </string>
+                <string name="fre" >Fredag
+                </string>
+                <string name="tryagain" >F\u00F6rs\u00F6k igen
+                </string>
+                <string name="noHead" >--Ingen rubrik--
+                </string>
+                <string name="itslearning" >It\'s learning
+                </string>
+                <string name="day" >Dag
+                </string>
+                <string name="nextweek" >N\u00E4sta vecka
+                </string>
+                <string name="elevkar" >Elevk\u00E5ren
+                </string>
+                <string name="noDesc" >--Ingen beskrivning--
+                </string>
+                <string name="weekchoice" >Vecka
+                </string>
+                <string name="choosePin" >V\u00E4lj en PIN-kod
+                </string>
+                <string name="forward" >Fram\u00E5t
+                </string>
+                <string name="betyg" >Betyg
+                </string>
+                <string name="cont" >Forts\u00E4tt
+                </string>
+            </file>
+            <file
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\values\styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="LoginTheme"
+                    parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            </file>
+            <file
+                path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\main\res\values-v19\styles.xml"
+                qualifiers="v19" >
+
+                <style
+                    name="LoginTheme"
+                    parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
+            </file>
+        </source>
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\rs\debug" />
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\generated\debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\debug\res" />
+    </dataSet>
+
+</merger>
