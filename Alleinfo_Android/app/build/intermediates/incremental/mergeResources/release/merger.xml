@@ -398,11 +398,11 @@
                     parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
             </file>
         </source>
-        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\rs\debug" />
-        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\generated\debug" />
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\rs\release" />
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\generated\res\generated\release" />
     </dataSet>
-    <dataSet config="debug" >
-        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\debug\res" />
+    <dataSet config="release" >
+        <source path="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\src\release\res" />
     </dataSet>
 
 </merger>
