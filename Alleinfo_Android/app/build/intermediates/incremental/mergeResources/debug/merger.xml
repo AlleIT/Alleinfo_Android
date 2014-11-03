@@ -287,35 +287,35 @@
                     <item>
 #6AB52C
                     </item>
- <!-- Hem -->
+                    <!-- Hem -->
                     <item>
 #29b7eb
                     </item>
- <!-- Schema -->
+                    <!-- Schema -->
                     <item>
 #c1cc67
                     </item>
- <!-- Skolmat -->
+                    <!-- Skolmat -->
                     <item>
 #DBB314
                     </item>
- <!-- Betyg -->
+                    <!-- Betyg -->
                     <item>
 #9c2a89
                     </item>
- <!-- Nyheter -->
+                    <!-- Nyheter -->
                     <item>
 #445Fa9
                     </item>
- <!-- Elevkåren -->
+                    <!-- Elevkåren -->
                     <item>
 #e6332a
                     </item>
- <!-- Dexter -->
+                    <!-- Dexter -->
                     <item>
 #F07F0A
                     </item>
- <!-- It's learning -->
+                    <!-- It's learning -->
                 </string-array>
 
                 <string name="openInBrowser" >\u00D6ppna i webbl\u00E4saren

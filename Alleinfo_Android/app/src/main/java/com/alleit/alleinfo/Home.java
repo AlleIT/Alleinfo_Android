@@ -386,7 +386,7 @@ public class Home extends Activity {
 			String url = data.butURL;
 
 			if (url.length() == 0) {
-				but.setVisibility(View.INVISIBLE);
+				but.setVisibility(View.GONE); // Important that this is set to View.GONE in order for the "kort info"-scrolling text to work
 			}
 
 			final String finURL = url;

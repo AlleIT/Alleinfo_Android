@@ -59,7 +59,7 @@ public final class R {
         public static final int analogClock1=0x7f0a0010;
         public static final int beMember=0x7f0a0044;
         public static final int butcontainer=0x7f0a002b;
-        public static final int button=0x7f0a0008;
+        public static final int button=0x7f0a0007;
         public static final int chng_user=0x7f0a0035;
         public static final int content=0x7f0a0001;
         public static final int dateShow=0x7f0a0011;
@@ -78,7 +78,7 @@ public final class R {
         public static final int homeSlide=0x7f0a001e;
         public static final int imageView1=0x7f0a002e;
         public static final int imageView2=0x7f0a002f;
-        public static final int info=0x7f0a0007;
+        public static final int info=0x7f0a0008;
         public static final int itsSlide=0x7f0a0024;
         public static final int karSlide=0x7f0a0022;
         public static final int leftBarContainer=0x7f0a001c;

@@ -1,121 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#222222"
-    android:orientation="vertical" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#222222"
+                android:orientation="vertical">
 
-    <!-- makes the RelativeLayout parent fill the screen -->
+	<!-- makes the RelativeLayout parent fill the screen -->
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="invisible" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:visibility="invisible"/>
 
-    <RelativeLayout
-        android:id="@+id/top"
-        android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="#FFF3F3F3" >
+	<RelativeLayout
+		android:id="@+id/top"
+		android:layout_width="fill_parent"
+		android:layout_height="150dp"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:background="#FFF3F3F3">
 
-        <RelativeLayout
-            android:id="@+id/picContainer"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp" >
+		<RelativeLayout
+			android:id="@+id/picContainer"
+			android:layout_width="125dp"
+			android:layout_height="125dp"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp">
 
-            <ImageView
-                android:id="@+id/pic"
-                android:layout_width="125dp"
-                android:layout_height="125dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/app_name"
-                android:src="@null" />
+			<ImageView
+				android:id="@+id/pic"
+				android:layout_width="125dp"
+				android:layout_height="125dp"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:contentDescription="@string/app_name"
+				android:src="@null"/>
 
-	        <ProgressBar
-		        style="?android:attr/progressBarStyle"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:id="@+id/ImageLoadPB"
-		        android:visibility="gone"
-		        android:layout_centerVertical="true"
-		        android:layout_centerHorizontal="true"/>
-        </RelativeLayout>
-        
-        <TextView
-            android:id="@+id/shortInfoText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/picContainer"
-            android:text="@string/shortInfo"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#000000" />
+			<ProgressBar
+				style="?android:attr/progressBarStyle"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/ImageLoadPB"
+				android:visibility="gone"
+				android:layout_centerVertical="true"
+				android:layout_centerHorizontal="true"/>
+		</RelativeLayout>
 
-        <TextView
-            android:id="@+id/info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_below="@+id/shortInfoText"
-            android:layout_toRightOf="@+id/picContainer"
-            android:text="@string/noExtra"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#000000" />
+		<TextView
+			android:id="@+id/shortInfoText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_toRightOf="@+id/picContainer"
+			android:text="@string/shortInfo"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:textColor="#000000"/>
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/picContainer"
-            android:text="@null"
-            android:textColor="#000000"
-            android:textColorHint="#DDDDDD" />
-    </RelativeLayout>
+		<RelativeLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_marginLeft="15dp"
+			android:layout_below="@+id/shortInfoText"
+			android:layout_toRightOf="@+id/picContainer">
 
-    <RelativeLayout
-        android:id="@+id/separator"
-        android:layout_width="fill_parent"
-        android:layout_height="5dp"
-        android:layout_below="@+id/top"
-        android:background="#FFFFFF" />
+			<ScrollView
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:layout_above="@+id/button">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/separator"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/desc"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF" />
+				<TextView
+					android:id="@+id/info"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/noExtra"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:textColor="#000000"/>
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp" >
+			</ScrollView>
 
-        <TextView
-            android:id="@+id/desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/noDesc"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#FFFFFF" />
-    </ScrollView>
+			<Button
+				android:id="@+id/button"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				android:layout_alignParentLeft="true"
+				android:text="\@nulld"
+				android:textColor="#000000"
+				android:textColorHint="#DDDDDD"/>
+		</RelativeLayout>
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:id="@+id/separator"
+		android:layout_width="fill_parent"
+		android:layout_height="5dp"
+		android:layout_below="@+id/top"
+		android:background="#FFFFFF"/>
+
+	<TextView
+		android:id="@+id/textView2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/separator"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="10dp"
+		android:text="@string/desc"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="#FFFFFF"/>
+
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_alignParentLeft="true"
+		android:layout_below="@+id/textView2"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:layout_marginTop="5dp">
+
+		<TextView
+			android:id="@+id/desc"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/noDesc"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:textColor="#FFFFFF"/>
+	</ScrollView>
 
 </RelativeLayout><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/detailview.xml -->
