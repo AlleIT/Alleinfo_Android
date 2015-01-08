@@ -1,7 +1,6 @@
 package com.alleit.alleinfo;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -10,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -17,8 +17,10 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -56,7 +58,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class Home extends Activity {
+public class Home extends ActionBarActivity {
 
 	//<editor-fold> Variables
 
@@ -77,12 +79,13 @@ public class Home extends Activity {
 	TextView todDay, todDate, todWeek;
 
 	// Colors for the sidebar buttons. Expand in strings.xml as necessary.
-	String[] colorlist;
+	ColorDrawable[] colorlist;
 
 	// The user's location
 	HomePage current = HomePage.Start;
 
-	ActionBar bar;
+	private Toolbar bar;
+
 	ActionBarDrawerToggle mDrawerToggle;
 	ViewGroup viewGroup;
 	Menu menu;
@@ -102,6 +105,8 @@ public class Home extends Activity {
 	NewsData[] newsListData;
 	PosterData[] posterListData;
 	Boolean isPlayingSport;
+
+	private static final int home_index = 0, schedule_index = 1, food_index = 3, news_index = 4, kar_index = 5, dexter_index = 6, itslearning_index = 7;
 
 	//</editor-fold>
 
@@ -154,11 +159,9 @@ public class Home extends Activity {
 			xy = new Point(display.getWidth(), display.getHeight());
 		}
 
-		bar = getActionBar();
-		bar.setDisplayHomeAsUpEnabled(true);
-		bar.setHomeButtonEnabled(true);
-		bar.setBackgroundDrawable(new ColorDrawable(0xff222222));
-		colorlist = getResources().getStringArray(R.array.colors);
+		bar = (Toolbar) findViewById(R.id.toolbar);
+		setSupportActionBar(bar);
+		colorlist = setUpColorList();
 		SetUpLeftBar();
 		makeHome();
 
@@ -234,19 +237,7 @@ public class Home extends Activity {
 
 	private void SetUpLeftBar() {
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, /*
-																		 * DrawerLayout
-																		 * object
-																		 */
-				R.drawable.ic_navigation_drawer, /*
-										 * nav drawer image to replace 'Up'
-										 * caret
-										 */
-				R.string.app_name, /*
-							 * "open drawer" description for accessibility
-							 */
-				R.string.app_name /* "close drawer" description for accessibility */
-		);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, bar, R.string.app_name, R.string.app_name);
 		mDrawerLayout.post(new Runnable() {
 
 			@Override
@@ -256,6 +247,19 @@ public class Home extends Activity {
 		});
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+	}
+
+	private ColorDrawable[] setUpColorList() {
+		return new ColorDrawable[]{
+				new ColorDrawable(getResources().getColor(R.color.col_green)),
+				new ColorDrawable(getResources().getColor(R.color.col_cyan)),
+				new ColorDrawable(getResources().getColor(R.color.col_lt_yellow)),
+				new ColorDrawable(getResources().getColor(R.color.col_dk_yellow)),
+				new ColorDrawable(getResources().getColor(R.color.col_magenta)),
+				new ColorDrawable(getResources().getColor(R.color.col_karbla)),
+				new ColorDrawable(getResources().getColor(R.color.col_red)),
+				new ColorDrawable(getResources().getColor(R.color.col_orange))
+		};
 	}
 
 	// <editor-fold>: makeXxx() Prepare the various pages here. Keep the methods in the same order as the actual buttons please.
@@ -303,7 +307,7 @@ public class Home extends Activity {
 			prepWeb();
 			prepFeed();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeScheme() {
@@ -315,7 +319,7 @@ public class Home extends Activity {
 			showThisWeek = true;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -326,7 +330,7 @@ public class Home extends Activity {
 			current = HomePage.Mat;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -338,7 +342,7 @@ public class Home extends Activity {
 			checkColors();
 			prepFeed();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeNewsSub(final NewsData data) {
@@ -346,7 +350,11 @@ public class Home extends Activity {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Nyheter_SUB;
+
 			checkColors();
+
+			currcolor = new ColorDrawable(Color.parseColor(data.color));
+			handlePageChange(data.headline, news);
 
 			new Thread(new Runnable() {
 
@@ -413,7 +421,7 @@ public class Home extends Activity {
 			});
 
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeKar() {
@@ -491,7 +499,7 @@ public class Home extends Activity {
 				}
 			});
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeKarSub(int position) {
@@ -499,7 +507,11 @@ public class Home extends Activity {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Elevkaren_SUB;
+
 			checkColors();
+
+			currcolor = new ColorDrawable(Color.parseColor(posterListData[position].color));
+			handlePageChange(posterListData[position].name, elevkaren);
 
 			final String finURL = posterListData[position].socialLink;
 
@@ -512,8 +524,6 @@ public class Home extends Activity {
 
 			infoHead.setVisibility(View.INVISIBLE);
 			info.setText("");
-
-			bar.setTitle(posterListData[position].name);
 
 			Pic.setImageDrawable(posterListData[position].logo);
 
@@ -537,7 +547,7 @@ public class Home extends Activity {
 			});
 
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeDexter() {
@@ -547,7 +557,7 @@ public class Home extends Activity {
 			current = HomePage.Dexter;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -558,7 +568,7 @@ public class Home extends Activity {
 			current = HomePage.ItsLearning;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -695,87 +705,70 @@ public class Home extends Activity {
 		switch (current) {
 
 			case Home:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-				bar.setTitle("Hem");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					home.setBackgroundDrawable(currcolor);
-				else
-					home.setBackground(currcolor);
+				currcolor = colorlist[home_index];
+				handlePageChange(getString(R.string.home), home);
 				break;
 
 			case Schema:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[1]));
-				bar.setTitle("Schema");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					schedule.setBackgroundDrawable(currcolor);
-				else
-					schedule.setBackground(currcolor);
+				currcolor = colorlist[schedule_index];
+				handlePageChange(getString(R.string.scheme), schedule);
 				break;
 
 			case Mat:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[2]));
-				bar.setTitle("Skolmat");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					food.setBackgroundDrawable(currcolor);
-				else
-					food.setBackground(currcolor);
+				currcolor = colorlist[food_index];
+				handlePageChange(getString(R.string.food), food);
 				break;
 
 			case Nyheter:
+				currcolor = colorlist[news_index];
+				handlePageChange(getString(R.string.news), news);
+				break;
+
 			case Nyheter_SUB:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
-
-				if (current == HomePage.Nyheter)
-					bar.setTitle("Nyheter");
-				else
-					bar.setTitle(newsListData[0].headline);
-
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					news.setBackgroundDrawable(currcolor);
-				else
-					news.setBackground(currcolor);
+			case Elevkaren_SUB:
 				break;
 
 			case Elevkaren:
-			case Elevkaren_SUB:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
-				bar.setTitle("Elevkåren");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					elevkaren.setBackgroundDrawable(currcolor);
-				else
-					elevkaren.setBackground(currcolor);
+				currcolor = colorlist[kar_index];
+				handlePageChange(getString(R.string.elevkar), elevkaren);
 				break;
 
 			case Dexter:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
-				bar.setTitle("Dexter");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					dexter.setBackgroundDrawable(currcolor);
-				else
-					dexter.setBackground(currcolor);
+				currcolor = colorlist[dexter_index];
+				handlePageChange(getString(R.string.dexter), dexter);
 				break;
 
 			case ItsLearning:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
-				bar.setTitle("It's learning");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					itsLearning.setBackgroundDrawable(currcolor);
-				else
-					itsLearning.setBackground(currcolor);
+				currcolor = colorlist[itslearning_index];
+				handlePageChange(getString(R.string.itslearning), itsLearning);
 				break;
 
 			default:
 				current = HomePage.Home;
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-				bar.setTitle("Hem");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					home.setBackgroundDrawable(currcolor);
-				else
-					home.setBackground(currcolor);
+				currcolor = colorlist[home_index];
+				handlePageChange(getString(R.string.home), home);
 				break;
 		}
+	}
 
-        bar.setBackgroundDrawable(currcolor);
+	private void handlePageChange(String title, Button b) {
+		bar.setTitle(title);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			Drawable statusBarColor = currcolor;
+			statusBarColor.setColorFilter(getResources().getColor(R.color.selection_overlay), PorterDuff.Mode.OVERLAY);
+			getWindow().setStatusBarColor(((ColorDrawable) statusBarColor).getColor());
+		}
+
+		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			b.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.selection_overlay)));
+			leftBar.setBackgroundDrawable(currcolor);
+			bar.setBackgroundDrawable(currcolor);
+		} else {
+			b.setBackground(new ColorDrawable(getResources().getColor(R.color.selection_overlay)));
+			leftBar.setBackground(currcolor);
+			bar.setBackground(currcolor);
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -821,7 +814,7 @@ public class Home extends Activity {
 			// when the page is finished
 
 			public void onPageFinished(WebView view, String url) {
-				if (PB.isShown() && error == false) {
+				if (PB.isShown() && !error) {
 					PB.setVisibility(View.INVISIBLE);
 					progress.setVisibility(View.INVISIBLE);
 					mWebView = WV;
@@ -832,12 +825,14 @@ public class Home extends Activity {
 
 			public void onReceivedSslError(WebView view,
 			                               SslErrorHandler handler, SslError error) {
+				System.out.println("SSL Error. Continuing...");
 				handler.proceed();
 			}
 
 			public void onReceivedError(WebView view, int errorCode,
 			                            String description, String failingUrl) {
 				lasturl = failingUrl;
+				System.out.println("Failed with EC: " + String.valueOf(errorCode) + "\nDescription: " + description + "\nURL:" + failingUrl);
 				WV.loadUrl("about:blank");
 				tryAgain(WV, PB, progress, retry, "Sidan kunde inte laddas",
 						lasturl);
@@ -1054,7 +1049,7 @@ public class Home extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
-										.commit();
+										.apply();
 
 								AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
 										c);
@@ -1121,13 +1116,13 @@ public class Home extends Activity {
 
 			// It's learning
 			case R.id.goBack:
-				if (mWebView.canGoBack() == true) {
+				if (mWebView.canGoBack()) {
 					mWebView.goBack();
 				}
 				return true;
 
 			case R.id.goForward:
-				if (mWebView.canGoForward() == true) {
+				if (mWebView.canGoForward()) {
 					mWebView.goForward();
 				}
 				return true;

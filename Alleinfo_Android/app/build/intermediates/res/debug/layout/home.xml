@@ -138,8 +138,9 @@
             android:layout_height="fill_parent"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:divider="#CCCCCC"
-            android:dividerHeight="1px" >
+            android:divider="#00000000"
+            android:dividerHeight="1px"
+	        android:paddingTop="1px">
         </ListView>
 
         <ProgressBar
@@ -151,4 +152,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/home.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/home.xml -->

@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
-    <eat-comment/>
-    <string-array name="colors">
-        <item>#6AB52C</item> <!-- Hem -->
-        <item>#29b7eb</item> <!-- Schema -->
-        <item>#c1cc67</item> <!-- Skolmat -->
-        <item>#DBB314</item> <!-- Betyg -->
-        <item>#9c2a89</item> <!-- Nyheter -->
-        <item>#445Fa9</item> <!-- Elevkåren -->
-        <item>#e6332a</item> <!-- Dexter -->
-        <item>#F07F0A</item> <!-- It's learning -->
-    </string-array>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -30,13 +18,6 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
-    <eat-comment/>
-    <color name="alleit">#0099CC</color>
-    <color name="alleitclick">#0077AA</color>
-    <color name="alleithover">#00BBEE</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
-    <eat-comment/>
     <color name="background_floating_material_dark">#ff424242</color>
     <color name="background_floating_material_light">#ffeeeeee</color>
     <color name="background_material_dark">#ff303030</color>
@@ -49,17 +30,22 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
+    <eat-comment/>
+    <color name="col_cyan">#29b7eb</color>
+    <color name="col_dk_yellow">#DBB314</color>
+    <color name="col_green">#6AB52C</color>
+    <color name="col_karbla">#445Fa9</color>
+    <color name="col_lt_yellow">#c1cc67</color>
+    <color name="col_magenta">#9c2a89</color>
+    <color name="col_orange">#F07F0A</color>
+    <color name="col_red">#e6332a</color>
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
-    <eat-comment/>
-    <color name="festare">#9900FF</color>
-    <color name="festareclick">#7700DD</color>
-    <color name="festarehover">#AA11FF</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
-    <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
@@ -71,13 +57,6 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
-    <eat-comment/>
-    <color name="pr">#FFCC00</color>
-    <color name="prclick">#DDAA00</color>
-    <color name="prhover">#FFDD11</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
-    <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
     <color name="primary_material_dark">#ff212121</color>
@@ -92,21 +71,13 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
     <eat-comment/>
-    <color name="skolif">#FF1975</color>
-    <color name="skolifclick">#DD0753</color>
-    <color name="skolifhover">#FF3B97</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <color name="selection_overlay">#50000000</color>
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
-    <eat-comment/>
-    <color name="theboard">#445FA9</color>
-    <color name="theboardclick">#223D87</color>
-    <color name="theboardhover">#667FCB</color>
-    <color name="white">#fff</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
@@ -130,8 +101,6 @@
     <declare-styleable name="Toolbar"><attr format="reference" name="titleTextAppearance"/><attr format="reference" name="subtitleTextAppearance"/><attr name="title"/><attr name="subtitle"/><attr name="android:gravity"/><attr format="dimension" name="titleMargins"/><attr format="dimension" name="titleMarginStart"/><attr format="dimension" name="titleMarginEnd"/><attr format="dimension" name="titleMarginTop"/><attr format="dimension" name="titleMarginBottom"/><attr name="contentInsetStart"/><attr name="contentInsetEnd"/><attr name="contentInsetLeft"/><attr name="contentInsetRight"/><attr format="dimension" name="maxButtonHeight"/><attr format="reference" name="theme"/><attr format="reference" name="collapseIcon"/><attr format="string" name="collapseContentDescription"/><attr name="popupTheme"/><attr format="reference" name="navigationIcon"/><attr format="string" name="navigationContentDescription"/><attr name="android:minHeight"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
-    <eat-comment/>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
     <dimen name="abc_action_bar_icon_vertical_padding_material">16dp</dimen>
@@ -185,10 +154,10 @@
     <item name="split_action_bar" type="id"/>
     <item name="up" type="id"/>
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast appen \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r appens \u00C5lleinfos data inte kopierats till extern lagring.)</string>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
@@ -206,7 +175,7 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="abort">Avbryt</string>
     <string name="angeDinPin">Ange din PIN-kod</string>
@@ -232,7 +201,6 @@
     <string name="home">Hem</string>
     <string name="itslearning">It\'s learning</string>
     <string name="mon">M\u00E5ndag</string>
-    <string name="newr">Nyheter</string>
     <string name="news">Nyheter</string>
     <string name="nextweek">N\u00E4sta vecka</string>
     <string name="noDesc">--Ingen beskrivning--</string>
@@ -254,10 +222,10 @@
     <string name="tryagain">F\u00F6rs\u00F6k igen</string>
     <string name="week">Veckovy</string>
     <string name="weekchoice">Vecka</string>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/styles.xml -->
     <eat-comment/>
-    <style name="AppTheme" parent="@android:style/Theme.AppCompat"/>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar"/>
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
         <item name="android:textColor">?android:textColorPrimary</item>
@@ -1011,11 +979,6 @@
         <item name="android:scaleType">center</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/styles.xml -->
-    <eat-comment/>
-    <style name="LoginTheme" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
-    <!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
-    <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
         <item name="buttonBarStyle">@android:style/ButtonBar</item>

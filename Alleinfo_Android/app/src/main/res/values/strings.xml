@@ -16,10 +16,8 @@
     <string name="betyg">Betyg</string>
     <string name="itslearning">It\'s learning</string>
     <string name="elevkar">Elevk\u00E5ren</string>
-    <string name="newr">Nyheter</string>
-    <string name="dexter">Dexter</string>
-    
     <string name="news">Nyheter</string>
+    <string name="dexter">Dexter</string>
     
     <string name="angeDittPers">Ange ditt personnummer</string>
     <string name="choosePin">V\u00E4lj en PIN-kod</string>
@@ -50,17 +48,6 @@
 
     <string name="thisweek">Denna vecka</string>
     <string name="nextweek">N\u00E4sta vecka</string>
-    
-    <string-array name="colors">
-        <item>#6AB52C</item> <!-- Hem -->
-        <item>#29b7eb</item> <!-- Schema -->
-        <item>#c1cc67</item> <!-- Skolmat -->
-        <item>#DBB314</item> <!-- Betyg -->
-        <item>#9c2a89</item> <!-- Nyheter -->
-        <item>#445Fa9</item> <!-- Elevkåren -->
-        <item>#e6332a</item> <!-- Dexter -->
-        <item>#F07F0A</item> <!-- It's learning -->
-    </string-array>
     
     <string name="noHead">--Ingen rubrik--</string>
     <string name="noExtra">--Ingen info--</string>

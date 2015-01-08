@@ -35,8 +35,8 @@ public class NewsFeedAdapter extends ArrayAdapter<NewsData> {
 
 		TextView handler = (TextView) rowView.findViewById(R.id.handler);
 		handler.setText(datas[position].handler.toUpperCase(Locale.ENGLISH));
-		
-		handler.setTextColor(Color.parseColor(datas[position].color));
+
+		rowView.findViewById(R.id.background).setBackgroundColor(Color.parseColor(datas[position].color));
 
 		return rowView;
 	}

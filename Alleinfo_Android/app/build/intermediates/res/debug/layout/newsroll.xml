@@ -1,58 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/news_list_item_style"
-    android:orientation="horizontal"
-    android:padding="10dp" >
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/background"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/col_karbla"
+	android:orientation="horizontal"
+	android:padding="10dp">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.6"
-        android:gravity="left|center"
-        android:ellipsize="end"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:freezesText="true"
-        android:scrollHorizontally="true"
-        android:text="@null"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="16sp" />
+	<TextView
+		android:id="@+id/description"
+		android:layout_width="0dp"
+		android:layout_height="fill_parent"
+		android:layout_weight="0.6"
+		android:gravity="left|center"
+		android:ellipsize="end"
+		android:marqueeRepeatLimit="marquee_forever"
+		android:singleLine="true"
+		android:freezesText="true"
+		android:scrollHorizontally="true"
+		android:text="@null"
+		android:textColor="#FFFFFF"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textSize="16sp"/>
 
-    <LinearLayout
-        android:id="@+id/specKeep"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.4"
-        android:orientation="vertical" >
+	<LinearLayout
+		android:id="@+id/specKeep"
+		android:layout_width="0dp"
+		android:layout_height="fill_parent"
+		android:layout_weight="0.4"
+		android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/type"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical|right"
-            android:text="@null"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#FF0000"
-            android:textStyle="bold"
-            android:ellipsize="end"
-            android:singleLine="true" />
+		<TextView
+			android:id="@+id/type"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:layout_weight="0.5"
+			android:gravity="center_vertical|right"
+			android:text="@null"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/selection_overlay"
+			android:textStyle="bold"
+			android:ellipsize="end"
+			android:singleLine="true"/>
 
-        <TextView
-            android:id="@+id/handler"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical|right"
-            android:text="@null"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#0000FF"
-            android:textStyle="bold"
-            android:ellipsize="end"
-            android:singleLine="true" />
-    </LinearLayout>
+		<TextView
+			android:id="@+id/handler"
+			android:layout_width="fill_parent"
+			android:layout_height="0dp"
+			android:layout_weight="0.5"
+			android:gravity="center_vertical|right"
+			android:text="@null"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="@color/selection_overlay"
+			android:textStyle="bold"
+			android:ellipsize="end"
+			android:singleLine="true"/>
+	</LinearLayout>
 
-</LinearLayout><!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/newsroll.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/newsroll.xml -->

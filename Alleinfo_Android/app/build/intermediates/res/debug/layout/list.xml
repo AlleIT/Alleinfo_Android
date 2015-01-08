@@ -8,8 +8,9 @@
         android:id="@+id/feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1px" >
+        android:divider="#222"
+        android:dividerHeight="1px"
+        android:paddingTop="1px" >
     </ListView>
 
     <ProgressBar
@@ -19,4 +20,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-</RelativeLayout><!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/list.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/list.xml -->

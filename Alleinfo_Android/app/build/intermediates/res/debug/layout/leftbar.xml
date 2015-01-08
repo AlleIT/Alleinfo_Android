@@ -4,7 +4,7 @@
     android:layout_width="320dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="#222222"
+    android:background="@color/col_green"
     android:scrollbars="none" >
 
     <LinearLayout
@@ -53,7 +53,7 @@
             android:background="@null"
             android:gravity="left|center_vertical"
             android:paddingLeft="10dp"
-            android:text="@string/newr"
+            android:text="@string/news"
             android:textColor="#FFFFFF"
             android:textSize="50sp" />
 
@@ -91,4 +91,4 @@
             android:textSize="50sp" />
     </LinearLayout>
 
-</ScrollView><!-- From: file:/C:/Users/RadiationG0D/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/leftbar.xml -->
+</ScrollView><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/leftbar.xml -->
