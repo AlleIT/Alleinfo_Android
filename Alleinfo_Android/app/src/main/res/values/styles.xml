@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LoginTheme" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"></style>
-    
+    <style name="LoginTheme" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"/>
+    <style name="AppTheme" parent="@android:style/Theme.AppCompat"/>
+
+
+
 </resources>

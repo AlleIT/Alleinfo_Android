@@ -774,6 +774,8 @@ public class Home extends Activity {
 					home.setBackground(currcolor);
 				break;
 		}
+
+        bar.setBackgroundDrawable(currcolor);
 	}
 
 	@SuppressWarnings("deprecation")
