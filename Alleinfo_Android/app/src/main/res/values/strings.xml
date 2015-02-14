@@ -1,63 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">\u00C5lleinfo</string>
-    
-    <string name="settings">Inst\u00E4llningar</string>
-    
-    <string name="chng_user">Byt anv\u00E4ndare</string>
-    
-    <string name="chng_user_notice">\u00C4r du s\u00E4ker p\u00E5 att du vill byta anv\u00E4ndare?</string>
-    <string name="restart_app_notice">Anv\u00E4ndarbytet sker n\u00E4sta g\u00E5ng appen startas.</string>
-    
-    <string name="home">Hem</string>
-    <string name="scheme">Schema</string>
-    <string name="food">Skolmat</string>
-    <string name="betyg">Betyg</string>
-    <string name="itslearning">It\'s learning</string>
-    <string name="elevkar">Elevk\u00E5ren</string>
-    <string name="news">Nyheter</string>
-    <string name="dexter">Dexter</string>
-    
-    <string name="angeDittPers">Ange ditt personnummer</string>
-    <string name="choosePin">V\u00E4lj en PIN-kod</string>
-    <string name="angeDinPin">Ange din PIN-kod</string>
-    <string name="cont">Forts\u00E4tt</string>
-    <string name="change">Byt anv\u00E4ndare</string>
-    <string name="abort">Avbryt</string>
-    <string name="teacher">L\u00E4rare</string>
-    <string name="tryagain">F\u00F6rs\u00F6k igen</string>
-    <string name="savecred">Spara</string>
-    <string name="saveSport">RIG/NIU/LIU</string>
-    
-    <string name="forward">Fram\u00E5t</string>
-    <string name="back">Bak\u00E5t</string>
-    <string name="openInBrowser">\u00D6ppna i webbl\u00E4saren</string>
-    
-    <string name="bemember">Bli medlem</string>
-    
-    <string name="weekchoice">Vecka</string>
-    <string name="day">Dag</string>
-    <string name="mon">M\u00E5ndag</string>
-    <string name="tis">Tisdag</string>
-    <string name="ons">Onsdag</string>
-    <string name="tors">Torsdag</string>
-    <string name="fre">Fredag</string>
-    <string name="week">Veckovy</string>
-    <string name="chngpers">Byt person</string>
+	<string name="app_name">\u00C5lleinfo</string>
 
-    <string name="thisweek">Denna vecka</string>
-    <string name="nextweek">N\u00E4sta vecka</string>
-    
-    <string name="noHead">--Ingen rubrik--</string>
-    <string name="noExtra">--Ingen info--</string>
-    <string name="noDesc">--Ingen beskrivning--</string>
-    <string name="noName">Inget namn</string>
-    <string name="shortInfo">Kort info:</string>
-    <string name="desc">Beskrivning:</string>
-    <string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast appen \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r appens \u00C5lleinfos data inte kopierats till extern lagring.)</string>
-    
-    <!-- Short description of why the user needs to input his/her credentials again to log on to the app -->
-    <string name="dataEraseNote">Denna uppdateringen av \u00C5lleinfo kr\u00E4ver inte l\u00E4ngre ett l\u00F6senord, men du beh\u00F6ver tyv\u00E4rr fylla i dina uppgifter igen.</string>
-    
+	<string name="settings">Inst\u00E4llningar</string>
+
+	<string name="chng_user">Byt anv\u00E4ndare</string>
+
+	<string name="chng_user_notice">\u00C4r du s\u00E4ker p\u00E5 att du vill byta anv\u00E4ndare?</string>
+	<string name="restart_app_notice">Anv\u00E4ndarbytet sker n\u00E4sta g\u00E5ng appen startas.</string>
+
+	<string-array name="drawer_navigation">
+		<item>Hem</item>
+		<item>Schema</item>
+		<item>Skolmat</item>
+		<item>Nyheter</item>
+		<item>Elevk\u00E5ren</item>
+		<item>Dexter</item>
+		<item>It\'s learning</item>
+	</string-array>
+	
+	<string name="home">Hem</string>
+	<string name="scheme">Schema</string>
+	<string name="food">Skolmat</string>
+	<string name="news">Nyheter</string>
+	<string name="elevkar">Elevk\u00E5ren</string>
+	<string name="dexter">Dexter</string>
+	<string name="itslearning">It\'s learning</string>
+
+	<string name="angeDittPers">Ange ditt personnummer</string>
+	<string name="choosePin">V\u00E4lj en PIN-kod</string>
+	<string name="angeDinPin">Ange din PIN-kod</string>
+	<string name="cont">Forts\u00E4tt</string>
+	<string name="change">Byt anv\u00E4ndare</string>
+	<string name="abort">Avbryt</string>
+	<string name="teacher">L\u00E4rare</string>
+	<string name="tryagain">F\u00F6rs\u00F6k igen</string>
+	<string name="savecred">Spara</string>
+	<string name="saveSport">RIG/NIU/LIU</string>
+
+	<string name="forward">Fram\u00E5t</string>
+	<string name="back">Bak\u00E5t</string>
+	<string name="openInBrowser">\u00D6ppna i webbl\u00E4saren</string>
+
+	<string name="bemember">Bli medlem</string>
+
+	<string name="weekchoice">Vecka</string>
+	<string name="day">Dag</string>
+	<string name="mon">M\u00E5ndag</string>
+	<string name="tis">Tisdag</string>
+	<string name="ons">Onsdag</string>
+	<string name="tors">Torsdag</string>
+	<string name="fre">Fredag</string>
+	<string name="week">Veckovy</string>
+	<string name="chngpers">Byt person</string>
+
+	<string name="thisweek">Denna vecka</string>
+	<string name="nextweek">N\u00E4sta vecka</string>
+
+	<string name="noHead">--Ingen rubrik--</string>
+	<string name="noExtra">--Ingen info--</string>
+	<string name="noDesc">--Ingen beskrivning--</string>
+	<string name="noName">Inget namn</string>
+	<string name="shortInfo">Kort info:</string>
+	<string name="desc">Beskrivning:</string>
+	<string name="PULText">Dina uppgifter sparas endast lokalt p\u00E5 din enhet. Uppgifterna sparas i en fil som endast appen \u00C5lleinfo kommer åt under normala förhållanden. Uppgifterna anv\u00E4nds f\u00F6r att h\u00E4mta ditt personliga schema. (Med normala förh\u00E5llanden menas att du anv\u00E4nder en orootad android-enhet d\u00E4r appens \u00C5lleinfos data inte kopierats till extern lagring.)</string>
+
+	<!-- Short description of why the user needs to input his/her credentials again to log on to the app -->
+	<string name="dataEraseNote">Denna uppdateringen av \u00C5lleinfo kr\u00E4ver inte l\u00E4ngre ett l\u00F6senord, men du beh\u00F6ver tyv\u00E4rr fylla i dina uppgifter igen.</string>
+
 </resources>

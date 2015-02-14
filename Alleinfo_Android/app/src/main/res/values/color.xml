@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<color name="col_login">#005566</color>
+
 	<!-- Hem -->
 	<color name="col_green">#6AB52C</color>
 	<!-- Schema -->
@@ -17,5 +19,5 @@
 	<!-- It's learning -->
 	<color name="col_orange">#F07F0A</color>
 
-	<color name="selection_overlay">#50000000</color>
+	<color name="selection_overlay">#80000000</color>
 </resources>

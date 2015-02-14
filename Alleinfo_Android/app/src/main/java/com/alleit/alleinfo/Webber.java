@@ -193,41 +193,6 @@ public class Webber {
 		return schemesearch;
 	}
 
-	// get tiny news feed displayed on HomePage.Home
-	public static NewsData[] getTinyNewsFeed() {
-		NewsData[] feed;
-
-		NewsData data;
-		List<NewsData> temp = Arrays.asList(getNews());
-
-		if (temp.isEmpty())
-			return new NewsData[0];
-
-		if (temp.size() > 2) {
-			feed = new NewsData[3];
-			feed[0] = temp.get(0);
-			feed[1] = temp.get(1);
-
-			// news info, show more news
-			data = new NewsData();
-			data.headline = "Fler nyheter...";
-			data.type = "";
-			data.handler = "";
-			data.color = "#FFFFFF";
-			data.contentType = ContentType.ShowMoreNews;
-			data.uniqueIdentifier = null;
-			feed[2] = data;
-		} else {
-			int i = 0;
-			feed = new NewsData[temp.size()];
-			for (NewsData NI : temp) {
-				feed[i] = NI;
-				i++;
-			}
-		}
-		return feed;
-	}
-
 	public static NewsData[] getNews() {
 		HttpResponse response;
 		JSONArray jsonResponse;

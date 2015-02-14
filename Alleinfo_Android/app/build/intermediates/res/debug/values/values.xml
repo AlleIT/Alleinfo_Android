@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string-array name="drawer_navigation">
+		<item>Hem</item>
+		<item>Schema</item>
+		<item>Skolmat</item>
+		<item>Nyheter</item>
+		<item>Elevk\u00E5ren</item>
+		<item>Dexter</item>
+		<item>It\'s learning</item>
+	</string-array>
     <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
@@ -36,6 +47,7 @@
     <color name="col_dk_yellow">#DBB314</color>
     <color name="col_green">#6AB52C</color>
     <color name="col_karbla">#445Fa9</color>
+    <color name="col_login">#005566</color>
     <color name="col_lt_yellow">#c1cc67</color>
     <color name="col_magenta">#9c2a89</color>
     <color name="col_orange">#F07F0A</color>
@@ -73,7 +85,7 @@
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/color.xml -->
     <eat-comment/>
-    <color name="selection_overlay">#50000000</color>
+    <color name="selection_overlay">#80000000</color>
     <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
@@ -183,7 +195,6 @@
     <string name="app_name">\u00C5lleinfo</string>
     <string name="back">Bak\u00E5t</string>
     <string name="bemember">Bli medlem</string>
-    <string name="betyg">Betyg</string>
     <string name="change">Byt anv\u00E4ndare</string>
     <string name="chng_user">Byt anv\u00E4ndare</string>
     <string name="chng_user_notice">\u00C4r du s\u00E4ker p\u00E5 att du vill byta anv\u00E4ndare?</string>
@@ -224,7 +235,7 @@
     <string name="weekchoice">Vecka</string>
     <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values/styles.xml -->
     <eat-comment/>
-    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar"/>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar"/>
     <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance">
