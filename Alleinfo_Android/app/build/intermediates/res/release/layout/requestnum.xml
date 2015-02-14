@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/butcontainer"
+    android:background="@color/col_login" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" >
+
+        <EditText
+            android:id="@+id/numbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:background="#30000000"
+            android:textColor="#FFFFFF" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/prompttext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/numbox"
+            android:layout_alignLeft="@+id/numbox"
+            android:text="@string/angeDittPers"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#FFFFFF" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/numbox"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="25dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/biglogo" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/alleit" />
+
+        <CheckBox
+            android:id="@+id/saveCreds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/numbox"
+            android:layout_below="@+id/numbox"
+            android:text="@string/savecred"
+            android:textColor="#FFFFFF"
+	        />
+
+        <CheckBox
+            android:id="@+id/saveSport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/saveCreds"
+            android:layout_below="@+id/saveCreds"
+            android:text="@string/saveSport"
+            android:textColor="#FFFFFF"
+	        />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/butcontainer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true" >
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerVertical"
+            android:layout_alignParentTop="true"/>
+        
+        <View
+            android:id="@+id/middleLine"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical" 
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/teacher"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/middleLine"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/teacher"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/submit"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/middleLine"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:text="@string/cont"
+            android:textColor="#FFFFFF" />
+    </RelativeLayout>
+
+</RelativeLayout><!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/requestnum.xml -->
