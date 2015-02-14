@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_above="@+id/butcontainer"
-    android:background="#005566" >
+    android:background="@color/col_login" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,9 +17,11 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
+            android:padding="10dp"
             android:ems="10"
             android:gravity="center"
             android:inputType="number"
+            android:background="#30000000"
             android:textColor="#FFFFFF" >
 
             <requestFocus />
@@ -62,7 +64,8 @@
             android:layout_alignLeft="@+id/numbox"
             android:layout_below="@+id/numbox"
             android:text="@string/savecred"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+	        />
 
         <CheckBox
             android:id="@+id/saveSport"
@@ -71,7 +74,8 @@
             android:layout_alignLeft="@+id/saveCreds"
             android:layout_below="@+id/saveCreds"
             android:text="@string/saveSport"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+	        />
     </RelativeLayout>
 
     <RelativeLayout

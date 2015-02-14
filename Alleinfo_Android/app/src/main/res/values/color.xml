@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theboard">#445FA9</color>
-    <color name="theboardhover">#667FCB</color>
-    <color name="theboardclick">#223D87</color>
-    <color name="pr">#FFCC00</color>
-    <color name="prhover">#FFDD11</color>
-    <color name="prclick">#DDAA00</color>
-    <color name="festare">#9900FF</color>
-    <color name="festarehover">#AA11FF</color>
-    <color name="festareclick">#7700DD</color>
-    <color name="skolif">#FF1975</color>
-    <color name="skolifhover">#FF3B97</color>
-    <color name="skolifclick">#DD0753</color>
-    <color name="alleit">#0099CC</color>
-    <color name="alleithover">#00BBEE</color>
-    <color name="alleitclick">#0077AA</color>
-    <color name="white">#fff</color>
+	<color name="col_login">#005566</color>
+
+	<!-- Hem -->
+	<color name="col_green">#6AB52C</color>
+	<!-- Schema -->
+	<color name="col_cyan">#29b7eb</color>
+	<!-- Skolmat -->
+	<color name="col_lt_yellow">#c1cc67</color>
+	<!-- Betyg -->
+	<color name="col_dk_yellow">#DBB314</color>
+	<!-- Nyheter -->
+	<color name="col_magenta">#9c2a89</color>
+	<!-- Elevkåren -->
+	<color name="col_karbla">#445Fa9</color>
+	<!-- Dexter -->
+	<color name="col_red">#e6332a</color>
+	<!-- It's learning -->
+	<color name="col_orange">#F07F0A</color>
+
+	<color name="selection_overlay">#80000000</color>
 </resources>

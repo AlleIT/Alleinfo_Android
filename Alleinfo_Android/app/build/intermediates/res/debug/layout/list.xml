@@ -8,8 +8,9 @@
         android:id="@+id/feed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#CCCCCC"
-        android:dividerHeight="1px" >
+        android:divider="#222"
+        android:dividerHeight="1px"
+        android:paddingTop="1px" >
     </ListView>
 
     <ProgressBar

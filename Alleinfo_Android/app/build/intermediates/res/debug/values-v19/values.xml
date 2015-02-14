@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <!-- From: file:/C:/Users/Zakinishi/Documents/GitHub/Alleinfo_Android/Alleinfo_Android/app/src/main/res/values-v19/styles.xml -->
-    <eat-comment />
-
-    <style name="LoginTheme" parent="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen" />
-
-</resources>
