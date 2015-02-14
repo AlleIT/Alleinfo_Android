@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pre-dex-items>
+<items version="2" >
 
     <item
-        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.0-13e9d61c5251cd184f765ea570684d002a4c6a49.jar"
-        jar="C:\Users\Zakinishi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.0\support-annotations-21.0.0.jar"
+        jar="C:\Users\Zakinishi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
         jumboMode="false"
-        revision="21.0.2"
-        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-505d599d4640477e79099852ec070743155a6546.jar" />
+    </item>
     <item
-        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.0-8de6cad471ee40831e41d9289d9131b88075bb17.jar"
-        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\libs\internal_impl-21.0.0.jar"
+        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
         jumboMode="false"
-        revision="21.0.2"
-        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-01031cd699e05cb81e3f23cbc629606c50c24d51.jar" />
+    </item>
     <item
-        dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-2eecf84d8f4c7af6710478427ea09ac43a774a5c.jar"
-        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0\classes.jar"
+        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
         jumboMode="false"
-        revision="21.0.2"
-        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-d12ca008a022be786fe39f49efdeb809778d0c77.jar" />
+    </item>
+    <item
+        jar="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-9a5f8faf136c3434b4fb30616e318aa0d34be623.jar" />
+    </item>
 
-</pre-dex-items>
+</items>

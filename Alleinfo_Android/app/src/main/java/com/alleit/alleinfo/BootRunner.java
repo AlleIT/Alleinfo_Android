@@ -5,6 +5,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.InputType;
@@ -43,7 +48,7 @@ public class BootRunner extends Activity {
 		if (currentVersion != PreferenceInfo.currentVersionCode) {
 			if (!number.equals("")) {
 
-				SP.edit().clear().commit();
+				SP.edit().clear().apply();
 
 				number = "";
 
@@ -67,6 +72,13 @@ public class BootRunner extends Activity {
 		c = this;
 		if (number.equals("")) {
 			setContentView(R.layout.requestnum);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				ColorDrawable statusBarColor = new ColorDrawable(getResources().getColor(R.color.col_login));
+				float[] hsv = new float[3];
+				Color.colorToHSV(statusBarColor.getColor(), hsv);
+				hsv[2] *= .8;
+				getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+			}
 			requestPersNumString();
 		} else
 			startApp();

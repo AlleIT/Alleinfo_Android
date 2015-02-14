@@ -1,7 +1,6 @@
 package com.alleit.alleinfo;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,10 +16,11 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -42,11 +42,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,52 +54,43 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class Home extends Activity {
+public class Home extends ActionBarActivity {
 
 	//<editor-fold> Variables
 
-	Drawable currcolor;
+	private Drawable currcolor;
 
-	/*
-	 * Buttons in the sidebar. Please keep these in the same order as the actual
-	 * buttons
-	 */
-	Button home;
-	Button schedule;
-	Button food;
-	Button news;
-	Button elevkaren;
-	Button dexter;
-	Button itsLearning;
-
-	TextView todDay, todDate, todWeek;
+	private TextView todDay, todDate, todWeek;
 
 	// Colors for the sidebar buttons. Expand in strings.xml as necessary.
-	String[] colorlist;
+	private ColorDrawable[] colorlist;
 
 	// The user's location
-	HomePage current = HomePage.Start;
+	private HomePage current = HomePage.Start;
 
-	ActionBar bar;
-	ActionBarDrawerToggle mDrawerToggle;
-	ViewGroup viewGroup;
-	Menu menu;
+	private ActionBar bar;
 
-	int chosenDay = -1;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private ViewGroup viewGroup;
 
-	Boolean showThisWeek = true;
-	Point xy;
-	Context c;
-	WebView mWebView;
-	DrawerLayout mDrawerLayout;
-	ScrollView leftBar;
-	AlertDialog AD;
+	private int chosenDay = -1;
+
+	private Boolean showThisWeek = true;
+	private Point xy;
+	private Context c;
+	private WebView mWebView;
+	private ListView leftBar;
+	private DrawerLayout mDrawerLayout;
 	private String number = null;
-	SharedPreferences sharedP;
-	String pin = null;
-	NewsData[] newsListData;
-	PosterData[] posterListData;
-	Boolean isPlayingSport;
+	private SharedPreferences sharedP;
+	private String pin = null;
+	private NewsData[] newsListData;
+	private PosterData[] posterListData;
+	private Boolean isPlayingSport;
+
+	private LeftBarAdapter leftBarAdapter;
+
+	private static final int home_index = 0, schedule_index = 1, food_index = 2, news_index = 3, kar_index = 4, dexter_index = 5, itslearning_index = 6;
 
 	//</editor-fold>
 
@@ -131,19 +120,6 @@ public class Home extends Activity {
 
 		viewGroup = (ViewGroup) findViewById(R.id.content);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		leftBar = (ScrollView) findViewById(R.id.leftBarContainer);
-
-		/*
-		 * Please keep these in the same order as the actual buttons
-		 * (leftbar.xml)
-		 */
-		home = (Button) findViewById(R.id.homeSlide);
-		schedule = (Button) findViewById(R.id.schemeSlide);
-		food = (Button) findViewById(R.id.foodSlide);
-		news = (Button) findViewById(R.id.newsSlide);
-		elevkaren = (Button) findViewById(R.id.karSlide);
-		dexter = (Button) findViewById(R.id.dexSlide);
-		itsLearning = (Button) findViewById(R.id.itsSlide);
 
 		Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
@@ -154,99 +130,57 @@ public class Home extends Activity {
 			xy = new Point(display.getWidth(), display.getHeight());
 		}
 
-		bar = getActionBar();
+		bar = getSupportActionBar();
 		bar.setDisplayHomeAsUpEnabled(true);
-		bar.setHomeButtonEnabled(true);
-		bar.setBackgroundDrawable(new ColorDrawable(0xff222222));
-		colorlist = getResources().getStringArray(R.array.colors);
+
+		colorlist = setUpColorList();
 		SetUpLeftBar();
 		makeHome();
-
-		/*
-		 * XXX: OnClick listeners for sidebar Please keep these in the same
-		 * order as the actual buttons
-		 */
-		// <editor-fold> left bar onClickListener set-up
-
-		home.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeHome();
-			}
-		});
-
-		// if user clicks on schedule button
-
-		schedule.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeScheme();
-			}
-		});
-
-		// if user clicks on food menu button
-
-		food.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeFood();
-			}
-		});
-
-		// if user clicks on news button
-
-		news.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeNews();
-			}
-		});
-
-		// if user clicks on "elevkar" button
-
-		elevkaren.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeKar();
-			}
-		});
-
-		// if user clicks on Dexter button
-
-		dexter.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeDexter();
-			}
-		});
-
-		// if user clicks on itsLearning button
-
-		itsLearning.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				makeItsLearning();
-			}
-		});
-
-		// </editor-fold>
 	}
 
 	private void SetUpLeftBar() {
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, /*
-																		 * DrawerLayout
-																		 * object
-																		 */
-				R.drawable.ic_navigation_drawer, /*
-										 * nav drawer image to replace 'Up'
-										 * caret
-										 */
-				R.string.app_name, /*
-							 * "open drawer" description for accessibility
-							 */
-				R.string.app_name /* "close drawer" description for accessibility */
-		);
+		String[] menuEntries = getResources().getStringArray(R.array.drawer_navigation);
+
+		leftBar = (ListView) findViewById(R.id.leftBar);
+
+		leftBarAdapter = new LeftBarAdapter(this, R.layout.leftbar_entry, R.id.action_text, menuEntries);
+
+		leftBar.setAdapter(leftBarAdapter);
+
+		leftBar.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				switch (position) {
+					default:
+					case home_index:
+						makeHome();
+						break;
+					case schedule_index:
+						makeScheme();
+						break;
+					case food_index:
+						makeFood();
+						break;
+					case news_index:
+						makeNews();
+						break;
+					case kar_index:
+						makeKar();
+						break;
+					case dexter_index:
+						makeDexter();
+						break;
+					case itslearning_index:
+						makeItsLearning();
+						break;
+				}
+			}
+		});
+
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
 		mDrawerLayout.post(new Runnable() {
 
 			@Override
@@ -256,6 +190,18 @@ public class Home extends Activity {
 		});
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+	}
+
+	private ColorDrawable[] setUpColorList() {
+		return new ColorDrawable[]{
+				new ColorDrawable(getResources().getColor(R.color.col_green)),
+				new ColorDrawable(getResources().getColor(R.color.col_cyan)),
+				new ColorDrawable(getResources().getColor(R.color.col_dk_yellow)),
+				new ColorDrawable(getResources().getColor(R.color.col_magenta)),
+				new ColorDrawable(getResources().getColor(R.color.col_karbla)),
+				new ColorDrawable(getResources().getColor(R.color.col_red)),
+				new ColorDrawable(getResources().getColor(R.color.col_orange))
+		};
 	}
 
 	// <editor-fold>: makeXxx() Prepare the various pages here. Keep the methods in the same order as the actual buttons please.
@@ -303,7 +249,7 @@ public class Home extends Activity {
 			prepWeb();
 			prepFeed();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeScheme() {
@@ -315,7 +261,7 @@ public class Home extends Activity {
 			showThisWeek = true;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -326,7 +272,7 @@ public class Home extends Activity {
 			current = HomePage.Mat;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -338,7 +284,7 @@ public class Home extends Activity {
 			checkColors();
 			prepFeed();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeNewsSub(final NewsData data) {
@@ -346,7 +292,11 @@ public class Home extends Activity {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Nyheter_SUB;
+
 			checkColors();
+
+			currcolor = new ColorDrawable(Color.parseColor(data.color));
+			handlePageChange(data.headline, news_index);
 
 			new Thread(new Runnable() {
 
@@ -375,9 +325,12 @@ public class Home extends Activity {
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
+			RelativeLayout top = (RelativeLayout) findViewById(R.id.top);
 
 			info.setText(data.shortInfo);
 			desc.setText(data.description);
+
+			top.setBackgroundColor(Color.parseColor(data.color));
 
 			separator.setBackgroundColor(Color.parseColor(data.color));
 
@@ -413,7 +366,7 @@ public class Home extends Activity {
 			});
 
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeKar() {
@@ -491,7 +444,7 @@ public class Home extends Activity {
 				}
 			});
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeKarSub(int position) {
@@ -499,7 +452,11 @@ public class Home extends Activity {
 			viewGroup.removeAllViews();
 			viewGroup.addView(View.inflate(c, R.layout.detailview, null));
 			current = HomePage.Elevkaren_SUB;
+
 			checkColors();
+
+			currcolor = new ColorDrawable(Color.parseColor(posterListData[position].color));
+			handlePageChange(posterListData[position].name, kar_index);
 
 			final String finURL = posterListData[position].socialLink;
 
@@ -509,11 +466,10 @@ public class Home extends Activity {
 			TextView info = (TextView) findViewById(R.id.info);
 			TextView desc = (TextView) findViewById(R.id.desc);
 			RelativeLayout separator = (RelativeLayout) findViewById(R.id.separator);
+			RelativeLayout top = (RelativeLayout) findViewById(R.id.top);
 
 			infoHead.setVisibility(View.INVISIBLE);
 			info.setText("");
-
-			bar.setTitle(posterListData[position].name);
 
 			Pic.setImageDrawable(posterListData[position].logo);
 
@@ -521,6 +477,8 @@ public class Home extends Activity {
 
 			separator.setBackgroundColor(Color
 					.parseColor(posterListData[position].color));
+
+			top.setBackgroundColor(Color.parseColor(posterListData[position].color));
 
 			but.setText("Sociala medier");
 			but.setOnClickListener(new OnClickListener() {
@@ -537,7 +495,7 @@ public class Home extends Activity {
 			});
 
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 	}
 
 	private void makeDexter() {
@@ -547,7 +505,7 @@ public class Home extends Activity {
 			current = HomePage.Dexter;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
@@ -558,118 +516,63 @@ public class Home extends Activity {
 			current = HomePage.ItsLearning;
 			checkColors();
 		}
-		Home.this.invalidateOptionsMenu();
+		Home.this.supportInvalidateOptionsMenu();
 		prepWeb();
 	}
 
 	private void prepFeed() {
 		final Activity a = this;
-		if (current == HomePage.Home) {
-			final ListView listView = (ListView) a.findViewById(R.id.mininew);
-			final ProgressBar miniNewsPBar = (ProgressBar) a
-					.findViewById(R.id.miniNewsPBar);
-			miniNewsPBar.setVisibility(View.VISIBLE);
-			new Thread(new Runnable() {
 
-				@Override
-				public void run() {
+		final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
+		final ListView listView = (ListView) a.findViewById(R.id.feed);
+		LoadEntriesBar.setVisibility(View.VISIBLE);
+		new Thread(new Runnable() {
 
-					List<NewsData> temp = Arrays.asList(Webber
-							.getTinyNewsFeed());
+			@Override
+			public void run() {
 
-					if (temp.isEmpty()) {
-						newsListData = new NewsData[0];
-					} else {
-						int i = 0;
-						newsListData = new NewsData[temp.size()];
-						for (NewsData NI : temp) {
-							newsListData[i] = NI;
-							i++;
-						}
-					}
+				List<NewsData> temp = Arrays.asList(Webber.getNews());
 
-					runOnUiThread(new Runnable() {
-						public void run() {
-							if (newsListData.length == 0) {
-								newsListData = new NewsData[1];
-								newsListData[0] = new NewsData();
-								newsListData[0].headline = "Inga nyheter hittades";
-								newsListData[0].contentType = ContentType.NoNews;
-							}
-							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, newsListData);
-							listView.setAdapter(itemAdapter);
-							miniNewsPBar.setVisibility(View.INVISIBLE);
-						}
-					});
-
-				}
-
-			}).start();
-
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-				                        int position, long id) {
-					if (newsListData[position].contentType == ContentType.ShowMoreNews) {
-						makeNews();
-					} else if (newsListData[position].contentType == ContentType.News)
-						makeNewsSub(newsListData[position]);
-
-				}
-			});
-		} else if (current == HomePage.Nyheter) {
-			final ProgressBar LoadEntriesBar = (ProgressBar) findViewById(R.id.listProgBar);
-			final ListView listView = (ListView) a.findViewById(R.id.feed);
-			LoadEntriesBar.setVisibility(View.VISIBLE);
-			new Thread(new Runnable() {
-
-				@Override
-				public void run() {
-
-					List<NewsData> temp = Arrays.asList(Webber.getNews());
-
-					if (temp.isEmpty()) {
-						newsListData = new NewsData[0];
-					} else {
-						int i = 0;
-						newsListData = new NewsData[temp.size()];
-						for (NewsData NI : temp) {
-							newsListData[i] = NI;
-							i++;
-						}
-					}
-
-					runOnUiThread(new Runnable() {
-						public void run() {
-							if (newsListData.length == 0) {
-								newsListData = new NewsData[1];
-								newsListData[0] = new NewsData();
-								newsListData[0].headline = "Inga nyheter hittades";
-								newsListData[0].contentType = ContentType.NoNews;
-							}
-							NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
-									a, R.layout.newsroll, newsListData);
-							listView.setAdapter(itemAdapter);
-							LoadEntriesBar.setVisibility(View.INVISIBLE);
-						}
-					});
-
-				}
-
-			}).start();
-
-			listView.setOnItemClickListener(new OnItemClickListener() {
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-				                        int position, long id) {
-					if (newsListData[position].contentType == ContentType.News) {
-						makeNewsSub(newsListData[position]);
+				if (temp.isEmpty()) {
+					newsListData = new NewsData[0];
+				} else {
+					int i = 0;
+					newsListData = new NewsData[temp.size()];
+					for (NewsData NI : temp) {
+						newsListData[i] = NI;
+						i++;
 					}
 				}
-			});
 
-		}
+				runOnUiThread(new Runnable() {
+					public void run() {
+						if (newsListData.length == 0) {
+							newsListData = new NewsData[1];
+							newsListData[0] = new NewsData();
+							newsListData[0].headline = "Inga nyheter hittades";
+							newsListData[0].contentType = ContentType.NoNews;
+							newsListData[0].color = "#000000";
+						}
+						NewsFeedAdapter itemAdapter = new NewsFeedAdapter(
+								a, R.layout.newsroll, newsListData);
+						listView.setAdapter(itemAdapter);
+						LoadEntriesBar.setVisibility(View.INVISIBLE);
+					}
+				});
+
+			}
+
+		}).start();
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+			                        int position, long id) {
+				if (newsListData[position].contentType == ContentType.News) {
+					makeNewsSub(newsListData[position]);
+				}
+			}
+		});
 
 	}
 	// </editor-fold>
@@ -678,102 +581,79 @@ public class Home extends Activity {
 	@SuppressLint("NewApi")
 	public void checkColors() {
 
-		currcolor = new ColorDrawable(Color.TRANSPARENT);
-
-		// Reset the colors of all the buttons in the sidebar
-
-		LinearLayout container = (LinearLayout) findViewById(R.id.slideContainer);
-		for (int i = 0; i < (container).getChildCount(); i++) {
-			Button b = (Button) container.getChildAt(i);
-
-			if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-				b.setBackgroundDrawable(currcolor);
-			else
-				b.setBackground(currcolor);
-		}
-
 		switch (current) {
 
 			case Home:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-				bar.setTitle("Hem");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					home.setBackgroundDrawable(currcolor);
-				else
-					home.setBackground(currcolor);
+				currcolor = colorlist[home_index];
+				handlePageChange(getString(R.string.home), home_index);
 				break;
 
 			case Schema:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[1]));
-				bar.setTitle("Schema");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					schedule.setBackgroundDrawable(currcolor);
-				else
-					schedule.setBackground(currcolor);
+				currcolor = colorlist[schedule_index];
+				handlePageChange(getString(R.string.scheme), schedule_index);
 				break;
 
 			case Mat:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[2]));
-				bar.setTitle("Skolmat");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					food.setBackgroundDrawable(currcolor);
-				else
-					food.setBackground(currcolor);
+				currcolor = colorlist[food_index];
+				handlePageChange(getString(R.string.food), food_index);
 				break;
 
 			case Nyheter:
+				currcolor = colorlist[news_index];
+				handlePageChange(getString(R.string.news), news_index);
+				break;
+
 			case Nyheter_SUB:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[4]));
-
-				if (current == HomePage.Nyheter)
-					bar.setTitle("Nyheter");
-				else
-					bar.setTitle(newsListData[0].headline);
-
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					news.setBackgroundDrawable(currcolor);
-				else
-					news.setBackground(currcolor);
+			case Elevkaren_SUB:
 				break;
 
 			case Elevkaren:
-			case Elevkaren_SUB:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[5]));
-				bar.setTitle("Elevkåren");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					elevkaren.setBackgroundDrawable(currcolor);
-				else
-					elevkaren.setBackground(currcolor);
+				currcolor = colorlist[kar_index];
+				handlePageChange(getString(R.string.elevkar), kar_index);
 				break;
 
 			case Dexter:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[6]));
-				bar.setTitle("Dexter");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					dexter.setBackgroundDrawable(currcolor);
-				else
-					dexter.setBackground(currcolor);
+				currcolor = colorlist[dexter_index];
+				handlePageChange(getString(R.string.dexter), dexter_index);
 				break;
 
 			case ItsLearning:
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[7]));
-				bar.setTitle("It's learning");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					itsLearning.setBackgroundDrawable(currcolor);
-				else
-					itsLearning.setBackground(currcolor);
+				currcolor = colorlist[itslearning_index];
+				handlePageChange(getString(R.string.itslearning), itslearning_index);
 				break;
 
 			default:
 				current = HomePage.Home;
-				currcolor = new ColorDrawable(Color.parseColor(colorlist[0]));
-				bar.setTitle("Hem");
-				if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
-					home.setBackgroundDrawable(currcolor);
-				else
-					home.setBackground(currcolor);
+				currcolor = colorlist[home_index];
+				handlePageChange(getString(R.string.home), home_index);
 				break;
 		}
+	}
+
+	private void handlePageChange(String title, int index) {
+		bar.setTitle(title);
+
+		leftBarAdapter.selectedPos = index;
+		leftBarAdapter.notifyDataSetChanged();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			ColorDrawable statusBarColor = (ColorDrawable) currcolor;
+			float[] hsv = new float[3];
+			Color.colorToHSV(statusBarColor.getColor(), hsv);
+			hsv[2] *= .8;
+			getWindow().setStatusBarColor(Color.HSVToColor(hsv));
+		}
+
+		if (Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
+			leftBar.setBackgroundDrawable(currcolor);
+		else
+			leftBar.setBackground(currcolor);
+
+		// Not depreciated..?
+		// DON'T TOUCH THIS LINE. IT JUST WORKS. LEAVE IT!
+		// {
+		bar.setBackgroundDrawable(new ColorDrawable(((ColorDrawable) currcolor).getColor()));
+		// }
 	}
 
 	@SuppressWarnings("deprecation")
@@ -805,7 +685,7 @@ public class Home extends Activity {
 
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				// We want to avoid navigation from some pages
-				if (current != HomePage.Schema && current != HomePage.Mat) {
+				if (current != HomePage.Schema) {
 					PB.setVisibility(View.VISIBLE);
 					progress.setVisibility(View.VISIBLE);
 					retry.setVisibility(View.INVISIBLE);
@@ -819,7 +699,7 @@ public class Home extends Activity {
 			// when the page is finished
 
 			public void onPageFinished(WebView view, String url) {
-				if (PB.isShown() && error == false) {
+				if (PB.isShown() && !error) {
 					PB.setVisibility(View.INVISIBLE);
 					progress.setVisibility(View.INVISIBLE);
 					mWebView = WV;
@@ -830,12 +710,14 @@ public class Home extends Activity {
 
 			public void onReceivedSslError(WebView view,
 			                               SslErrorHandler handler, SslError error) {
+				System.out.println("SSL Error. Continuing...");
 				handler.proceed();
 			}
 
 			public void onReceivedError(WebView view, int errorCode,
 			                            String description, String failingUrl) {
 				lasturl = failingUrl;
+				System.out.println("Failed with EC: " + String.valueOf(errorCode) + "\nDescription: " + description + "\nURL:" + failingUrl);
 				WV.loadUrl("about:blank");
 				tryAgain(WV, PB, progress, retry, "Sidan kunde inte laddas",
 						lasturl);
@@ -859,7 +741,7 @@ public class Home extends Activity {
 					return;
 				}
 
-				if (connected != null && connected != false) {
+				if (connected) {
 					if (newProgress <= 98) {
 						if (PB.getVisibility() != View.VISIBLE) {
 							PB.setVisibility(View.VISIBLE);
@@ -891,10 +773,11 @@ public class Home extends Activity {
 							chosenDay, showThisWeek, xy, isPlayingSport, c);
 					runOnUiThread(new Runnable() {
 						public void run() {
-							WV.getSettings().setUseWideViewPort(true);
+							WV.getSettings().setUseWideViewPort(false);
 							WV.getSettings().setLoadWithOverviewMode(true);
 							WV.getSettings().setLayoutAlgorithm(
-									LayoutAlgorithm.SINGLE_COLUMN);
+									LayoutAlgorithm.NORMAL);
+							WV.setInitialScale(100);
 							WV.getSettings().setBuiltInZoomControls(true);
 							try {
 								WV.getSettings().setDisplayZoomControls(false);
@@ -913,21 +796,13 @@ public class Home extends Activity {
 		// Load Food menu
 
 		if (current == HomePage.Mat) {
-			WV.getSettings().setUseWideViewPort(false);
-			WV.getSettings().setLoadWithOverviewMode(false);
-			WV.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+			WV.getSettings().setUseWideViewPort(true);
+			WV.getSettings().setLoadWithOverviewMode(true);
+			WV.getSettings().setLayoutAlgorithm(
+					LayoutAlgorithm.NORMAL);
+			WV.setInitialScale(100);
 			WV.getSettings().setBuiltInZoomControls(false);
 			WV.getSettings().setSupportZoom(false);
-			WV.setPadding(0, 0, 0, 0);
-
-			float scaling = 100;
-			int display_width;
-			DisplayMetrics dm = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(dm);
-			display_width = dm.widthPixels;
-			scaling = (((float) display_width / 430) * 100);
-			scaling = (int) Math.floor(scaling);
-			WV.setInitialScale((int) scaling);
 
 			WV.loadUrl(Webber.foodAddress);
 		}
@@ -982,7 +857,7 @@ public class Home extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 
-		if (current == HomePage.Home || current == HomePage.Schema)
+		if (current == HomePage.Home)
 			menu.findItem(R.id.chng_user).setVisible(true);
 		else
 			menu.findItem(R.id.chng_user).setVisible(false);
@@ -1052,7 +927,7 @@ public class Home extends Activity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								sharedP.edit().remove(PreferenceInfo.Pers_Num_Name)
-										.commit();
+										.apply();
 
 								AlertDialog.Builder restart_app_notice = new AlertDialog.Builder(
 										c);
@@ -1119,13 +994,13 @@ public class Home extends Activity {
 
 			// It's learning
 			case R.id.goBack:
-				if (mWebView.canGoBack() == true) {
+				if (mWebView.canGoBack()) {
 					mWebView.goBack();
 				}
 				return true;
 
 			case R.id.goForward:
-				if (mWebView.canGoForward() == true) {
+				if (mWebView.canGoForward()) {
 					mWebView.goForward();
 				}
 				return true;

@@ -20,6 +20,14 @@
 		android:layout_alignParentTop="true"
 		android:background="#FFF3F3F3">
 
+		<View
+			android:id="@+id/top_Overlay"
+			android:layout_width="fill_parent"
+			android:layout_height="150dp"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:background="@color/selection_overlay"/>
+
 		<RelativeLayout
 			android:id="@+id/picContainer"
 			android:layout_width="125dp"
@@ -55,7 +63,7 @@
 			android:layout_toRightOf="@+id/picContainer"
 			android:text="@string/shortInfo"
 			android:textAppearance="?android:attr/textAppearanceLarge"
-			android:textColor="#000000"/>
+			android:textColor="#FFF"/>
 
 		<RelativeLayout
 			android:layout_width="fill_parent"
@@ -75,7 +83,7 @@
 					android:layout_height="wrap_content"
 					android:text="@string/noExtra"
 					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textColor="#000000"/>
+					android:textColor="#FFF"/>
 
 			</ScrollView>
 
@@ -85,11 +93,13 @@
 				android:layout_height="wrap_content"
 				android:layout_alignParentBottom="true"
 				android:layout_alignParentLeft="true"
-				android:text="\@nulld"
-				android:textColor="#000000"
+				android:text="@null"
+				android:background="@color/selection_overlay"
+				android:textColor="#FFF"
 				android:textColorHint="#DDDDDD"/>
 		</RelativeLayout>
 	</RelativeLayout>
+
 
 	<RelativeLayout
 		android:id="@+id/separator"
@@ -117,7 +127,8 @@
 		android:layout_below="@+id/textView2"
 		android:layout_marginLeft="20dp"
 		android:layout_marginRight="20dp"
-		android:layout_marginTop="5dp">
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="5dp">
 
 		<TextView
 			android:id="@+id/desc"
