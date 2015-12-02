@@ -35,7 +35,7 @@ public class Webber {
 	// XXX: Only URLS in this area!
 
 	// web url for the food menu
-	public static String foodAddress = "http://mpi.mashie.se/mashie/MashiePublic/MenuPresentation/Common/MenuSite.aspx?Siteid=4c2901c9-61f3-4b38-a30c-a02f00dc7f9b";
+	public static String foodAddress = "https://mpi.mashie.eu/public/menu/falköpings+kommun/4c2901c9";
 
 	// Url to it's learning
 	public static String itslearningAddress = "https://falkoping.itslearning.com/Index.aspx";
