@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="110dp"
+                android:background="#222">
+
+	<LinearLayout
+		android:id="@+id/KarBackground"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_margin="10dp"
+		android:background="#000000"
+		android:orientation="horizontal">
+
+		<RelativeLayout
+			android:layout_width="90dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical"
+			android:background="@color/selection_overlay">
+
+			<ImageView
+				android:id="@+id/KarLogo"
+				android:layout_width="75dp"
+				android:layout_height="75dp"
+				android:layout_centerInParent="true"
+				android:contentDescription="@string/app_name"
+				android:duplicateParentState="true"
+				/>
+		</RelativeLayout>
+
+		<TextView
+			android:id="@+id/KarName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:ellipsize="end"
+			android:singleLine="true"
+			android:freezesText="true"
+			android:scrollHorizontally="true"
+			android:duplicateParentState="true"
+			android:paddingLeft="10dp"
+			android:text="@string/noName"
+			android:textColor="#FFFFFF"
+			android:textSize="35sp"/>
+	</LinearLayout>
+
+</RelativeLayout><!-- From: file:/C:/Users/Andreas%20de%20Wit/AndroidStudioProjects/Alleinfo_Android/Alleinfo_Android/app/src/main/res/layout/elevkar_entry.xml -->

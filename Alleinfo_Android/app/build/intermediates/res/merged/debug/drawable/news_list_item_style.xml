@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" android:drawable="@android:color/holo_blue_bright"/>
+    <item android:drawable="@android:color/background_light"/>
+
+</selector><!-- From: file:/C:/Users/Andreas%20de%20Wit/AndroidStudioProjects/Alleinfo_Android/Alleinfo_Android/app/src/main/res/drawable/news_list_item_style.xml -->

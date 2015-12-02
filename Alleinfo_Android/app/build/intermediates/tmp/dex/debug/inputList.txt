@@ -1,5 +1,0 @@
-C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\classes\debug
-C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-505d599d4640477e79099852ec070743155a6546.jar
-C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-d12ca008a022be786fe39f49efdeb809778d0c77.jar
-C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-01031cd699e05cb81e3f23cbc629606c50c24d51.jar
-C:\Users\Zakinishi\Documents\GitHub\Alleinfo_Android\Alleinfo_Android\app\build\intermediates\pre-dexed\debug\classes-9a5f8faf136c3434b4fb30616e318aa0d34be623.jar

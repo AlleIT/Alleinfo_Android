@@ -773,8 +773,8 @@ public class Home extends ActionBarActivity {
 							chosenDay, showThisWeek, xy, isPlayingSport, c);
 					runOnUiThread(new Runnable() {
 						public void run() {
-							WV.getSettings().setUseWideViewPort(false);
-							WV.getSettings().setLoadWithOverviewMode(true);
+							WV.getSettings().setUseWideViewPort(true);
+							WV.getSettings().setLoadWithOverviewMode(false);
 							WV.getSettings().setLayoutAlgorithm(
 									LayoutAlgorithm.NORMAL);
 							WV.setInitialScale(100);
